@@ -1,0 +1,42 @@
+{% assign icons = "" %}
+{% assign titles = "" %}
+{% for block in section.blocks %}
+  {% comment %} use this only for icons and small images {% endcomment %}
+  {% assign icon = block.settings.icon | json | remove: '"' | replace: '\/', '/' %}
+  {% assign icons = icons | append: icon | append: '::' %}
+  {% assign titles = titles | append: block.settings.title | append: '::' %}
+{% endfor %}
+{% assign icons_array = icons | split: '::' %}
+{% assign titles_array = titles | split: '::' %}
+
+{% include 'usp-banner' titles: titles_array, icons: icons_array  %}
+
+{% schema %}
+  {
+    "name": "Top USP Banner",
+    "class": "index-usp-top",
+    "blocks": [
+      {
+        "type": "usp",
+        "name": "USP",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon",
+            "info": "90x90"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Top USP Banner",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

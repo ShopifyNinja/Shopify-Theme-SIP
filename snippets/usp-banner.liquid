@@ -1,0 +1,22 @@
+{% if titles.size > 0 and icons.size > 0 %}
+  <div class="max-wrap">
+    <div class="usp-banner">
+      <div class="row usp-banner__row">
+        {% for usp_title in titles limit: 4 %}
+          <div class="col usp-banner__col d-flex">
+            <div class="usp-banner__inner">
+              <div class="usp-banner__icon-wrap">
+                {% assign array_index = 0 %}
+                {% assign array_index = forloop.index | minus: 1 %}
+                {% if icons[array_index] != blank %}
+                  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ icons[array_index] }}" alt="{{ usp_title }} Icon" class="usp-banner__icon custom_lazyload" />
+                {% endif %}
+              </div>
+              <h4 class="usp-banner__title">{{ usp_title }}</h4>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,364 @@
+{{ "cart_custom.scss.css" | asset_url | stylesheet_tag }}
+
+<div class="container-fluid cm">
+<div class="main_view_cart_sce cart-desktop">
+{% if cart.item_count > 0 %}
+
+  <h2 class="index-f-products__title">{{ 'cart.general.title' | t }}</h2>
+  <limespot></limespot>
+  <form action="/checkout" method="post" id="cart_form">
+    <table class="responsive-table table-cart-content cart_desktop">
+      <thead class="small--hide">
+        <tr>
+          <th>{{ 'cart.label.product' | t }}</th>
+<!--           <th>{{ 'cart.label.price' | t }}</th> -->
+          <th></th>
+          <th>Color</th>
+          <th>Size</th>
+          <th>{{ 'cart.label.quantity' | t }}</th>
+          <th>{{ 'cart.label.total' | t }} Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+		{% assign index = 0 %}
+        {% for item in cart.items %}
+        {% comment %}
+        Cart Item Template
+        =====================
+        The data-label attributes on <td> elements are mobile-friendly
+        helpers used for responsive-table labels
+        {% endcomment %}
+          <tr class="responsive-table-row">
+
+            <td data-label="{{ 'customer.order.product' | t }}">
+
+              {% if item.image != blank %}
+                <a href="{{ item.url | within: collections.all }}">
+                  {{ item | img_url: '240x240' | img_tag: item.title }}
+                </a>
+              {% endif %}
+
+            </td>
+            <td>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+            </td>
+
+            <td>
+              <nav class="color" >
+                <ul>
+                  <li class="active">
+                    {% assign sel_val = "" %}
+                    {% assign color = "" %}
+                    {% for i in (0..2) %}
+                      {% if item.options_with_values[i] != blank %}
+                        {% if item.options_with_values[i]["name"] == "Color" %}
+                          {% assign sel_val = item.options_with_values[i]["value"] %}
+                          {% assign color = sel_val %}
+                          {% assign sel_val = sel_val | camelcase %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="{% if sel_val != '' %}value{% endif %}" style="background: {{ sel_val }}" color="{{ color }}">
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </td>
+		    <td>
+              <nav class="size">
+                <ul>
+                  <li class="active">
+                    {% assign sel_val = "" %}
+                    {% for i in (0..2) %}
+                      {% if item.options_with_values[i] != blank %}
+                        {% if item.options_with_values[i]["name"] == "Size" %}
+                          {% assign sel_val = item.options_with_values[i]["value"] %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="value" title="{{ sel_val | handleize }}">
+                      {{ sel_val }}
+                      {% assign sel_val = sel_val | camelcase %}
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </td>
+
+            <td data-label="{{ 'cart.label.quantity' | t }}">
+              <div class="number">
+                <span class="num minus {% if item.quantity == 1 %}min{% endif %}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M17.543 11.029H2.1A1.032 1.032 0 0 1 1.071 10c0-.566.463-1.029 1.029-1.029h15.443c.566 0 1.029.463 1.029 1.029 0 .566-.463 1.029-1.029 1.029z"></path></svg></span>
+                <span id="updates_{{ item.id }}" class="number" data-product-id="{{ item.id }}">{{ item.quantity }}</span>
+                <span class="num plus"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M17.409 8.929h-6.695V2.258c0-.566-.506-1.029-1.071-1.029s-1.071.463-1.071 1.029v6.671H1.967C1.401 8.929.938 9.435.938 10s.463 1.071 1.029 1.071h6.605V17.7c0 .566.506 1.029 1.071 1.029s1.071-.463 1.071-1.029v-6.629h6.695c.566 0 1.029-.506 1.029-1.071s-.463-1.071-1.029-1.071z"></path></svg></span>
+              </div>
+              <input type="hidden" name="updates[]" value="{{ item.quantity }}" />
+            </td>
+            <td data-label="{{ 'cart.label.total' | t }}">
+              {% if item.properties %}
+                <p>
+                  {% for p in item.properties %}
+                    {% include 'mw_GP_helpers' with 'properties', first: p.first %}.
+                    {% unless p.last == blank %}
+                      {% if p.last contains '/uploads/' %}
+                        {{ p.first }}: <a class="lightbox" href="{{ p.last }}">{{ 'cart.general.uploaded_file' | t }}</a><br />
+                      {% else %}
+                        {{ p.first }}: {{ p.last }}<br />
+                      {% endif %}
+                    {% endunless %}
+                  {% endfor %}
+                </p>
+              {% endif %}
+              {% comment %} ${{ item.price | amount | divided_by: 100.0 }} {% endcomment %}
+              {% include 'mw_GP_helpers' with 'price', item: item %}
+            </td>
+            <td>
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                <i class="item-close">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M15.89 14.696l-4.734-4.734 4.717-4.717c.4-.4.37-1.085-.03-1.485s-1.085-.43-1.485-.03L9.641 8.447 4.97 3.776c-.4-.4-1.085-.37-1.485.03s-.43 1.085-.03 1.485l4.671 4.671-4.688 4.688c-.4.4-.37 1.085.03 1.485s1.085.43 1.485.03l4.688-4.687 4.734 4.734c.4.4 1.085.37 1.485-.03s.43-1.085.03-1.485z"></path></svg>
+                </i>
+              </a>
+            </td>
+          </tr>
+
+        {% endfor %}
+          <tr class="cart-tr-prices ">
+            <td colspan="7" class="cart-form">
+              <div class="sub_total total">
+                <label class="label-sub-toal">{{ 'cart.general.subtotal' | t }}:</label>
+                <span class="cart-total-price">${{ cart.total_price | amount | divided_by: 100.0 }}</span> 
+              </div>
+            </td>
+          </tr>
+       </tbody>
+    </table>
+
+    {% if settings.cart_notes_enable %}
+      <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+      <textarea name="note" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+    {% endif %}
+    <div class="bottom-cart-controls">
+      <a href="/" class="sip-continue-shoping"><i class="fa fa-angle-left"></i>Continue shopping</a>
+      <!--     <p>{{ 'cart.general.shipping_at_checkout' | t }}</p> -->
+      <!--     <input type="submit" name="update" value="{{ 'cart.general.update' | t }}"> -->
+      <input type="submit" name="checkout" class="button btn-cart-checkout" value="CHECKOUT">
+    </div>
+
+  </form>
+
+{% else %}
+  <h1>{{ 'cart.general.title' | t }}</h1>
+
+  {% comment %}
+  Cart empty state
+  {% endcomment %}
+  <div class="supports-cookies">
+    <p>{{ 'cart.general.empty' | t }}</p>
+    <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+  </div>
+
+  {% comment %}
+  Cart no cookies state
+  ---------------------
+  Browser cookies are required to use the cart. If cookies aren't enabled in the
+  browser a message is displayed prompting the user to enable them.
+  {% endcomment %}
+
+  <div class="supports-no-cookies">
+
+    <p>
+      Your Shopping Bag is Empty! <a href="/">Let's Change That!</a>
+    </p>
+
+  </div>
+
+{% endif %}
+
+</div>
+
+  <div class="main_view_cart_sce cart-mobile {% unless cart.item_count > 0 %} no-cookies {% endunless %}">
+    {% if cart.item_count > 0 %}
+    <h4>Shopping <strong>Bag</strong></h4>
+    <h4 class="free-shipping">
+
+      <strong>$<span class="order_limit_r">x</span></strong> away from earning <strong>FREE</strong> shipping
+
+    </h4>
+
+    <form action="/checkout" method="post" id="cart_form_mobile">
+
+      <input type="submit" name="checkout" class="button btn-cart-checkout" value="CHECKOUT">
+      <div class="cart_mobile">
+        {% for item in cart.items %}
+        <div class="order_product">
+          <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+            <i class="item-close">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M15.89 14.696l-4.734-4.734 4.717-4.717c.4-.4.37-1.085-.03-1.485s-1.085-.43-1.485-.03L9.641 8.447 4.97 3.776c-.4-.4-1.085-.37-1.485.03s-.43 1.085-.03 1.485l4.671 4.671-4.688 4.688c-.4.4-.37 1.085.03 1.485s1.085.43 1.485.03l4.688-4.687 4.734 4.734c.4.4 1.085.37 1.485-.03s.43-1.085.03-1.485z"></path></svg>
+            </i>
+          </a>
+          <div class="product_image">
+            {% if item.image != blank %}
+            <a href="{{ item.url | within: collections.all }}">
+              {{ item | img_url: '240x240' | img_tag: item.title }}
+            </a>
+            {% endif %}
+          </div>
+          <div class="product_con">
+
+            <div class="con_title"><a href="{{ item.url }}">{{ item.product.title }}</a></div>
+
+            <div class="con_size">
+              <nav class="size">
+                <ul>
+                  <li class="active">
+                    {% assign sel_val = "" %}
+                    {% for i in (0..2) %}
+                      {% if item.options_with_values[i] != blank %}
+                        {% if item.options_with_values[i]["name"] == "Size" %}
+                          {% assign sel_val = item.options_with_values[i]["value"] %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="value" title="{{ sel_val | handleize }}">
+                      {{ sel_val }}
+                      {% assign sel_val = sel_val | camelcase %}
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div class="con_color">
+              <nav class="color" >
+                <ul>
+                  <li class="active">
+                    {% assign sel_val = "" %}
+                    {% assign color = "" %}
+                    {% for i in (0..2) %}
+                      {% if item.options_with_values[i] != blank %}
+                        {% if item.options_with_values[i]["name"] == "Color" %}
+                          {% assign sel_val = item.options_with_values[i]["value"] %}
+                          {% assign color = sel_val %}
+                          {% assign sel_val = sel_val | camelcase %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                    <div class="{% if sel_val != "" %}value{% endif %}" style="background: {{ sel_val }}" color="{{ color }}">
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="con_qual">
+              <div class="number">
+                <span class="num minus {% if item.quantity == 1 %}min{% endif %}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M17.543 11.029H2.1A1.032 1.032 0 0 1 1.071 10c0-.566.463-1.029 1.029-1.029h15.443c.566 0 1.029.463 1.029 1.029 0 .566-.463 1.029-1.029 1.029z"></path></svg></span>
+                <span id="updates_{{ item.id }}" class="number" data-product-id="{{ item.id }}">{{ item.quantity }}</span>
+                <span class="num plus"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon" viewBox="0 0 20 20"><path d="M17.409 8.929h-6.695V2.258c0-.566-.506-1.029-1.071-1.029s-1.071.463-1.071 1.029v6.671H1.967C1.401 8.929.938 9.435.938 10s.463 1.071 1.029 1.071h6.605V17.7c0 .566.506 1.029 1.071 1.029s1.071-.463 1.071-1.029v-6.629h6.695c.566 0 1.029-.506 1.029-1.071s-.463-1.071-1.029-1.071z"></path></svg></span>
+              </div>
+              <input type="hidden" name="updates[]" value="{{ item.quantity }}" />
+            </div>
+          </div>
+          <div class="product_price">
+            ${{ item.price | amount | divided_by: 100.0 }}
+          </div>
+        </div>
+        <div class="separator"></div>
+        {% endfor %}
+      </div>
+
+      <div class="sub_total is-hidden">
+        <label class="label-sub-toal">{{ 'cart.general.subtotal' | t }}:</label>
+        <span class="cart-total-price">${{ cart.total_price | amount | divided_by: 100.0 }}</span>
+      </div>
+      <div class="bottom-cart-controls">
+        <!--     <p>{{ 'cart.general.shipping_at_checkout' | t }}</p> -->
+        <!--     <input type="submit" name="update" value="{{ 'cart.general.update' | t }}"> -->
+        <input type="submit" name="checkout" class="button btn-cart-checkout" value="CHECKOUT">
+        <!--<div class="site-header__rewards mobile">
+          <h4 class="site-header__rewards-title">FREE SHIPPING</h4>
+          <p class="site-header__rewards-text">on orders <span style="color:#ffa5b4;"> Over $<span class="order_limit">x</span></span></p>
+        </div>-->
+      </div>
+  	</form>
+    {% else %}
+      <h1>{{ 'cart.general.title' | t }}</h1>
+
+      {% comment %}
+      Cart empty state
+      {% endcomment %}
+      <div class="supports-cookies">
+        <p>{{ 'cart.general.empty' | t }}</p>
+        <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+      </div>
+
+      {% comment %}
+      Cart no cookies state
+      ---------------------
+      Browser cookies are required to use the cart. If cookies aren't enabled in the
+      browser a message is displayed prompting the user to enable them.
+      {% endcomment %}
+      <div class="supports-no-cookies">
+        <p>
+			Your Shopping Bag is Empty! <a href="/">Let's Change That!</a>
+        </p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+<style>
+.tabs_sec p {
+    margin: 0 !important;
+    color: #757575;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  $("div.main_view_cart_sce form").on('click','.num.plus',function(){
+    var item_elem = jQuery(this).prev();
+    var newQuantity = parseInt(item_elem.text());
+    newQuantity++;
+    item_elem.text(newQuantity);
+    jQuery(this).parent('.number').next().val(newQuantity);
+    if ($(window).width() <= 767){
+      $('#cart_form_mobile').submit();
+    } else {
+      $('#cart_form').submit();
+    }
+
+  });
+
+  $("div.main_view_cart_sce form").on('click','.num.minus',function(){
+    var item_elem = jQuery(this).next();
+    var newQuantity = parseInt(item_elem.text());
+    newQuantity--;
+    if(newQuantity < 0)
+      return;
+    item_elem.text(newQuantity);
+    jQuery(this).parent('.number').next().val(newQuantity);
+    if ($(window).width() <= 767){
+      $('#cart_form_mobile').submit();
+    } else {
+      $('#cart_form').submit();
+    }
+
+  });
+
+  $('div.main_view_cart_sce form').on('click', '.order_product .item-close', function(){
+    $(this).parent().parent().slideUp();
+  });
+  
+  //////////////////////////// 01/05/2020 by lucas /////////////////////////////////////
+
+    if(localStorage.getItem("currentLang") !== 'en'){
+      $(".button.btn-cart-checkout").val("Revisa");
+    }
+
+  //////////////////////////////////////////////////////////////////////////////////////
+  
+});
+
+
+
+</script>

@@ -1,0 +1,706 @@
+
+/////////////////////////////////  28/04/2020 by lucas /////////////////////////////// 
+
+var referMsg = {
+  en: {
+    referralRegisterHeading: "Give <%= referralCampaign.reward_text %>, Get <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+    referralRegisterFormDetails: "Please submit your email below to get started.",
+    referralRegisterFormEmail: "Your email address",
+    referralRegisterFormSubmit: "Next",
+
+    referralReferHeading: "Give <%= referralCampaign.reward_text %>, Get <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+    referralReferFormDetails: "Now, enter your friends' emails below.",
+    referralReferFormEmails: "Friends’ email (separated by commas)",
+    referralReferFormEmailsDetails: "Separate by Commas",
+    referralReferMediaDetails: "Referral links are to be shared on personal pages only, and are not to be shared on any of Sparkle In Pink's pages/posts",
+    referralReferFormSubmit: "Send",
+    referralThanksHeading: "Thanks for Referring.",
+
+    referralShareFacebook: "Share",
+    referralShareSMS: "SMS",
+    referralShareMessenger: "Message",
+    referralShareCopy: "Copy Link",
+
+    referralCopyButton: "Copy Link",
+    referralCopyDetails: "Copy link and share with your friends"
+  },
+  es: {
+    referralRegisterHeading: "Dar <%= referralCampaign.reward_text %>, Obtener <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+    referralRegisterFormDetails: "Por favor envíe su correo electrónico a continuación para comenzar.",
+    referralRegisterFormEmail: "Tu correo electrónico",
+    referralRegisterFormSubmit: "Próxima",
+
+    referralReferHeading: "Dar <%= referralCampaign.reward_text %>, Obtener <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+    referralReferFormDetails: "Ingrese los correos electrónicos de sus amigos a continuación.",
+    referralReferFormEmails: "El correo electrónico de tus amigos",
+    referralReferFormEmailsDetails: "Separada por comas",
+    referralReferMediaDetails: "Los enlaces de referencia solo deben compartirse en páginas personales y no en las páginas / publicaciones de SIP",
+    referralReferFormSubmit: "Enviar",
+    referralThanksHeading: "Gracias por referir.",
+
+    referralShareFacebook: "Comparte",
+    referralShareSMS: "SMS",
+    referralShareMessenger: "Mensaje",
+    referralShareCopy: "Copiar enlace",
+
+    referralCopyButton: "Copiar enlace",
+    referralCopyDetails: "Copia el enlace y compártelo con tus amigos"
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+(function() {
+$(document).ready(function() {
+  var mediaWrapper = $(".swell-referral-media-wrapper").clone();
+
+  $(document).on('click', '.left-arrow', function() {
+    if ($('.star').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'none');
+      $('.diamond').css('display', 'table-cell');
+      $('.star').css('display', 'none');
+
+    } else if ($('.platinum').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'none');
+      $('.diamond').css('display', 'none');
+      $('.star').css('display', 'table-cell');
+
+    } else if ($('.diamond').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'table-cell');
+      $('.diamond').css('display', 'none');
+      $('.star').css('display', 'none');
+
+    }
+  });
+
+  $(document).on('click', '.right-arrow', function() {
+    if ($('.star').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'table-cell');
+      $('.diamond').css('display', 'none');
+      $('.star').css('display', 'none');
+
+    } else if ($('.platinum').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'none');
+      $('.diamond').css('display', 'table-cell');
+      $('.star').css('display', 'none');
+
+    } else if ($('.diamond').css('display') === "table-cell") {
+
+      $('.platinum').css('display', 'none');
+      $('.diamond').css('display', 'none');
+      $('.star').css('display', 'table-cell');
+
+    }
+  });
+  $(document).on("swell:setup", function() {
+    
+    var vipTiers = swellAPI.getVipTiers();
+    var customerDetails = swellAPI.getCustomerDetails();
+
+    var amountSpentCents = customerDetails.vipTierStats.amountSpentCents;
+
+    var vIdx = 0;
+    vipTiers.every(function(tier){
+      vIdx ++;
+
+      if(tier.swellrequiredAmountSpentCents <= amountSpentCents){
+
+        if(vIdx == vipTiers.length){
+          $("#customer-vip-tier").text(vipTiers[vIdx-1].name);
+
+          if(localStorage.getItem('currentLang') == "es"){
+            $("#customer-vip-to-spend").text('¡Felicidades! ¡Has alcanzado el nivel más alto!').css("height", "43px").css("line-height", "1.5 !important").css("overflow", "auto !important");
+          }
+          else{
+            $("#cus !importantmer-vip-to-spend").text('Congratulations! You have achieved the highest tier!').css("height", "43px").css("line-height", "1.5 !important").css("overflow", "auto !important");
+          }
+          $("#customer-vip-next-tier").text('');
+          return false;
+        }
+        else{
+          if(vipTiers[vIdx].swellrequiredAmountSpentCents > amountSpentCents){
+            $("#customer-vip-tier").text(tier.name);
+            $("#customer-vip-next-tier").text(vipTiers[vIdx].name);
+            $("#vip-amount-to-spend").text(parseInt((vipTiers[vIdx].swellrequiredAmountSpentCents - amountSpentCents) / 100));
+            return false;
+          }
+          else{
+            return true;
+          }
+        }
+
+      }
+      else{
+        if(vIdx == 1){
+          if(localStorage.getItem('currentLang') == "es"){
+            $("#customer-vip-tier").text("ORO");
+          }
+          else{
+            $("#customer-vip-tier").text("GOLD");
+          }
+        }
+        else{
+          $("#customer-vip-tier").text(vipTiers[vIdx-2].name);
+        }
+        $("#customer-vip-next-tier").text(tier.name);
+        $("#vip-amount-to-spend").text(parseInt((tier.swellrequiredAmountSpentCents - amountSpentCents) / 100));
+        return false;
+      }
+
+    });
+    
+
+    // if(customerDetails.vipTier != null){
+    //   var currentVipId = customerDetails.vipTier.id;
+    //   $("#customer-vip-tier").text(customerDetails.vipTier.name);
+
+    //   var vIdx = 0;
+    //   vipTiers.forEach(function(tier){
+    //     vIdx ++;
+    //     if(tier.id == currentVipId){
+    //       break;
+    //     }
+    //   });
+
+    //   if(vIdx == vipTiers.length){
+    //     $("#customer-vip-to-spend").text('');
+    //     $("#customer-vip-next-tier").text('');
+    //   }
+    //   else{
+    //     $("#vip-amount-to-spend").text()
+    //     $("#customer-vip-next-tier").text(vipTiers[vIdx].name);
+    //     $("#vip-amount-to-spend").text(parseInt((vipTiers[vIdx].swellrequiredAmountSpentCents - amountSpentCents) / 100));
+    //   }
+    // }
+    // else{
+    //   $("#customer-vip-tier").text("GOLD");
+    //   $("#customer-vip-next-tier").text(vipTiers[0].name);
+    //   $("#vip-amount-to-spend").text(parseInt((vipTiers[0].swellrequiredAmountSpentCents - amountSpentCents) / 100));
+    // }
+
+    $(".swell-post-checkout").css("display", "block");
+
+    /////////////////// removing static campaign and referral content ////////////////////////////
+    $("ul.swell-campaign-list").empty();
+    $(".swell-referral").empty();
+
+    Swell.Referral.initializeReferral(".swell-referral", SwellConfig.Referral.opts);
+    
+    if (!spapi.customer.email) {
+      $(".swell-referral-content-main").css("margin", "0px");
+    } 
+    SwellConfig.setupReferrals.populateReferrals(".table-data");
+
+    if (spapi.customer.email) {
+      $(".sidebar").css("display", "none");
+      $(".swell-referral-content-main").css("margin", "0 auto");
+    }
+    if (spapi.authenticated) {
+      SwellConfig.Tier.setupTiers();
+    }
+    if (spapi.isMobile) {
+      SwellConfig.Tier.handleMobileTiers();
+    }
+
+    Swell.Campaign.initializeCampaigns(".swell-campaign-list", SwellConfig.Campaign.opts);
+    if (spapi.isMobile) {
+      $(".swell-campaign-list").append("<li class='swell-campaign custom-referral-campaign' data-campaign-id='xxxxx'> <div class='swell-campaign-content' data-display-mode='modal' data-campaign-id='<%= campaign.id %>'> <h3>Refer a Friend</h3> <p>Gets $5 for every referral made.</p> <a href='/pages/refer' class='start-referring'> Start Referring</a> </div> </li>");
+    } else {
+      $($(".swell-campaign-list").find(`[data-campaign-id="467741"]`)[0]).after("<li class='swell-campaign custom-referral-campaign' data-campaign-id='xxxxx'> <div class='swell-campaign-content' data-display-mode='modal' data-campaign-id='<%= campaign.id %>'> <h3>Refer a Friend</h3> <p>Gets $5 for every referral made.</p> <a href='/pages/refer' class='start-referring'> Start Referring</a> </div> </li>");
+    }
+
+    ///////////////////////////////// 28/04/2020 ////////////////////////////////////////
+
+      if(localStorage.getItem('currentLang') !== 'en'){
+        $(".swell-post-checkout-heading.refer-locale-en").css("display", "none");
+        $(".swell-post-checkout-heading.refer-locale-es").css("display", "block");
+      }
+      else{
+        $(".swell-post-checkout-heading.refer-locale-en").css("display", "block");
+        $(".swell-post-checkout-heading.refer-locale-es").css("display", "none");
+      }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    $(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+    
+    var itvalCount = 0;
+    var itvalReferForm = setInterval(function(){
+      itvalCount ++;
+      if(itvalCount > 50) clearInterval(itvalReferForm);
+      if($(".swell-referral-media-wrapper").length == 0){
+        clearInterval(itvalReferForm);
+        $(".swell-referral .swell-referral-content-container").addClass("swl-reg-content");
+        // $(".swell-referral-form-wrapper").after(mediaWrapper);
+      }
+    }, 100);
+
+  });
+
+    $(document).on("swell:referral:error", function(jqXHR, textStatus, errorThrown) {
+       if(textStatus && (textStatus === "Please enter a valid email address" || textStatus === "EMAILS_ALREADY_PURCHASED")){
+         if (!$(".refer-to-old-customer-error")[0]) {
+           $("<p class=\"refer-to-old-customer-error\">Email address are already associated with an account.</p>").insertBefore($("#swell-referral-refer-emails").parent().parent());
+           $("#swell-referral-refer-emails").addClass("error-border");
+         }
+       }
+     });
+
+    $(document).on("swell:referral:success", function() {
+           swellAPI.refreshCustomerDetails(function() {
+              $(".table-data").html("");
+             SwellConfig.setupReferrals.populateReferrals(".table-data");
+           });
+         });
+
+    $('body').on('click', '#swell-referral-register-submit', function(){
+      setTimeout(function() {
+        if (spapi.customer.email) {
+          $(".sidebar").css("display", "none");
+        }
+      }, 200);
+
+      setTimeout(function() {
+        if (spapi.customer.email) {
+          $(".swell-referral-content-main").css("margin", "0 auto");
+        }
+      }, 700);
+    });
+
+    $(document).on("click", '.close-thank-you-popup', function() {
+            $(".swell-post-checkout").remove();
+        });
+
+
+  });
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Tier = {
+   setupTiers: () => {
+    let stats = spapi.customer ? spapi.customer.vip_tier_stats : null;
+    let amountSpent = stats.amount_spent_cents / 100;
+    let customerTier = spapi.customer.vip_tier;
+    if (customerTier) {
+      $.each(spapi.activeVipTiers, function(index, item) {
+        if (item.id === customerTier.id && item.name === "Platinum") {
+          if (spapi.isMobile) {
+            $(".platinum.status").html(`<span class="current-status">Current Status</span><p class="spend-more">Spend $<span class="req-points">${(500 - amountSpent).toFixed(2)}</span> more to earn <span class="next-tier">Diamond</span></p>`);
+          } else {
+            $(".platinum.status").html(`<span class="current-status">Current Status</span>`);
+            $(".diamond.status").html(`<p class="spend-more">Spend $<span class="req-points">${(500 - amountSpent).toFixed(2)}</span> more to earn <span class="next-tier">Diamond</span></p>`);
+          }
+          if (spapi.authenticated) {
+            $(".swell-tier-names .platinum").addClass("active");
+            $(".star").css("opacity", "0.7");
+            $(".diamond").css("opacity", "0.7");
+          }
+        } else if (item.id === customerTier.id && item.name === "Diamond") {
+          $(".diamond.status").html(`<span class="current-status1">Current Status</span>`);
+          if (spapi.authenticated) {
+            $(".swell-tier-names .diamond").addClass("active");
+            $(".platinum").css("opacity", "0.7");
+            $(".star").css("opacity", "0.7");
+          }
+        }
+      });
+    } else {
+      if (spapi.isMobile) {
+        $(".star.status").html(`<span class="current-status">Current Status</span><p class="spend-more">Spend $<span class="req-points">${(250 - amountSpent).toFixed(2)}</span> more to earn <span class="next-tier">Platinum</span></p>`);
+      } else {
+        $(".star.status").html(`<span class="current-status">Current Status</span>`);
+
+        $(".platinum.status").html(`<p class="spend-more">Spend $<span class="req-points">${(250 - amountSpent).toFixed(2)}</span> more to earn <span class="next-tier">Platinum</span></p>`);
+        if (spapi.authenticated) {
+          $(".swell-tier-names .star").addClass("active");
+          $(".platinum").css("opacity", "0.7");
+          $(".diamond").css("opacity", "0.7");
+
+        }
+      }
+    }
+   },
+   tierStatus: (current) => {
+      var  columnLength = $(".swell-tier-table .swell-tier-values").children().length;
+      for(counter=2; counter<= columnLength; counter++) {
+        if(counter!=current) {
+          $(".swell-tier-table tr th:nth-child("+counter+")").addClass("hide");
+          $(".swell-tier-table tr td:nth-child("+counter+")").addClass("hide");
+        }
+      }
+    },
+    handleMobileTiers: () => {
+     $(document).on('click', '.left-arrow', function() {
+       if ($('.star').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'none');
+         $('.diamond').css('display', 'table-cell');
+         $('.star').css('display', 'none');
+
+       } else if ($('.platinum').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'none');
+         $('.diamond').css('display', 'none');
+         $('.star').css('display', 'table-cell');
+
+       } else if ($('.diamond').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'table-cell');
+         $('.diamond').css('display', 'none');
+         $('.star').css('display', 'none');
+
+       }
+     });
+
+     $(document).on('click', '.right-arrow', function() {
+       if ($('.star').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'table-cell');
+         $('.diamond').css('display', 'none');
+         $('.star').css('display', 'none');
+
+       } else if ($('.platinum').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'none');
+         $('.diamond').css('display', 'table-cell');
+         $('.star').css('display', 'none');
+
+       } else if ($('.diamond').css('display') === "table-cell") {
+
+         $('.platinum').css('display', 'none');
+         $('.diamond').css('display', 'none');
+         $('.star').css('display', 'table-cell');
+
+       }
+     });
+    }
+  };
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Link = {
+    initializeLinks: function(containerSelector) {
+      return $(document).on("click", containerSelector, function(e) {
+        var href;
+        e.preventDefault();
+        href = $(this).attr("href");
+        localStorage.setItem("swell-location", "/pages/rewards");
+        return window.location = href;
+      });
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Campaign = {
+    opts: {
+      templates: {
+        campaign: '<li class=\ "swell-campaign swell-campaign-login\" data-campaign-id=\ "<%= campaign.id %>\">\n <div class=\ "swell-campaign-content\" data-display-mode=\ "modal\"\n data-campaign-id=\ "<%= campaign.id %>\">\n <div class=\ "swell-campaign-icon\">\n <span class=\ "swell-campaign-icon-content\"> <i class=\"<%= campaign.icon %>\"> </i> </span>\n </div>\n <div class=\ "swell-campaign-type\">\n <span class=\ "swell-campaign-type-content\"><%= campaign.title %></span>\n </div>\n <div class=\ "swell-campaign-value\">\n <span class=\ "swell-campaign-value-content\"><%= campaign.reward_text %> </span>\n </div>\n </div>\n </li>'
+      }
+    },
+    authenticate: function() {
+      if (!spapi.authenticated) {
+        spapi.$(document).off("click", ".swell-campaign-content");
+        $(".swell-campaign").addClass("swell-campaign-login");
+        return $(".swell-campaign-content").hover(function() {
+          return $(this).append(SwellConfig.Campaign.opts.templates.campaignHover);
+        }, function() {
+          return $(this).find(".swell-campaign-hover").remove();
+        });
+      }
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Redemptions = {
+    initializeSlider: function(containerSelector){
+      $('.slider-section').slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 3,
+                infinite: true,
+              }
+            },
+            {
+              breakpoint: 900,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+         ]
+        });
+      },
+      initializeProducts: function(){
+        if (spapi.authenticated) {
+          $(".swell-redemption-option-cost").addClass("swell-buy-product-btn");
+          return spapi.setupBuyProductWithPointsHelper();
+        }
+      },
+      initializeRangeSlider: function() {
+        var centsPerPoint = spapi.variableRedemptionOption ? spapi.variableRedemptionOption.discount_rate_cents : 1;
+        var cartTotal = parseInt($('.discounts_amount').text()) + parseInt($('.subtotal_price').text());
+        var customerAccountBal = (spapi.customer.adjusted_points_balance * centsPerPoint) / 100
+        var cartTotalAmmount = cartTotal/100
+
+        // cartTotal = cartTotal >= customerAccountBal ? customerAccountBal : cartTotal
+
+        $(".input-holder").append('<input type="range" class="swell-range-slider" min="0" max="' + customerAccountBal + '" step="0.1" value="'+ customerAccountBal + '">');
+
+        slider_value = parseFloat($(".swell-range-slider").val());
+
+        if (slider_value > cartTotalAmmount)
+        {
+          balanceAvailable = parseFloat((cartTotalAmmount / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+        }
+        else
+        {
+          balanceAvailable = parseFloat((slider_value / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+        }
+
+        // balanceAvailable = parseFloat((slider_value / centsPerPoint) * 100).toFixed(2);
+        balanceAvailable = Math.ceil(balanceAvailable);
+
+
+        $("#swell-checkout-points-amount").val(balanceAvailable);
+        $(".slider-point-balance").html(balanceAvailable);
+
+        $('input[type="range"]').rangeslider({
+          polyfill: false,
+          // Default CSS classes
+          rangeClass: 'rangeslider',
+          disabledClass: 'rangeslider--disabled',
+          horizontalClass: 'rangeslider--horizontal',
+          verticalClass: 'rangeslider--vertical',
+          fillClass: 'rangeslider__fill',
+          handleClass: 'rangeslider__handle',
+
+          // Callback function
+          onInit: function() {},
+
+          // Callback function
+          onSlide: function(position, value) {},
+
+          // Callback function
+          onSlideEnd: function(position, value) {}
+        });
+
+
+        $( ".swell-range-slider" ).change(function() {
+          $(".swell-range-slider").attr('step', 1);
+          var points_balance = parseInt($('.subtotal_price').text())/100;
+          var centsPerPoint = spapi.variableRedemptionOption.discount_rate_cents;
+          slider_value = parseFloat($(".swell-range-slider").val());
+          if (slider_value > cartTotalAmmount)
+          {
+            balanceAvailable = parseFloat((cartTotalAmmount / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+          }
+          else
+          {
+            balanceAvailable = parseFloat((slider_value / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+          }
+
+          balanceAvailable = Math.ceil(balanceAvailable);
+          $("#swell-checkout-points-amount").val(balanceAvailable.toFixed(2));
+          $(".slider-point-balance").html(balanceAvailable);
+
+
+          //set slider max value
+          if (parseInt($(".swell-range-slider").val()) == parseInt($(".swell-range-slider").attr('max')))
+          {
+            $(".swell-range-slider").attr('step', 0.1);
+            slider_value = customerAccountBal;
+            if (slider_value > cartTotalAmmount)
+            {
+              balanceAvailable = parseFloat((cartTotalAmmount / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+            }
+            else
+            {
+              balanceAvailable = parseFloat((slider_value / centsPerPoint) * 100.0);
+          $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+            }
+            balanceAvailable = Math.ceil(balanceAvailable);
+
+            $("#swell-checkout-points-amount").val(balanceAvailable);
+            $(".slider-point-balance").html(balanceAvailable);
+            //$(".swell-adjusted-point-balance").html(parseFloat($(".swell-range-slider").attr('max')).toFixed(2));
+          }
+
+        });
+
+        //reset the last redeemPoints
+        $(document).on("swell:redemption", function(){
+          var lastRedeemPoints = $("#swell-checkout-points-amount").val();
+          setTimeout(function(){
+            $("#swell-checkout-points-amount").val(lastRedeemPoints);
+          }, 200);
+        });
+      }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Customer = {
+    initializeHistory: function(containerSelector) {
+      return $(containerSelector).click(function() {
+        return swellAPI.showPopupByType("HistoryPopup");
+      });
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.setupReferrals = {
+    populateReferrals: function(containerSelector) {
+      details = swellAPI.getCustomerDetails();
+
+      if (details.referrals.length != 0) {
+        $.each(details.referrals, function( index, item ) {
+          status = "Invited";
+          if (item.completedAt != null){
+            status =  "<span>Purchased</span>"+" ("+spapi.activeReferralCampaign.reward_text + " earned" +")";
+          }
+          $(containerSelector).append("<tr><td class ='trancate'>"+ item.email+ "</td><td>" + status + "</td></tr>");
+          if ($('.table').height() >= 200) {
+            $(".table-classes").addClass("table-responsive");
+          }
+        });
+      }
+
+      return
+    },
+
+    setupReferralforMobile: function() {
+      if (spapi.isMobile) {
+        setTimeout(function(){
+          $(".swell-referral-sidebar-details").remove();
+        }, 200);
+      }
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.LocalStorage = {
+    initializeLocalStorage: function() {
+      var location;
+      location = localStorage.getItem("swell-location");
+      if (location && window.location.pathname === '/account') {
+        localStorage.removeItem("swell-location");
+        return window.location = location;
+      }
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  SwellConfig.Redemption = {
+    opts: {
+      templates: {
+        redemptionOption: '<li class=\ "swell-redemption-option\"> \n <div class=\ "slide-img-holder swell-redemption-option-content\"\n data-redemption-option-id=\ "<%= redemption.id %>\">\n <div class=\ "slide-img-holder\"> <img src=\ "<%= redemption.background_image_url %>\">\n </div> \n <div class=\ "swell-redemption-option-value\"> <%= redemption.name %> </div> \n <div class=\ "swell-redemption-option-cost\" data-variant-id=\ "<%= redemption.applies_to_id %>\"\n> <%= redemption.cost_text %> </div> \n </div>\n </li>'
+      }
+    }
+  };
+
+}).call(this);
+
+(function() {
+  window.SwellConfig = window.SwellConfig || {};
+
+  /////////////////////////////////  28/04/2020 by lucas /////////////////////////////// 
+
+  var localeMessage = referMsg.en;
+
+
+  if(localStorage.getItem('currentLang') == 'es'){
+    localeMessage = referMsg.es;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+
+  SwellConfig.Referral = {
+    opts: {
+      localization: localeMessage,
+      // localization: {
+      //   referralRegisterHeading: "Give: <%= referralCampaign.reward_text %>, Get <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+      //   referralRegisterFormDetails: "Please submit your email below to get started.",
+      //   referralRegisterFormEmail: "Your email address",
+      //   referralRegisterFormSubmit: "Next",
+
+      //   referralReferHeading: "Give <%= referralCampaign.reward_text %>, Get <%= referralCampaign.referral_redemption_option.prettyDiscount %>",
+      //   referralReferFormDetails: "Now, enter your friends' emails below.",
+      //   referralReferFormEmails: "Your friends’ email (separated by commas)",
+      //   referralReferFormEmailsDetails: "Separate by Commas",
+      //   referralReferMediaDetails: "Referral links are to be shared on personal pages only, and are not to be shared on any of Sparkle In Pink's pages/posts",
+      //   referralReferFormSubmit: "Send",
+      //   referralThanksHeading: "Thanks for Referring.",
+
+      //   referralShareFacebook: "Share",
+      //   referralShareSMS: "SMS",
+      //   referralShareMessenger: "Message",
+      //   referralShareCopy: "Copy Link",
+
+      //   referralCopyButton: "Copy Link",
+      //   referralCopyDetails: "Copy link and share with your friends"
+      // },
+      templates: {
+        referralRegister: '<div class="swell-referral-register"> <h2 class="swell-referral-heading"><%= localization.referralRegisterHeading %></h2> <p class="swell-referral-details"><%= localization.referralRegisterDetails %></p> <div class="swell-referral-form-wrapper"> <form name="swell-referral-register-form" id="swell-referral-register-form" method="POST" action="."> <div class="swell-referral-form-header"> <p class="swell-referral-form-header-details"><%= localization.referralRegisterFormDetails %></p> </div> <div class="swell-referral-form-body"> <ul class="swell-referral-form-list"> <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-field-input" type="email" name="swell-referral-register-email" id="swell-referral-register-email" required="required" placeholder="<%= localization.referralRegisterFormEmail %>"> </li> <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-submit" type="submit" name="swell-referral-register-submit" id="swell-referral-register-submit" value="<%= localization.referralRegisterFormSubmit %>"> </li> </ul> </div> </form> </div> </div>',
+        referralRefer: '<div class="swell-referral-refer"> <h2 class="swell-referral-heading"><%= localization.referralReferHeading %></h2> <p class="swell-referral-details"><%= localization.referralReferDetails %></p> <div class="swell-referral-form-wrapper"> <form class="swell-referral-form" name="swell-referral-refer-form" id="swell-referral-refer-form" method="POST" action="."> <div class="swell-referral-form-header"> <p class="swell-referral-form-header-details"><%= localization.referralReferFormDetails %></p> </div> <div class="swell-referral-form-body"> <ul class="swell-referral-form-list"> <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-field-input" type="text" name="swell-referral-refer-emails" id="swell-referral-refer-emails" required="required" placeholder="<%= localization.referralReferFormEmails %>"> <span class="swell-referral-form-field-details"><%= localization.referralReferFormEmailsDetails %></span> </li> <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-submit" type="submit" name="swell-referral-refer-submit" id="swell-referral-refer-submit" value="<%= localization.referralReferFormSubmit %>"> </li> </ul> </div> </form> </div> <div class="swell-referral-media-wrapper"> <p class="swell-referral-media-details"><%= localization.referralReferMediaDetails %></p> <ul class="swell-referral-media-list"> <li class="swell-referral-medium swell-share-referral-facebook"> <div class="swell-referral-medium-content"> <i class="swell-icon-Fb <%= localization.referralFacebookIcon %>" aria-hidden="true"></i>&nbsp;<%= localization.referralShareFacebook %> </div> </li> <li class="swell-referral-medium swell-share-referral-sms"> <div class="swell-referral-medium-content"> <i class="swell-icon-SMS <%= localization.referralSMSIcon %>" aria-hidden="true"></i>&nbsp;<%= localization.referralShareSMS%> </div> </li> <li class="swell-referral-medium swell-share-referral-messenger"> <div class="swell-referral-medium-content"> <i class="swell-icon-Message <%= localization.referralMessengerIcon %>" aria-hidden="true"> <span class="path1"></span> <span class="path2"></span> </i> &nbsp; <span><%= localization.referralShareMessenger %> </span> </div> </li> <li class="swell-referral-medium swell-share-referral-copy"> <div class="swell-referral-medium-content"> <i class="swell-icon-Copy-Link <%= localization.referralLinkIcon %>" aria-hidden="true"></i>&nbsp;<%= localization.referralShareCopy %> </div> </li> </ul> </div> </div>',
+        referralCopy: '<div class="swell-referral-copy"> <div class="swell-referral-copy-content"> <div class="swell-referral-copy-sidebar"> <img src="{{ 'swell-copy.png' | asset_url }}" alt="Copy-Image" class="copy-image"> </div> <div class="swell-referral-copy-main"> <span class="swell-referral-back-link"></span> <h2 class="swell-referral-heading"><i class="swell-referral-heading-icon <%= localization.referralLinkIcon %>" aria-hidden="true"></i>&nbsp;<%= localization.referralCopyHeading %></h2> <div class="swell-referral-form-wrapper"> <div class="swell-referral-copy-link" id="swell-referral-copy-link"><%= customer.referralLink %></div> <button class="swell-referral-copy-button" id="swell-referral-copy-button" data-clipboard-target="#swell-referral-copy-link"><%= localization.referralCopyButton %></button> </div> <p class="swell-referral-details"><%= localization.referralCopyDetails %></p> </div> </div> <div>'
+      }
+    }
+  };
+
+}).call(this);

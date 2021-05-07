@@ -1,0 +1,184 @@
+<footer>
+
+<section class="footer">
+<div class="container">
+<div class="row">
+
+
+ <div class="footer1 col-sm-6 footer_menu">
+  	<img src="{{ section.settings.footer_logo | img_url: 'medium' }}" class="three_sec_logo"/>
+    <h2>NEWS & UPDATES</h2>
+    <p>Sign up to get the latest on sale, new releases and more....</p>
+    <div class="newsletter-section{% if section.settings.show_background %} index-section--newsletter-background{% endif %}">
+      <div class="page-width text-center">
+        {% form 'customer' %}
+          {{ form.errors | default_errors }}
+          {% if form.posted_successfully? %}
+            <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+          {% else %}
+            <div id="foter_news" class="input-group password__input-group">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email"
+                name="contact[email]"
+                id="Email"
+                class="input-group__field newsletter__input"
+                value="{% if customer %}{{ customer.email }}{% endif %}"
+                placeholder="Enter your email address"
+                autocorrect="off"
+                autocapitalize="off">
+              <span class="input-group__btn">
+                <button type="submit" id="footer-submit" name="commit">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+              </span>
+            </div>
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+
+   <div class="footer_menu  col-sm-3">
+<!-- 	{% if section.settings.footer_linklist_company != blank %}
+      <h2>{{ linklists[section.settings.footer_linklist_service].title }}</h2>
+      {% for link in linklists[section.settings.footer_linklist_service].links %}
+          <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+      {% endfor %}
+	{% endif %} -->
+    <h2>CUSTOMER SERVICE</h2>
+      <!--<li><a href="/pages/contact-us">Contact Us</a></li>
+      <li><a href="/pages/customer-care">Customer Care</a></li>
+      <li><a href="/pages/size-chart">Size Chart</a></li>
+      <li><a href="/pages/returns">Returns & Exchanges</a></li>
+      <li><a href="/pages/shipping-information">Shipping Info</a></li>
+      <li><a href="/pages/terms-of-use">Terms & Conditions</a></li>
+      <li><a href="/products/drop-ship-my-order">Drop Shipping</a></li>-->
+      {% for link in linklists[section.settings.footer_linklist_service].links %}
+          <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+      {% endfor %}
+   </div>
+
+  <div class="footer_menu col-sm-3">
+<!--     {% if section.settings.footer_linklist_company != blank %}
+      <h2>{{ linklists[section.settings.footer_linklist_company].title }}</h2>
+      {% for link in linklists[section.settings.footer_linklist_company].links %}
+          <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+      {% endfor %}
+    {% endif %} -->
+  <h2>OUR COMPANY</h2>
+    <!--<li><a href="/pages/about-us">About Us</a></li>
+    <li><a href="/pages/reviews">Reviews</a></li>
+    <li><a href="/blogs/sip-blog">SIP Blog</a></li>
+    <li><a href="/pages/rewards">Rewards Program</a></li>
+    <li><a href="/pages/be-the-first-to-know">Discount Codes</a></li>
+    <li><a href="/pages/coupon-sign-up">Coupon Sign Up</a></li>
+    <li><a href="/pages/press">Press</a></li>-->
+    {% for link in linklists[section.settings.footer_linklist_company].links %}
+        <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+    {% endfor %}
+  </div>
+
+   </div>
+   </div>
+ <div class="border_sssce">
+ </div>
+  <div class="container copyright">
+
+    <div class="copy_socialm_sec col-md-6">
+      {%- assign social_accounts = 'Facebook, Instagram, Pinterest' | split: ', ' -%}
+      <ul>
+        {% for social in social_accounts %}
+          {%- assign social_handle = social | handleize -%}
+          {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+          {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+          {% if settings[social_link] != blank %}
+            <li>
+              <a href="{{ settings[social_link] }}" target="_blank" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                {% include social_icon %}
+                <span class="icon-fallback-text">{{ social }}</span>
+              </a>
+            </li>
+          {% endif %}
+
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="copy_right col-md-6">
+      <small><!-- {{ 'layout.footer.copyright' | t }} -->&copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}. All Rights Reserved</small>
+  	</div>
+
+   </div>
+ </section>
+
+ {% comment %}
+
+  {%- assign social_accounts = 'Facebook, Twitter, Google Plus, Pinterest, LinkedIn, Instagram, Snapchat, Tumblr, YouTube, Vimeo' | split: ', ' -%}
+  <ul>
+    {% for social in social_accounts %}
+      {%- assign social_handle = social | handleize -%}
+      {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+      {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+      {% if settings[social_link] != blank %}
+        <li>
+          <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+            {% include social_icon %}
+            <span class="icon-fallback-text">{{ social }}</span>
+          </a>
+        </li>
+      {% endif %}
+
+    {% endfor %}
+  </ul>
+
+  {% if section.settings.show_payment_icons %}
+    {% unless shop.enabled_payment_types == empty %}
+      <span class="visually-hidden">{{ 'layout.footer.payment_methods' | t }}</span>
+      <ul class="payment-icons">
+        {% for type in shop.enabled_payment_types %}
+          <li>
+            {{ type | payment_type_svg_tag: class: 'icon' }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endunless %}
+  {% endif %}
+
+  {%- assign footer_linklist = section.settings.footer_linklist -%}
+  {% if linklists[footer_linklist].links.size > 0 %}
+    <ul>
+      {% for link in linklists[footer_linklist].links %}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div>
+    <small>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}. {{ powered_by_link }}</small>
+  </div>
+</footer>
+{% endcomment %}
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer_linklist_company",
+        "label": "Company Menu"
+      },
+	  {
+        "type": "link_list",
+        "id": "footer_linklist_service",
+        "label": "Service Menu"
+      },
+	  {
+        "type": "image_picker",
+        "id": "footer_logo",
+        "label": "Footer Logo"
+      }
+    ]
+  }
+{% endschema %}

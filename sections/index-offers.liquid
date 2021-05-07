@@ -1,0 +1,54 @@
+
+ {% assign collection1 = collections[section.settings.collection] %}
+ {% if collection1.products.size > 0 %}
+  <div class="container index-offers__container">
+    {% if section.settings.title %}
+      <h2 class="index-offers__title">{{ section.settings.title }}</h2>
+      <div class="row justify-content-center index-offers__row">
+        {% for product in collection1.products limit: 4  %}
+          <div class="col-lg-3 col-6 index-offers__col">
+            {% include 'product-item' with product_item: product] %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Special Offers",
+    "class": "index-offers",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+     {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Special Offer",
+        "limit": 8,
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Special Offers",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

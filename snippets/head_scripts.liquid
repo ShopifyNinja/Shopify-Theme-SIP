@@ -1,0 +1,109 @@
+<script>
+//  version 3.3.1
+{% include 'jquery-lib' %}
+!function(e){var t=function(t,o,n){"use strict";var r,a=e.document.getElementsByTagName("script")[0],c=e.document.createElement("script");return"boolean"==typeof o&&(r=n,n=o,o=r),c.src=t,c.async=!n,a.parentNode.insertBefore(c,a),o&&"function"==typeof o&&(c.onload=o),c};"undefined"!=typeof module?module.exports=t:e.loadJS=t}("undefined"!=typeof global?global:this);
+!function(e){"use strict";var n=function(n,t,o){var l,r=e.document,i=r.createElement("link");if(t)l=t;else{var a=(r.body||r.getElementsByTagName("head")[0]).childNodes;l=a[a.length-1]}var d=r.styleSheets;i.rel="stylesheet",i.href=n,i.media="only x",l.parentNode.insertBefore(i,t?l:l.nextSibling);var f=function(e){for(var n=i.href,t=d.length;t--;)if(d[t].href===n)return e();setTimeout(function(){f(e)})};return i.onloadcssdefined=f,f(function(){i.media=o||"all"}),i};"undefined"!=typeof module?module.exports=n:e.loadCSS=n}("undefined"!=typeof global?global:this);
+</script>
+<script>
+  document.documentElement.className = document.documentElement.className.replace('no-js', '');
+
+  window.theme = {
+    strings: {
+      addToCart: {{ 'products.product.add_to_cart' | t | json }},
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }}
+    },
+    moneyFormat: {{ shop.money_format | json }}
+  };
+
+    {% unless template contains 'index' or template contains 'collection' %}
+    loadJS("//staticw2.yotpo.com/wzEo5Y9prJgJeGbube6Y0IuJfXjogzBjiNxfJmyC/widget.js");
+    {% endunless %}
+    
+    {% if template.directory == 'customers' %}
+    theme.allCountryOptionTags = {{ all_country_option_tags | json }};
+    {% endif %}
+    
+    document.addEventListener("StartAppLoading", function(event) {
+    
+    {% if template contains 'index' or template contains 'collection' %}
+    loadJS("//staticw2.yotpo.com/wzEo5Y9prJgJeGbube6Y0IuJfXjogzBjiNxfJmyC/widget.js");
+    {% endif %}
+
+    {% assign nowts = "now" | date: "%s" %}
+    {% assign metats = shop.metafields._ls_meta.check %}
+    {% assign timediff = nowts | minus: metats %}
+    {% if timediff < 604800 %}
+  	loadJS("https://livesearch.okasconcepts.com/js/livesearch.init.min.js?v=2&shop=sparkle-in-pink.myshopify.com");
+    {% endif %}
+    });
+  
+
+    document.addEventListener("StartOtherLoading", function(event) {
+      loadJS("https://config.gorgias.io/production/qgaXzxaPYo7vDWOp/chat/dY4gQxze407Wnv8l.js");
+      
+       !function(e){if(!window.pintrk){window.pintrk=function()
+      {window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+      n=window.pintrk;n.queue=[],n.version="3.0";var
+      t=document.createElement("script");t.async=!0,t.src=e;var
+      r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}
+      ("https://s.pinimg.com/ct/core.js"); 
+
+      pintrk('load', 2618705804029, { em: '{{ customer.email }}', });
+      pintrk('page'); 
+    });
+</script>
+<noscript> 
+  <img height="1" width="1" style="display:none;" alt=""
+       src="https://ct.pinterest.com/v3/?tid=2618705804029&noscript=1" /> 
+</noscript>
+
+
+{% capture asyncLoad %}
+window.addEventListener('load', function load(event){setTimeout(function(){asyncLoad();document.dispatchEvent(new CustomEvent('StartAppLoading'));}, 4500)},false);
+document.addEventListener("StartAsyncLoading", function(event)
+{
+  document.dispatchEvent(new CustomEvent('StartKLoad'));
+});
+{% endcapture %}
+
+{% capture KernalHead %}
+  document.addEventListener('StartKernelLoading', function() { var customDocumentWrite = 
+{% endcapture %}
+
+{% capture KernalFooter %}
+  loadJS(eventsListenerScript.src); console.log('loaded > ' + eventsListenerScript.src);})
+{% endcapture %}
+
+
+{% comment %} Advanced app {% endcomment %}
+{% assign sourceJsPattern = 'https:\/\/files-shpf.mageworx.com\/groupedproducts\/source.js' %}
+{% assign sourceJs = '_source.js' | asset_url | split: '?' | first %}
+
+{% assign sourceJs_capture_last_temp = content_for_header | split: sourceJsPattern | last %}
+{% assign sourceJs_key = sourceJs_capture_last_temp | split: 'shop=sparkle-in-pink.myshopify.com' | first %}
+
+{% assign sourceJsReplacePattern = ',"' | append: sourceJsPattern | append: sourceJs_key | append: 'shop=sparkle-in-pink.myshopify.com' | append: '"' %}
+
+{% if template contains 'product' or template contains 'cart' %}
+<script src="{{ sourceJs | append: sourceJs_key | append: 'shop=sparkle-in-pink.myshopify.com' }}" defer></script>
+{% endif %}
+
+
+{% capture content_header %}
+  {{
+    content_for_header
+  | replace: ' x.parentNode.insertBefore(s, x)', 'loadJS(urls[i])'
+  | replace: sourceJsReplacePattern, ''
+  | remove: "window.attachEvent('onload', asyncLoad)" 
+  | replace: "window.addEventListener('load', asyncLoad, false);", asyncLoad 
+  | replace: 'var customDocumentWrite = ', KernalHead 
+  | replace: "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);", KernalFooter
+  | replace: "DOMContentLoaded", 'StartKLoad'
+  }}
+{% endcapture %}
+
+{{ content_header }}
+
+
+{%- include 'bold-common' -%}

@@ -1,0 +1,201 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" defer></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" defer></script>
+{%- if layout == 'theme' -%}
+<script type="text/javascript" src="{{ 'vendors@layout.theme.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'vendors@layout.theme.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'gift_card' -%}
+<script type="text/javascript" src="{{ 'vendors@template.gift_card.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'vendors@template.gift_card.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'gift_card' -%}
+<script type="text/javascript" src="{{ 'template.gift_card.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'template.gift_card.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'index' -%}
+<script type="text/javascript" src="{{ 'vendors@template.index.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'vendors@template.index.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'index' -%}
+<script type="text/javascript" src="{{ 'template.index.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'template.index.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'product' -%}
+<script type="text/javascript" src="{{ 'vendors@template.product.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'vendors@template.product.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'product' -%}
+<script type="text/javascript" src="{{ 'template.product.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'template.product.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'customers/addresses' -%}
+<script type="text/javascript" src="{{ 'template.addresses.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'template.addresses.js' | asset_url }}" as="script">
+{%- endif -%} {%- if template == 'customers/login' -%}
+<script type="text/javascript" src="{{ 'template.login.js' | asset_url }}" defer></script>
+{%- else -%}
+<link rel="prefetch" href="{{ 'template.login.js' | asset_url }}" as="script">
+{%- endif -%}
+
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+{% unless canonical_url contains 'apps/menu/preview' %}
+<script>
+  loadJS("{{ 'v3globomenu.js' | asset_url }}", function(){
+  	MenuApp.init();
+  });
+</script>
+{% endunless %}
+
+<script>
+(function () {
+  if ( typeof window.CustomEvent === "function" ) return false; //If not IE
+
+  function CustomEvent ( event, params ) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent( 'CustomEvent' );
+    evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+    return evt;
+  }
+
+  CustomEvent.prototype = window.Event.prototype;
+
+  window.CustomEvent = CustomEvent;
+})();
+
+document.addEventListener("StartAppLoading", function(event) 
+{
+  $('body .custom_lazyload').each(function(){ if($(this).attr('src') != $(this).data('src')) $(this).attr('src', $(this).data('src')); });
+
+  setTimeout(function(){
+    document.dispatchEvent(new CustomEvent('StartKernelLoading'));
+  }, 800);
+
+  setTimeout(function(){
+    document.dispatchEvent(new CustomEvent('StartOtherLoading'));
+  }, 2500);   
+
+  setTimeout(function(){
+    document.dispatchEvent(new CustomEvent('StartAsyncLoading'));
+  }, 3500);
+});
+
+  
+document.addEventListener("StartAsyncLoading", function(event) {
+  //loadJS("https://instafeed.nfcube.com/cdn/a523b4b100fe2c2aa9b55a084c337be6.js?shop=sparkle-in-pink.myshopify.com");
+  loadJS("https://cdn.attn.tv/sparkleinpink/dtag.js");
+  
+  //mobile-lang-switcher
+  var weglot_cnt = 0;
+  setTimeout(function run(){
+    if($('footer .weglot-container').length > 0) {
+      	$('body #weglot-switcher-2').html($('footer .weglot-container .weglot_switcher').clone());
+        switch($('footer .weglot-container .weglot_switcher .wgcurrent').data('l')) {
+          case 'en':
+            document.dispatchEvent(new CustomEvent('LoadedLang', {'detail': {'currentLang': 'en'}}));
+          break;
+          case 'es':
+            document.dispatchEvent(new CustomEvent('LoadedLang', {'detail': {'currentLang': 'es'}}));
+          break;
+          default:
+        }
+      	return !0;
+    } else if(weglot_cnt < 30) {
+    	weglot_cnt++;
+    } else {
+    	return !0;
+    }
+    
+  	setTimeout(run, 100);
+  }, 100);
+
+
+  // desktop weglot language switcher
+  $('body #weglot-switcher-1').on('click', 'ul a', function(){
+    var deactivedLang = $(this).attr('aria-label');
+    if(deactivedLang !== 'English') document.dispatchEvent(new CustomEvent('LoadedLang', {'detail': {'currentLang': 'en'}}));
+    else document.dispatchEvent(new CustomEvent('LoadedLang', {'detail': {'currentLang': 'es'}}));
+  });
+
+  // mobile weglot language switcher
+  $('body #weglot-switcher-2').on('click', '.wgcurrent a', function(){
+    if($(this).closest('aside').hasClass('closed')) {
+    	$(this).closest('aside').removeClass('closed').addClass('wg-mouse-click weg-openup');
+    } else {
+      $(this).closest('aside').removeClass('wg-mouse-click weg-openup').addClass('closed');
+    }
+  });
+  
+  $('body #weglot-switcher-2').on('click', 'ul a', function(){
+  	$('footer .weglot-container .weglot_switcher').find('ul a[aria-label="'+ $(this).attr('aria-label') +'"]').trigger('click');
+    $(this).closest('aside').removeClass('wg-mouse-click weg-openup').addClass('closed');
+  });
+
+});
+
+document.addEventListener("LoadedLang", function(event) {
+  localStorage.setItem('currentLang', event.detail.currentLang);
+
+  {% if template contains 'product' %}
+  if(jQuery('body .shopify-product-form .swatch').find('.swatch-element input[type="radio"]:checked').closest('.swatch-element').hasClass('soldout')) {
+    jQuery('.product_form button.addtocart span').text(localStorage.getItem('currentLang') === 'en'? 'Sold Out': 'Agotado');
+  } else {
+    jQuery('.product_form button.addtocart span').text(localStorage.getItem('currentLang') === 'en'? 'Add To Bag': 'Añadir a la bolsa');
+  }
+  {% endif %}
+});
+
+window.addEventListener('load', (event) => {
+  
+  var $priceTag = $('span[data-product-price]');
+  var $cartMobileSubTotal = $('#cart_form_mobile .sub_total');
+  var target = 50;
+  var cnt = 0;
+  
+  if($('script[src*="_source.js"]').length) {
+    {% if template contains 'product' %}
+    setTimeout(function run(){
+      if(target > cnt) {
+        if($('.shopify-product-form .purchase .mw-gp-container').length) {
+          //console.log("Bundle app is working now");
+          $priceTag.html($('.shopify-product-form .purchase').find('.mw-gp__subtotal').clone());
+          $priceTag.removeClass('is-hidden');
+
+          if(localStorage.getItem('currentLang') !== 'en') {
+            $('.shopify-product-form .purchase').find('button[type="submit"] span').text("Añadir a la bolsa");
+          } else {
+            $('.shopify-product-form .purchase').find('button[type="submit"] span').text("Add Bundle To Bag");
+          }
+          
+          return !0;
+        }
+        cnt++;
+      } else { 
+        $priceTag.removeClass('is-hidden');
+        return !0; 
+      }
+      setTimeout(run, 10);
+    }, 10);
+
+    {% endif %}
+
+    {% if template contains 'cart' %}
+    setTimeout(function run(){
+      if(target > cnt) {
+        if($('#cart_form .sub_total .mw-gp__subtotal--replaced').length) {
+          $cartMobileSubTotal.html($('#cart_form .sub_total').clone()[0].innerHTML);
+          $cartMobileSubTotal.removeClass('is-hidden');
+          return !0;
+        }
+        cnt++;
+      } else { $cartMobileSubTotal.removeClass('is-hidden'); return !0; }
+      setTimeout(run, 10);
+    }, 10);
+    {% endif %}
+  }
+});
+</script>
+
+
+<script type="text/javascript" src="{{ 'custom.js' | asset_url }}" defer></script>

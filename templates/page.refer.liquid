@@ -1,0 +1,326 @@
+{{ 'fontawesome-5.10.2-all.min.css' | asset_url | stylesheet_tag }}
+{{ 'swell-page-rewards.scss.css' | asset_url | stylesheet_tag }}
+{{ 'swell-rewards.js'  | asset_url | script_tag }}
+
+<div class="swell-refer-sparkle">
+    <div class="referral-section">
+        <img src="{{ 'swell-banner.jpg' | asset_url }}" alt="Banner-Image" class="desktop-refer">
+        <img src="{{ 'swell-banner-mobile.jpg' | asset_url }}" alt="Banner-Image" class="mobile-refer">
+        <div class="swell-refer-header">
+          <h2>Refer a friend</h2>
+        </div>
+        
+        <div class="swell-referral">
+        {% if customer %}
+          <div class="swell-referral-content-container swell-referral-static">
+            <div class="swell-referral-content-sidebar">
+
+                <div class="swell-referral-sidebar-details">
+                    <span class="swell-referral-sidebar-details-action">Refer a Friend</span>
+                    <span class="swell-referral-sidebar-details-reward">$5</span>
+                </div>
+            </div>
+            <div class="swell-referral-content-main" style="margin: 0px auto;">
+                <div class="swell-referral-refer">
+                    <h2 class="swell-referral-heading">Give $5, Get $5</h2>
+                    <p class="swell-referral-details">When your friend makes their first purchase of $30 or more.</p>
+                    <div class="swell-referral-form-wrapper">
+                        <form class="swell-referral-form" name="swell-referral-refer-form" id="swell-referral-refer-form"
+                            method="POST" action="javascript:;" onsubmit="return false;">
+                            <div class="swell-referral-form-header">
+                                <p class="swell-referral-form-header-details">Now, enter your friends' emails below.</p>
+                            </div>
+                            <div class="swell-referral-form-body">
+                                <ul class="swell-referral-form-list">
+                                    <li class="swell-referral-form-list-field"> <input
+                                            class="swell-referral-form-list-field-input" type="text"
+                                            name="swell-referral-refer-emails" id="swell-referral-refer-emails"
+                                            required="required" placeholder="Friends’ email (separated by commas)" autocomplete="off"><button
+                                            type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane"
+                                                aria-hidden="true"></i> </button> <span
+                                            class="swell-referral-form-field-details">Separate by Commas</span> </li>
+                                    <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-submit"
+                                            type="submit" name="swell-referral-refer-submit" id="swell-referral-refer-submit"
+                                            value="Send"> </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="swell-referral-media-wrapper">
+                        <p class="swell-referral-media-details">Referral links are to be shared on personal pages only, and are
+                            not to be shared on any of Sparkle In Pink's pages/posts</p>
+                        <ul class="swell-referral-media-list">
+                            <li class="swell-referral-medium swell-share-referral-facebook">
+                                <div class="swell-referral-medium-content"> <i class="swell-icon-Fb fa fa-facebook"
+                                        aria-hidden="true"></i>&nbsp;Share </div>
+                            </li>
+                            <li class="swell-referral-medium swell-share-referral-sms">
+                                <div class="swell-referral-medium-content"> <i class="swell-icon-SMS "
+                                        aria-hidden="true"></i>&nbsp;SMS </div>
+                            </li>
+                            <li class="swell-referral-medium swell-share-referral-messenger">
+                                <div class="swell-referral-medium-content"> <i class="swell-icon-Message " aria-hidden="true">
+                                        <span class="path1"></span> <span class="path2"></span> </i> &nbsp; <span>Message
+                                    </span> </div>
+                            </li>
+                            <li class="swell-referral-medium swell-share-referral-copy">
+                                <div class="swell-referral-medium-content"> <i class="swell-icon-Copy-Link fa fa-link"
+                                        aria-hidden="true"></i>&nbsp;Copy Link </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="swell-referral-content-container swell-referral-static">
+              <div class="swell-referral-content-sidebar">
+                <div class="swell-referral-sidebar-details">
+                    <span class="swell-referral-sidebar-details-action">Refer a Friend</span>
+                    <span class="swell-referral-sidebar-details-reward">$5</span>
+                </div>
+              </div>
+              <div class="swell-referral-content-main" style="margin: 0px;">
+                <div class="swell-referral-register">
+                    <h2 class="swell-referral-heading">Give $5, Get $5</h2>
+                      <p class="swell-referral-details">When your friend makes their first purchase of $30 or more.</p>
+                    <div class="swell-referral-form-wrapper">
+                      <form name="swell-referral-register-form" id="swell-referral-register-form" method="POST" action="javascript:;" onsubmit="return false;">
+                          <div class="swell-referral-form-header">
+                              <p class="swell-referral-form-header-details">Please submit your email below to get started.</p>
+                          </div>
+                          <div class="swell-referral-form-body">
+                            <ul class="swell-referral-form-list">
+                                <li class="swell-referral-form-list-field"> 
+                                  <input class="swell-referral-form-list-field-input" type="email" name="swell-referral-register-email" id="swell-referral-register-email" autocomplete="off" required="required" 
+                                    placeholder="Your email address">
+                                  <button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button> 
+                                </li>
+                                <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-submit" type="submit" name="swell-referral-register-submit" id="swell-referral-register-submit" value="Next"> </li>
+                            </ul>
+                          </div>
+                      </form>
+                    </div>
+
+                </div>
+              </div>
+          </div>
+        {% endif %}
+        </div>
+
+        {% comment %} <div class="referral-section-holder">
+                {% if customer %}
+                    <div class="swell-referral-holder login">
+                {% else %}
+                    <div class="swell-referral-holder logout">
+                {% endif %}
+                {% unless customer %}
+                    <img src="{{ 'sidebar.jpg' | asset_url }}" alt="Banner-Image" class="sidebar">
+                {% endunless %}
+                <div class="swell-referral"></div>
+                
+            </div>
+            {% if customer %}
+          <div class="redeem-holder">
+            <div class="refer-details">
+              <div class="swell-section-content">
+                <div class="swell-referral-heading">
+                  <h2>Your Referrals</h2>
+                </div>
+                <div class="table-classes">
+                  <div class="swell-table-responsive">
+                    <table class="swell-referral-table">
+                      <thead>
+                        <tr>
+                          <th>Email</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-data">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div> 
+            </div>
+            <div class="heading-area">
+              <div class="heading-holder">
+                <h4>How Do I Redeem<br>My Reward Balance?</h4>
+                 <p>Now, the fun part! Simply redeem any rewards credit you've earned directly at checkout.</p>
+              </div>
+            </div>
+          </div>
+            {% endif %}
+        </div> {% endcomment %}
+    </div>
+</div>
+
+<script>
+
+  $(function(){
+    var staticInputVal = "";
+    var itvalRefer = setInterval(function(){
+
+      if($(".swell-referral-content-container .swell-referral-content-main h2.swell-referral-heading").length > 0){
+
+        clearInterval(itvalRefer);
+
+        if(localStorage.getItem('currentLang') == "es")
+          $(".swell-referral-content-container .swell-referral-content-main h2.swell-referral-heading").text("Dar $5, obtener $5");
+
+      }
+
+    }, 300);
+
+    $(document).on('click', ".swell-referral-back-link", function(){
+      
+      setTimeout(function(){
+        $(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off");
+      }, 200);
+      
+    });
+
+    var itvalSubmitRefer = setInterval(function(){
+
+      if($(".swell-referral-content-container:not(.swell-referral-static) .swell-referral-form-list-field-input").length > 0){
+
+        clearInterval(itvalSubmitRefer);
+
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off").val(staticInputVal).focus();
+        staticInputVal = "";
+        
+        
+        //$(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+
+      }
+
+    }, 300);
+
+    $(".swell-referral-content-container.swell-referral-static .swell-referral-form-list-field-input").on('keyup', function(){
+      staticInputVal = $(this).val();
+    });
+
+    $(document).on("submit", ".swell-referral-content-container .swell-referral-form-wrapper form", function(e){
+      setTimeout(function(){
+        $("#refer-form-submit").remove();
+        $(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off");
+      }, 3000);
+    });
+
+  });
+
+
+</script>
+
+
+
+  <style>
+
+    @media (max-width: 768px){
+      .shopify-section.index-newsletter {
+        background: whitesmoke;
+        padding-top: 20px;
+        padding-bottom: 15px;
+        margin-bottom: 0px;
+      }
+
+      .shopify-section.index-newsletter .index-newsletter__title{
+        line-height: 33px;
+        font-family: Lato !important;
+        color: #1a1a1a;
+        text-transform: capitalize;
+        font-size: 18px !important;
+      }
+
+      .shopify-section.index-newsletter .index-newsletter__message{
+        line-height: 18px !important;
+        margin-top: 2px;
+        font-size: 12px;
+      }
+
+      .shopify-section.index-newsletter .row .col-md-6:nth-child(2) {
+        margin-top: 10px;
+      }
+
+      .index-newsletter button span.desktop {
+        display: none;
+      }
+
+      .index-newsletter button span.mobile {
+        display: block !important;
+      }
+
+      .index-newsletter .input-group.password__input-group input#Email {
+        width: calc(100% - 30px) !important;
+        height: 41px !important;
+        background-color: #fff;
+      }
+
+      .index-newsletter .input-group.password__input-group span.input-group__btn {
+        width: 47px !important;
+        height: 47px !important;
+        border-radius: 50%;
+        padding-top: 16px;
+        margin-left: -20px;
+        margin-top: -2px;
+        z-index: 101;
+      }
+
+      .index-newsletter .input-group.password__input-group span.input-group__btn button#Subscribe {
+        padding: 0px !important;
+      }
+    }
+
+    .index-newsletter button span.mobile {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .index-newsletter .input-group.password__input-group input#Email {
+        border: 0 !important;
+        font-family: Lato;
+      }
+    }
+    .form--success {
+      font-size: 18px;
+    font-family: Lato;
+    font-weight: bold;
+    color: #7b7b7b;
+    }
+  </style>
+  
+  <div class="shopify-section index-newsletter">
+    <div class="container newsletter-container">
+      <div class="row">
+          <div class="col-md-6">
+            <h3 class="index-newsletter__title">Join the <span class="theme-color">SIP</span> family</h3>
+            <div class="index-newsletter__message">Get 10% off your first order, and be in the know of new arrivals,
+                discounts and special promotions.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="join_the_SIP newsletter-section">
+                <div class="text-center">
+                  <form method="post" action="/contact#contact_form" id="contact_form" accept-charset="UTF-8" class="contact-form">
+                      <input type="hidden" name="form_type" value="customer"><input type="hidden" name="utf8" value="✓">
+                      <div class="input-group password__input-group">
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <input class="newsletter-inputbox" type="email" name="contact[email]" id="Email" value="balentina@coalamails.com" placeholder="Enter your email address" autocorrect="off" autocapitalize="off">
+                        <span class="input-group__btn">
+                        <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
+                        <span class="newsletter__submit-text--large desktop">Subscribe</span>
+                        <span class="newsletter__submit-text--large mobile">
+                        <img class=" lazyloaded" src="//cdn.shopify.com/s/files/1/0407/8285/t/136/assets/icon-white-arrow-right.png?v=1412658512407410588" data-src="//cdn.shopify.com/s/files/1/0407/8285/t/136/assets/icon-white-arrow-right.png?v=1412658512407410588">
+                        </span>
+                        </button>
+                        </span>
+                      </div>
+                  </form>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>

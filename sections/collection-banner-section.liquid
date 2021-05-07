@@ -1,0 +1,45 @@
+<style>
+  .banner_text_collection {
+    {% comment %}
+{% if collection.image != blank %}
+    background-image: url('{{ collection.image | img_url: '2000x' }}');
+    height: 500px;
+{% else %}
+
+{% endif %}
+      {% endcomment %}
+    background-color: #ffa5bb;
+    height: 80px;
+  }
+</style>
+<header role="banner ">
+  <div class="banner_text_collection">
+	<div class="banner-conatiner">
+      <h1>{{ collection.title }} </h1>
+      <div class="banner-breadcrumb"> <a href="/" title="Home">Home</a>
+        <span>/</span>
+        <span>
+          {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+          {{ collection.title | link_to: url }}
+        </span>
+      </div>
+    </div>
+
+
+  </div>
+</header>
+
+{% schema %}
+  {
+    "name": "Collection banner",
+    "settings": [
+
+				]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

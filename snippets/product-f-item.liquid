@@ -1,0 +1,119 @@
+{% if product_item %}
+  <div class="product-item">
+    {%- assign current_variant = product_item.selected_or_first_available_variant -%}
+    {%- assign featured_image = product_item.featured_image | default: product_item.featured_image -%}
+
+     <form class="shopify-product-item-form" action="/cart/add"
+            method="post"
+            class="clearfix product_form init {% if product_item.variants.size > 1 or product_item.options.size > 1 %}product_form_options{% endif %}"
+            id="product-form-{{ product_item.id }}"
+            data-money-format="{{ shop.money_format }}"
+            data-shop-currency="{{ shop.currency }}"
+            data-select-id="product-select-{{ product_item.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+            data-enable-state="true"
+            data-product-id="{{ product_item.id }}">
+
+      <div class="product-item__img-container">
+        {% include 'responsive-image' with
+          image: featured_image,
+          max_width: 300,
+          max_height: 450,
+          image_attributes: "data-product-featured-image",
+          wrapper_class: "product-item__img-wrap",
+          image_class: "product-item__img"
+          wrapper_attributes: "data-product-image-wrapper",
+        %}
+        <a href="{{ product_item.url }}" class="product-item__link"></a>
+        <noscript>
+          <select name="id">
+            {% for variant in product_item.variants %}
+              <option
+                {% if variant == current_variant %}selected="selected"{% endif %}
+                {% unless variant.available %}disabled="disabled"{% endunless %}
+                value="{{ variant.id }}">
+                  {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        </noscript>
+
+
+         <button  {% if current_variant.available %}
+                  class="product-item__submit"
+                  {% else %}
+                        disabled class="product-item__submit disabled_btn"
+                  {% endif %}
+            type="submit"
+            name="add"
+
+            data-submit-button>
+            <span>{{ 'products.product.add_to_bag' | t }}</span>
+            <span>➡</span>
+          </button>
+
+
+      </div>
+
+      <input type="hidden" id="Quantity" name="quantity" value="1" min="1">
+
+    </form>
+
+    <div class="product-item__title-bar">
+      <a class="product-item__title" href="{{ product_item.url }}">{{ product_item.title }}</a>
+      {% comment %} TODO - wishlist {% endcomment %}
+
+	 	{% include 'swym-product-view', product: product_item %}<button class="swym-button swym-loaded swym-add-to-wishlist-view-product product_{{product_item.id}}" data-swaction="addToWishlist" data-product-id="{{product_item.id | json}}" style="color:#000 !important;"></button>
+    </div>
+    <div class="product-item__price-wrap" data-price-wrapper>
+      <span
+        data-product-price
+        class="product-item__price {% if product_item.compare_at_price_max > product_item.price %}discounted{% endif %}" data-product_item="{{product_item}}">
+        {% if product_item.price_varies %}
+        	from ${{ product_item.price_min | amount | divided_by: 100.0 }}
+        {% else %}
+          {% if current_variant.price > 0 %}
+            ${{ current_variant.price | amount | divided_by: 100.0 }}
+          {% else %}
+            Free
+          {% endif %}
+        {% endif %}
+
+        {% if product_item.compare_at_price_max > product_item.price %}
+          <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+          <s class="product-item__price-compare" data-compare-price>
+            {% if current_variant.compare_at_price > current_variant.price %}
+              {{ current_variant.compare_at_price | money }}
+            {% endif %}
+          </s>
+        {% endif %}
+      </span>
+      <div class="yotpo bottomLine" data-product-id="{{ product_item.id }}"></div>
+    </div>
+    <div class="tag-group">
+      <ul class="product-tags-labels">
+        {% for tag in product_item.tags %}
+          {% if tag == 'new arrival'%}
+            {% assign date_published = product_item.published_at | date: '%Y%m%d' %}
+            {% assign date_now = 'now' | date: '%Y%m%d' %}
+            {% assign date_difference = date_now | minus: date_published %}
+            {% if date_difference < 7 %}
+              <li class="tag-new"><span>NEW</span></li>
+            {% endif %}
+          {% endif %}
+          {% if tag == 'sale'%}
+            <li class="tag-normal"><span>SALE</span></li>
+          {% endif %}
+          {% if tag == 'sold out' %}
+            <li class="tag-normal"><span>SOLD OUT</span></li>
+          {% endif %}
+        {% endfor %}
+        {% unless product_item.available %}
+        <li><span>SOLD OUT - SIGN UP FOR RESTOCK</span></li>
+        {% endunless %}
+      </ul>
+	</div>
+	<!-- <div class="yotpo bottomLine"
+    data-product-id="{{ product_item.id }}">
+  </div> -->
+  </div>
+{% endif %}

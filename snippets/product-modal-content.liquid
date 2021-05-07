@@ -1,0 +1,205 @@
+<div class="container">
+  <div class="row">
+     <div class="col-md-6 mobile-thumb-slick {% if product.title == 'Drop Ship My Order' %} drop-ship-img {% endif %}">
+      <div class="product_img_cart">
+        <section data-section-id="product" data-section-type="product" class"d-flex">
+
+        {% if product.images.size > 0 %}
+          <div class="slider_wrap" data-slick='{"infinite": true, "slidesToShow": 1, "slidesToScroll": 4}' style="display: none;">
+            {% for image in product.images %}
+            <div class="slider_item">
+              <div class="slider_img_wrap">
+                <img src="{{ image | img_url: 'original' }}" alt="{{ image.alt | escape  }}" class="slider_img">
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+          {% if product.images.size > 1 %}
+            <ul class="product-thumbs">
+              {% for image in product.images %}
+                <li>
+                  <a data-thumbnail-id="{{ image.id }}" data-product-single-thumbnail{% if featured_image == image %} aria-current="true"{% endif %}>
+                    <img class="product-single__thumbnail-image galry_img{% if forloop.index == 1 %} bodrround{% endif %}" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}" data="{{ image.src | img_url: '480x480' }}">
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+
+          <div class="img_product single_img">
+
+            {%- assign current_variant = product.selected_or_first_available_variant -%}
+            {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+            {% for image in product.images %}
+              {% capture wrapper_class %}
+                {%- unless featured_image == image -%}
+                  hide
+                {%- endunless -%}
+              {% endcapture %}
+
+              {% include 'responsive-image' with
+                image: image,
+                max_width: 700,
+                max_height: 800,
+                image_attributes: "data-product-featured-image",
+                wrapper_class: wrapper_class,
+                wrapper_attributes: "data-product-image-wrapper",
+              %}
+
+            {% endfor %}
+          <div class="gallery_img">
+
+            {% if section.settings.show_share_buttons %}
+              {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+            {% endif %}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="col-md-6 {% if product.title == 'Drop Ship My Order' %} drop-ship-txt {% endif %}">
+      <div class="text_img_cart">
+        <h1 class="product-title">{{ product.title }}</h1>
+        <span data-product-price class="product-price">
+          ${{ current_variant.price | amount | divided_by: 100.0 }}
+        </span>
+        {% comment %}
+        <div class="review-sku">
+           <!-- Yotpo bottomline -->
+          <div class="rev_product">
+                <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+          </div>
+          
+          {% if product.title != 'Drop Ship My Order' %}
+          <span class="sku">{{product.selected_or_first_available_variant.sku}}</span>
+          {% endif %}
+        </div>
+        {% endcomment %}
+        <!-- <p>{{ product.vendor }}</p> -->
+
+       <form class="shopify-product-form mo" action="/cart/add"
+                method="post"
+                class="clearfix product_form init {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %}"
+                id="product-form-{{ product.id }}-{{ randoms }}"
+                data-money-format="{{ shop.money_format }}"
+                data-shop-currency="{{ shop.currency }}"
+                data-select-id="product-select-{{ product.id }}product"
+                data-enable-state="true"
+                data-product-id="{{ product.id }}">
+
+              {% if product.options.size > 1 %}
+                   <div class="select mo" style="display:none">
+                      <select id="product-id"
+                              class="multi_select">
+                          {% for v in product.variants %}
+                            {% capture option_values %}
+                              {% for option in product.options %}
+                                {% assign option_index = forloop.index0 %}
+                                 data-{{ option | handle }}="{{ v.options[option_index] | handle }}" 
+                              {% endfor %}
+                            {% endcapture %}
+                            <option value="{{ v.id }}" data-sku="{{ v.sku }}" {{ option_values }}>{{ v.title }}</option>
+                          {% endfor %}
+                      </select>
+                  </div> 
+              {% elsif product.options.size == 1 and product.options[0] != "Title" %}
+                  <div class="select mo" style="display:none">
+                      <label>{{ product.options[0] }}</label>
+                      <select id="product-id" name="id"
+                              class="tertip">
+                          {% for v in product.variants %}
+                              <option {% if v.id == product.selected_or_first_available_variant.id %}selected="selected"{% endif %} value="{{ v.id }}"
+                                      data-sku="{{ v.sku }}">{{ v.title }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+
+              {% else %}
+                  <input type="hidden" id="product-id" value="{{ product.selected_or_first_available_variant.id }}"/>
+              {% endif %}
+
+
+           {% if product.available and product.variants.size > 1 %}
+             {% for option in product.options %}
+             	{% include 'modal-swatch' with option %}
+             {% endfor %}
+           {% endif %}
+
+           {% if product.tags contains 'nulls_extra' %}
+              <div class="swatch mod clearfix main_div_swatch mobile-hide">
+                 <div class="header">Embroidery</div>
+                 <div class="checkbox">
+                   <input type="checkbox">
+                   <label></label>
+                 </div>
+                 <div class="embroidery-value"><span class="embroidery-mark">?</span> + $14.99</div>
+                 <div class="embroidery-text"><input type="text" name="properties.embroidery" id="embroidery-text" placeholder="{{ settings.nulls_net_embroidery_desc }}"/></div>
+               </div>
+
+               <div class="swatch mod clearfix main_div_swatch mobile-show">
+                 <div class="header">Embroidery</div>
+                 <span class="embroidery-mark">?</span>
+                 <div class="checkbox">
+                   <input type="checkbox">
+                   <label></label>
+                 </div>
+                 <div class="embroidery-value"> + $14.99</div>
+                 <div class="embroidery-text"><input type="text" id="embroidery-text" placeholder="{{ settings.nulls_net_embroidery_desc }}"/></div>
+               </div>
+           {% endif %}
+           
+         <style>
+           .nullsRadioLabel{{ product.id }}{
+             font-weight: normal;
+             text-transform: none;
+           }
+           .nullsEmBold{
+             font-weight: bold;
+           }
+           .nullsEmSlide{{ product.id }}{
+             display: none;
+           }
+         </style>
+		
+         <div class="purchase purchase{{ product.id }} clearfix {% if settings.display_product_quantity %}inline_purchase{% endif %}">
+           {% if settings.cart_action == 'reload_page' %}
+           <input type="hidden" name="return_to" value="back"/>
+           {% elsif settings.cart_action == 'redirect_checkout' %}
+           <input type="hidden" name="return_to" value="/checkout"/>
+           {% endif %}
+
+           {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}{% endcapture %}
+           <button type="submit" name="add" class="action_button add_to_cart add_to_cart{{ product.id }}"
+                   data-label={{ add_to_cart_label | json }}>
+             <span class="mobile-hide nullsPick">{{ add_to_cart_label }}</span>
+           </button>
+         </div>
+         {% if product.title == 'Drop Ship My Order' %}
+         
+         {% elsif product.title == 'Sparkle in Pink Gift Card' %}
+         
+         {% else %}
+           <div class="sixe_outofstock">
+             <p class="text-center"></p>
+             <button type="button">Size out of stock? Click here</button>
+
+           </div>
+         {% endif %}
+         {% if product.title != 'Drop Ship My Order' %}
+         <div class="over_order">
+          <p>Free Shipping on Orders Over $100 <a href='/pages/shipping-information'>More info</a></p>
+         </div>         
+         
+         {% endif %}
+        </form>
+
+
+     
+      </div>
+    </div>
+  </div>
+</div>

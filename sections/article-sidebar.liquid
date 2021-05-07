@@ -1,0 +1,35 @@
+<div class="blog-sidebar">
+ {% for article in blog.articles limit: 3 %}
+  {% if article.image %}
+  	<img src="{{ article.image | img_url: image_size }}"/>
+  {% endif %}
+  <span class="head">{{article.title}}</span>
+  <p>
+    {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+              {% else %}
+                {{ article.content | strip_html | truncate: 150 }}
+    {% endif %}
+  </p>
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Article sidebar",
+    "settings": [
+		{
+			"type":"article",
+			"id":"article_featured",
+			"label":"Featured Posts"
+		}
+
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

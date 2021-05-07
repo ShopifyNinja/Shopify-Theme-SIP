@@ -1,0 +1,41 @@
+
+/////////////////////  passing to checkout translated product names //////////////////////////////
+
+$(".header_cart_sec form#cart .mm-subtitle .action_button").on("click", function(e){
+    e.preventDefault();
+
+    var esNames = "";
+
+    $("form#cart li.cart_item").each(function(){
+        esNames += $(this).find('.quantity').data('product-id') + $(this).find('.item_title').text() + $(this).find('.quantity').data('product-id');
+    });
+
+    localStorage.removeItem("translatedNames");
+    localStorage.setItem("translatedNames", esNames);
+
+    $(".header_cart_sec form#cart").submit();
+
+})
+
+$(".template-cart form#cart_form .btn-cart-checkout").on("click", function(e){
+    e.preventDefault();
+
+    var esNames = "";
+
+    $(".template-cart form#cart_form table.cart_desktop tbody tr").each(function(){
+        
+        if($(this).hasClass("responsive-table-row")){
+            var cartVariantId = $(this).find("td").eq(0).find("a").attr("href").split("variant=")[1];
+            var cartProductName = $(this).find("td").eq(1).find("a").text();
+            esNames += cartVariantId + cartProductName + cartVariantId;
+        }
+    });
+
+    localStorage.removeItem("translatedNames");
+    localStorage.setItem("translatedNames", esNames);
+
+    $(".template-cart form#cart_form").submit();
+})
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////

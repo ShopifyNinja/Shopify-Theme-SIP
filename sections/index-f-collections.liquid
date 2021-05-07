@@ -1,0 +1,148 @@
+<style>
+  body .index-f-collections__item {
+      background-position: top center;
+  }
+
+  @media (min-width: 480px) and (max-width: 768px) {
+
+
+    body .index-f-collections__item {
+      height: 250px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body .index-f-collections__item {
+      height: 200px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .shopify-section.index-f-collections .col-md-6.index-f-collections__col {
+      width: 50% !Important;
+    }
+
+    body .index-f-collections__row {
+      margin-bottom: 10px !important;
+    }
+
+    body .index-f-collections__col {
+      padding-left: 1px !important;
+      padding-right: 1px !important;
+      margin: 0px !important;
+    }
+
+    body .index-f-collections__col a {
+      margin-top: 1px !important;
+      margin-bottom: 1px !important;
+    }
+
+  }
+</style>
+
+
+
+{% if section.blocks.size > 0 %}
+  <div class="max-wrap">
+    <div class="row index-f-collections__row">
+      {% for block in section.blocks %}
+        {% if block.settings.collection %}
+          {% assign featured_c = collections[block.settings.collection] %}
+          <div class="col-md-6 index-f-collections__col">
+            {% assign bg_image = false %}
+            {% if block.settings.image %}
+              {% assign bg_image = block.settings.image %}
+            {% elsif featured_c.image %}
+              {% assign bg_image = featured_c.image %}
+            {% endif %}
+
+            <a
+              href="{{ featured_c.url }}"
+              class="index-f-collections__item {% if bg_image %}lazyload{% else %}no-bg{% endif %}"
+              {% if bg_image %}
+                data-bgset="{% include 'responsive-bg-image', image: bg_image %}"
+              {% endif %}
+              >
+              <span class="index-f-collections__item-inner">
+                {% if block.settings.title != blank %}
+                  <h3 class="index-f-collections__title">{{ block.settings.title }}</h3>
+                {% else %}
+                  <h3 class="index-f-collections__title">{{ featured_c.title }}</h3>
+                {% endif %}
+
+                {% if block.settings.link_text %}
+                  <span class="index-f-collections__link">{{ block.settings.link_text }}</span>
+                {% endif %}
+              </span>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if section.settings.link_text != blank %}
+      <div class="index-f-collections__more-wrap">
+        <a href="{{ section.settings.link_url }}" class="index-f-collections__more-link">
+          <span class="index-f-collections__more-text">{{ section.settings.link_text }}</span>
+          <span class="index-f-collections__more-arrow">➡</span>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+<!--   <div class="index-f-collections__separator"></div> -->
+{% endif %}
+
+{% schema %}
+  {
+    "class": "index-f-collections",
+    "name": "Featured Collections",
+    "settings": [
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "More link text",
+        "info": "Bottom Link text. Remove text to hide this link."
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "More link url"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_block",
+        "name": "Collection",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "800x450. Will default to the collection featured image. "
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "Will default to the collection title"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link Text",
+            "default": "Shop Now"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Featured Collections",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

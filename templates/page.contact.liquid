@@ -1,0 +1,128 @@
+{{ 'page-template-custom.scss.css' | asset_url | stylesheet_tag }}
+
+<nav class="breadcrumb" role="navigation" aria-label="breadcrumb">
+  <h2>
+    <a href="/" title="Home">Home</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ page.title }}</span>
+  </h2>
+</nav>
+  <div id="page-content" class="{{ page.title }}">
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+<div>
+  <div class="form_viewer">
+
+    {% form 'contact' %}
+    <div class="msg_title">SEND US A MESSAGE</div>
+    <div class="msg_pink_rect"></div>
+    <p class="msg_description">At Sparkle In Pink, we are committed to providing quality service and showering our customers with attention. Please let us know if there’s any way we can help or improve, or even if you want to just talk fashion! We are always ready!</p>
+
+      {% if form.posted_successfully? %}
+        <p class="form-success">
+          {{ 'contact.form.post_success' | t }}
+        </p>
+      {% endif %}
+
+      {{ form.errors | default_errors }}
+    <div class="form_name_div">
+
+      <label for="ContactFormName" class="form_label">{{ 'contact.form.name' | t }}</label>
+      <input type="text"
+        name="contact[name]"
+        id="ContactFormName"
+        placeholder="{{ 'contact.form.name' | t }}"
+        value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+             class="txt_name">
+
+    </div>
+    <div class="form_email_div">
+      <label for="ContactFormEmail" class="form_label">{{ 'contact.form.email' | t }}</label>
+      <input type="email"
+        name="contact[email]"
+        id="ContactFormEmail"
+        placeholder="{{ 'contact.form.email' | t }}"
+        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+             class="txt_email">
+
+    </div>
+    {% comment %}
+      <label for="ContactFormPhone" class="form_label">{{ 'contact.form.phone' | t }}</label>
+      <input type="tel"
+        name="contact[phone]"
+        id="ContactFormPhone"
+        placeholder="{{ 'contact.form.phone' | t }}"
+        value="{% if form[phone] %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+        pattern="[0-9\-]*"
+             class="txt_name">
+    {% endcomment %}
+    <div class="form_message_div">
+      <label for="ContactFormMessage" class="form_label">{{ 'contact.form.message' | t }}</label>
+      <textarea rows="10"
+        name="contact[body]"
+        id="ContactFormMessage"
+        placeholder="{{ 'contact.form.message' | t }}"
+                class="txt_message">
+        {%- if form.body -%}
+          {{- form.body -}}
+        {%- endif -%}
+      </textarea>
+
+    </div>
+    <label class="hours">Hours: M-TH 9:00 AM-3:00 PM (MST), Friday 9:00AM-12:00PM MST</label>
+
+      <button class="send_btn">SEND YOUR MESSAGE</button>
+
+    {% endform %}
+
+  </div>
+  <div class="map_viewer">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31698.065550570456!2d-111.9144285759274!3d40.512015390196964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8752872186bbe75f%3A0x80a8c1ddc7c11cf7!2s313+West+12800+South+%23308%2C+Draper%2C+UT+84020%2C+USA!5e0!3m2!1sen!2sru!4v1565267713940!5m2!1sen!2sru" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+</div>
+<script>
+  jQuery(document).ready(function() {
+
+  jQuery('#contact_form .send_btn').on('click', function(e) {
+    e.preventDefault();
+    var name = $('#ContactFormName').val();
+    var email = $('#ContactFormEmail').val();
+    var txtarea = $('#ContactFormMessage').val();
+
+    $(".error").remove();
+
+    if (name.length < 1) {
+      $('#ContactFormName').after('<span class="error">This field is required</span>');
+    }
+
+    if (email.length < 1) {
+      $('#ContactFormEmail').after('<span class="error">This field is required</span>');
+    } else {
+      // var re = /\S+@\S+\.\S+/;
+      // try {
+      //   var regex = new RegExp(re);
+      // } catch(e) {
+      //   alert(e);
+      //   return false;
+      // }
+      // if (!regex.test(email)) {
+      //   $('#email').after('<span class="error">Enter a valid email</span>');
+      // }
+    }
+    if (txtarea.length < 1) {
+      $('#ContactFormMessage').after('<span class="error">This field is required</span>');
+    }
+
+    if ((name.length >= 1) && (email.length >= 1) && (txtarea.length >=1)) {
+      $('#contact_form').submit();
+    }
+  });
+
+});
+</script>

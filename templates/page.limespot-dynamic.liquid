@@ -1,0 +1,34 @@
+<link href="https://edge.personalizer.io/storefront/2.0.0/css/dynamic-pages.min.css" rel="stylesheet" />
+<style>
+	.ls-ul > li {
+		max-width: {{ page.metafields.LimeSpot.imageMaxWidth }}px !important;
+	}
+
+	.ellipsis {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		max-width: {{ page.metafields.LimeSpot.imageMaxWidth }}px !important;
+	}
+
+</style>
+<header class="section-header text-center">
+	<h1>{{ page.title }}</h1>
+</header>
+
+{{ page.content }}
+
+<div class="ls-recommendation-box" data-bypass-lazy-images="true" data-box-type="{{ page.metafields.LimeSpot.recommendationType }}" data-host-page="dynamic" data-full-page="true" data-image-max-width="{{ page.metafields.LimeSpot.imageMaxWidth }}" data-image-max-height="{{ page.metafields.LimeSpot.imageMaxHeight }}" data-image-right-margin="{{ page.metafields.LimeSpot.imageRightMargin }}" data-image-border-radius ="{{ page.metafields.LimeSpot.imageBorderRadius }}" data-items-limit="{{ page.metafields.LimeSpot.itemLimit }}" data-quick-actions-mode="{{ page.metafields.LimeSpot.quickActionsMode }}" data-quick-actions-add-to-cart-title ="{{ page.metafields.LimeSpot.quickActionsAddToCartTitle }}">
+	<ul class="ls-ul">
+		<li class="limespot-recommendation-box-item">
+			<a class="ls-link">
+				<img class="ls-image" />
+				<h4 class="ls-title">Loading...</h4>
+				<span class="ls-original-price"></span>
+				<span class="ls-price"></span>
+				<div class="ls-sale-sign-wrap"></div>
+			</a>
+		</li>
+	</ul>
+</div>
+{% comment %}Checksum: 14f320ad795b77b287cec6bce71858a8{% endcomment %}

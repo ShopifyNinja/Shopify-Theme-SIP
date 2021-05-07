@@ -1,0 +1,101 @@
+
+{% for link in linklists[header_menu].links %}
+    {% if link.links != blank %}
+      <li class="globomenu-item  globomenu-item-level-0 globomenu-item-has-children globomenu-has-submenu-drop globomenu-has-submenu-mega">
+        <a class="globomenu-target " href="{{ link.url }}">
+          <span class="globomenu-target-title globomenu-target-text"> {{ link.title }} </span><i class="globomenu-retractor fa fa-times"></i></a>
+        {% assign menu_flag = 0 %}
+        {% for childlink in link.links %}
+          {% if childlink.links != blank %}
+            {% assign menu_flag = 1 %}
+            {% break %}
+          {% endif %}
+        {% endfor %} 
+
+        {% if menu_flag == 1 %}
+          <ul class="globomenu-submenu globomenu-grid-row globomenu-submenu-drop globomenu-submenu-type-mega globomenu-submenu-align-full_width d-flex">
+            <span class="globmenu-caret"></span>
+            <div class="globomenu-background"></div>
+            {% assign col_num = link.links | size %}
+            {% assign col_num = col_num | plus: 2 %}
+            <li class="globomenu-submenu-sublist globomenu-submenu-container">
+              <ul>
+                {% for childlink in link.links %}
+                    {% if childlink.links != blank %}
+                      <li class="globomenu-item  {{ childlink.title }} {{ childlink.links }} globomenu-item-header globomenu-has-submenu-stack globomenu-column globomenu-column-1-2">
+                        <a class="globomenu-target " href="{{ childlink.url }}"><span class="globomenu-target-title globomenu-target-text">
+                          {{ childlink.title }}
+                        </span><i class="globomenu-retractor fa fa-times"></i></a>
+
+                          <ul class="globomenu-submenu globomenu-submenu-type-stack">
+                            {% for child in childlink.links %}
+                              <li class="globomenu-item  gin"> <a class="globomenu-target" href="{{ child.url }}"><span class="globomenu-target-title globomenu-target-text">{{ child.title }}</span></a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                      </li>
+                    {% else %}
+                      <li class="globomenu-item  globomenu-item-header globomenu-column globomenu-column-1-2">
+                        <a class="globomenu-target " href="{{ childlink.url }}"><span class="globomenu-target-title globomenu-target-text">
+                          {{ childlink.title }}
+                        </span><i class="globomenu-retractor fa fa-times"></i></a>
+                      </li>
+                    {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="globomenu-submenu-megaimg globomenu-submenu-container">
+              <ul class="d-flex flex-wrap">
+                <li class="globomenu-item  gin globomenu-column globomenu-column-1-2">
+                     <a href="/collections/mommy-me" class="globomenu-target  globomenu-target-with-image gilia">
+                        <img class="globomenu-image" src="{{ 'menu_nav_01.jpg' | asset_url }}" alt="">
+                     	<span class="globomenu-target-title globomenu-target-text"></span>
+                     </a>
+                </li>
+                <li href="/collections/swimsuits" class="globomenu-item  gin globomenu-column globomenu-column-1-2">
+                     <a href="/collections/accessories" class="globomenu-target  globomenu-target-with-image gilia">
+                       	<img class="globomenu-image" src="{{ 'menu_nav_02.jpg' | asset_url }}" alt="">
+                       	<span class="globomenu-target-title globomenu-target-text"></span>
+                     </a>
+                </li>
+                {% assign col_num2 = col_num | divided_by: 2 %}
+                {% assign pre_col = 1 %}
+                {% assign col_mod = col_num | modulo: 2 %}
+                {% if col_mod == 1 %}
+                  {% assign col_num2 = col_num | times: 2 %}
+                  {% assign pre_col = 2 %}
+                {% endif %}
+                <li class="globomenu-item  gin globomenu-column globomenu-column-full_width">
+                     <a href="/collections/footwear" class="globomenu-target  globomenu-target-with-image gilia">
+                          <img class="globomenu-image" src="{{ 'menu_nav_03.jpg' | asset_url }}" alt=""><span class="globomenu-target-title globomenu-target-text"></span>
+                     </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        {% else %}
+
+          <ul class="globomenu-submenu globomenu-grid-row globomenu-submenu-drop globomenu-submenu-type-mega globomenu-nochild">
+            <span class="globmenu-caret"></span>
+            <div class="globomenu-background" style="background-image: url({{ 'menu_bg_12644_1561444553.png' | asset_url }})"></div>
+            {% assign col_num = link.links | size %}
+            {% for childlink in link.links %}
+                  <li class="globomenu-item  globomenu-item-header">
+                    <a class="globomenu-target " href="{{ childlink.url }}"><span class="globomenu-target-title globomenu-target-text">
+                      {{ childlink.title }}
+                    </span><i class="globomenu-retractor fa fa-times"></i></a>
+                  </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+
+    {% else %}
+    
+      <li class="globomenu-item  globomenu-item-level-0 gin">
+        <a class="globomenu-target " href="{{ link.url }}"><span class="globomenu-target-title globomenu-target-text">
+          {{ link.title }}
+        </span></a>
+      </li>
+    {% endif %}
+  {% endfor %}

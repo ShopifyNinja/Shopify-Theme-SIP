@@ -1,0 +1,253 @@
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".galry_img").click(function(){
+    $(".galry_img").removeClass('bodrround');
+    var ddata = $(this).attr('data');
+    $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+    var widths =  $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").data('widths');
+    var widthsTemp = '';
+    widths.forEach(function(e, index){
+      let pattern = '_' + e + 'x';
+      let src = ddata.replace('_300x', pattern);
+      let width = ' ' + e + 'w, ';
+      widthsTemp += src + width;
+    });
+    
+	  $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("srcset",widthsTemp);
+    $(this).addClass('bodrround');
+  });
+  $(".product_color_swatch").click(function(){
+  	var ddata = $(this).attr('data');
+    $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+    var widths =  $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").data('widths');
+    var widthsTemp = '';
+    widths.forEach(function(e, index){
+      let pattern = '_' + e + 'x';
+      let src = ddata.replace('_300x', pattern);
+      let width = ' ' + e + 'w, ';
+      widthsTemp += src + width;
+    });
+    $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("srcset",widthsTemp);
+  });
+  $(".text_img_cart .tabs_sec #tab-1 p span:contains('bullets:')").parent().addClass("product-specdesc-1").next().addClass("product-specdesc-2");
+  var first_span = $(".text_img_cart .tabs_sec #tab-1 p span:contains('bullets:')").html();
+  $(".text_img_cart .tabs_sec #tab-1 p span:contains('bullets:')").html(first_span.replace('bullets:', ''));
+});
+</script>
+<style>
+.bodrround {
+    border: 2px solid #ffa5bb;
+}
+</style>
+
+{{ 'product-customize.scss' | asset_url | stylesheet_tag }}
+
+
+<!--     <div class="announcement-text">WIN $1000 FOR YOUR DREAM GETAWAY</div>
+    <a href="#">ENTER NOW</a> -->
+{% section 'product' %}
+{% comment %}
+{% include 'recently-viewed' %}
+{% endcomment %}
+
+<div class="container limespot-cc">
+  <limespot></limespot>
+</div>
+
+{% comment %}
+<div class="container">
+<div class="recent_product">
+  <h2 class="index-offers__title">Recently Viewed Items</h2>
+  <div class="row">
+  {% for product in collections.all.products | limit:4 %}
+  <div class="col-lg-3 col-6 index-f-products__col">
+	{% include 'product-item' with product_item: product %}
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+<div class="related_product">
+	<h2 class="index-offers__title">Recommended For You</h2>
+    <div class="row">
+          $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+		{% for product in collections.dresses.products limit: 4 %}
+			<div class="col-lg-3 col-6 index-f-products__col">
+				{% include 'product-item' with product_item: product %}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="related_product">
+  <h2 class="index-offers__title">Most popular in this collection</h2>
+  <div class="row">
+          $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+    {% for product in collections.boys.products limit: 4 %}
+		<div class="col-lg-3 col-6 index-f-products__col">
+			{% include 'product-item' with product_item: product %}
+		</div>
+	  {% endfor %}
+  </div>
+</div>
+
+<div class="similar_products">
+  <h2 class="index-offers__title">Similar Products</h2>
+  <div class="row">
+          $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+    {% for product in collections.all.products limit: 4 %}
+		<div class="col-lg-3 col-6 index-f-products__col">
+			{% include 'product-item' with product_item: product %}
+		</div>
+	  {% endfor %}
+  </div>
+</div>
+</div>
+
+
+
+<div class="container">
+<div class="similar_products mobile-show" style="display: none;">
+  <h2 class="index-offers__title">Similar Products</h2>
+  <div class="row">
+          $(".single_img img.responsive-image__image.lazyautosizes.lazyloaded").attr("src",ddata);
+    {% for product in collections.all.products | limit:4 %}
+  <div class="col-lg-3 col-6 index-f-products__col">
+	{% include 'product-item' with product_item: product %}
+  </div>
+  {% endfor %}
+</div>
+</div>
+</div>
+{% endcomment %}
+
+{% section 'index-newsletter' %}
+
+<style>
+  #shopify-section-index-newsletter{
+    margin-top: 12px;
+  }
+  
+  form.shopify-product-form .unavailable.add_to_cart{
+    padding: 12px 12px;
+  }
+
+  form.shopify-product-form .unavailable.add_to_cart span{
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+</style>
+
+{{'template.index.js' | asset_url | script_tag }}
+
+
+
+
+ <script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.title | escape }}",
+  }
+  "url": "{{ shop.url }}{{ product.url }}",
+  {% if product.featured_image %}
+    {% assign image_size = product.featured_image.width | append: 'x' %}
+    "image": [
+      "https:{{ product.featured_image.src | img_url: image_size }}"
+    ],
+  {% endif %}
+  "description": "{{ product.description | strip_html | escape }}",
+  {% if current_variant.sku != blank %}
+    "sku": "{{ current_variant.sku }}",
+  {% endif %}
+  "brand": {
+    "@type": "Thing",
+    "name": "{{ product.vendor | escape }}"
+  },
+  }
+<!-- Start Yotpo aggregateRating -->
+{% if product.metafields.yotpo.reviews_count and product.metafields.yotpo.reviews_count != "0" %}
+    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+        <span itemprop="itemReviewed">{{ product.title }}</span>
+        has a rating of <span itemprop="ratingValue">{{ product.metafields.yotpo.reviews_average }}</span> stars
+        based on <span itemprop="ratingCount">{{ product.metafields.yotpo.reviews_count }}</span> reviews.
+            </div>
+ {% endif %}
+<!-- End Yotpo aggregateRating -->
+  {% if product.variants %}
+    "offers": [
+      {% for variant in product.variants %}
+        {
+          "@type" : "Offer",
+          "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price" : "{{ variant.price | divided_by: 100.00 }}",
+          "priceCurrency" : "{{ shop.currency }}",
+          "url" : "{{ shop.url }}{{ variant.url }}",
+          "itemOffered" :
+          {
+              "@type" : "Product",
+              {% if variant.image %}
+                {% assign variant_image_size = variant.image.width | append: 'x' %}
+                "image": "http:{{ variant.image.src | img_url: variant_image_size }}",
+              {% endif %}
+              {% if variant.title != blank %}
+                "name" : "{{ variant.title | escape }}",
+              {% endif %}
+              {% if variant.sku != blank %}
+                "sku": "{{ variant.sku }}",
+              {% endif %}
+              {% if variant.weight != blank %}
+                "weight": {
+                  "@type": "QuantitativeValue",
+                  {% if variant.weight_unit != blank %}
+                    "unitCode": "{{ variant.weight_unit }}",
+                  {% endif %}
+                  "value": "{{ variant.weight | weight_with_unit: variant.weight_unit }}"
+                },
+              {% endif %}
+              "url": "{{ shop.url }}{{ variant.url }}"
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  {% endif %}
+}
+</script>
+
+<!-- Start Klaviyo tracking -->
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+<script type="text/javascript">
+     var _learnq = _learnq || [];
+     document.querySelector('.add_to_cart').addEventListener('click',function (){
+           _learnq.push(['track', 'Added to Cart', item]);
+     });
+</script>
+<!-- End Klaviyo tracking -->

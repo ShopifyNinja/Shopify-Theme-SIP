@@ -1,0 +1,267 @@
+<div class="order-summary__section order-summary__section--swell points-section swell-checkout-page swell-custom-class" style="display:none;" data-type="apply-points" id="swell-checkout">
+  <div class="swell-attributes" style="display:none;">
+    <span id="swell-checkout-customer-id">{{ customer.id }}</span>
+    <span id="swell-checkout-customer-email">{{ customer.email }}</span>
+    <span id="swell-checkout-customer-tags">{{ customer.tags | json }}</span>
+    <span id="swell-checkout-total-price-cents">{{ checkout.subtotal_price }}</span>
+    <input id="swell-checkout-points-amount" value="0"></input>
+</div>
+
+<div class="swell-checkout-error-message redeem-locale-en" id="swell-checkout-error-message-amount" style="display:none;color:red;">Oops, You don't have any points to redeem yet.</div>
+<div class="swell-checkout-error-message redeem-locale-en" id="swell-checkout-error-message-general" style="display:none;color:red;">Sorry something went wrong.  Try again and if the problem persists please contact support.</div>
+
+<div class="swell-checkout-error-message redeem-locale-es" id="swell-checkout-error-message-amount" style="display:none;color:red;">Vaya, todavía no tienes puntos para canjear.</div>
+<div class="swell-checkout-error-message redeem-locale-es" id="swell-checkout-error-message-general" style="display:none;color:red;">Perdón, algo salió mal. Intente nuevamente y si el problema persiste, comuníquese con el soporte.</div>
+
+<div class="fieldset">
+  <div class="field">
+    <label class="BrandonTextWeb-Bold redeem-credits-title redeem-locale-en"><strong>You have <span class="points-balance-color"><span class="swell-point-balance">0</span> Points </span></strong> </label>
+    <label class="BrandonTextWeb-Bold redeem-credits-title redeem-locale-es"><strong>Tienes <span class="points-balance-color"><span class="swell-point-balance">0</span> Puntos </span></strong> </label>
+
+    <div class="input-holder">
+    </div>
+
+    <div class="footer-holder">
+      <span class="BrandonTextWeb-Bold redeem-content redeem-locale-en">Redeem <strong> $<span class="point-balance swell-adjusted-point-balance"></span> (<span class=" slider-point-balance"></span> Points <span class="points-balance-color "></span>)</strong></span>
+      <span class="BrandonTextWeb-Bold redeem-content redeem-locale-es">Redimir <strong> $<span class="point-balance swell-adjusted-point-balance"></span> (<span class=" slider-point-balance"></span> Puntos <span class="points-balance-color "></span>)</strong></span>
+
+      <button type="submit" id="swell-checkout-redeem-btn" class="field__input-btn btn btn--default swell-button">
+        <span class="btn__content visually-hidden-on-mobile redeem-locale-en">Apply</span>
+        <span class="btn__content visually-hidden-on-mobile redeem-locale-es">Aplicar</span>
+        <svg class="icon-svg icon-svg--size-16 btn__icon shown-on-mobile" aria-hidden="true" focusable="false"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"></use> </svg>
+        <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#spinner-button"></use> </svg>
+        <i class="btn__content shown-on-mobile icon icon--arrow"></i>
+        <i style="display:none;" class="fa fa-spinner fa-spin"></i>
+        <svg class="icon-svg icon-svg--size-16 btn__icon shown-on-mobile" aria-hidden="true" focusable="false"> <use xlink:href="#arrow"></use> </svg>
+        <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button"></use> </svg>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<style type="text/css">
+  .input-holder{
+    margin: 10px 0;
+  }
+  .footer-holder {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+  .points-balance-color {
+    /*color: #762282;*/
+  }
+  .rangeslider__fill {
+    background: #ffa5bb;
+  }
+  .rangeslider--horizontal {
+    height: 10px;
+  }
+  .rangeslider--horizontal .rangeslider__handle {
+    top: -9px;
+    color: #fff;
+    background: #ffa5bb;
+  }
+  .rangeslider__handle {
+    width: 25px;
+    height: 29px;
+    border: 0;
+  }
+  .rangeslider__handle_span{
+    position: absolute;
+    min-width: 50px;
+    top: -20px;
+    left: 0;
+    right: 0;
+    font-weight: bold;
+    color: #ffa5bb;
+  }
+  #swell-checkout-redeem-btn {
+    height: 44px;
+    background: #c8c8c8;
+    /*background-color: #752781;*/
+  }
+  .redeem-content {
+    font-size: 16px;
+  }
+  .redeem-locale-es{
+    display: none;
+  }
+</style>
+
+
+<script type="text/javascript">
+
+  // only load swell loader on checkout page, not thank you page as it's already loaded by our app
+  if(window.location.href.indexOf("checkout") > -1 && window.location.href.indexOf("thank_you") == -1) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://cdn.swellrewards.com/loader/DjSky7d586ukyW9DVw64Fw.js?shop=sparkle-in-pink.myshopify.com"
+
+    document.getElementsByTagName("head")[0].appendChild(script);
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.css";
+    document.getElementsByTagName("head")[0].appendChild(link);
+
+    var range_script = document.createElement("script");
+    range_script.src = "https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.js";
+    document.getElementsByTagName("head")[0].appendChild(range_script);
+  }
+
+  // initialize slider.....
+  $(document).on("swell:setup", function() {
+
+    Swell.Checkout.showLoadingSpinner = function() {
+      $('#swell-checkout-redeem-btn .icon-svg--spinner-button').css('opacity', '1');
+      $('#swell-checkout-redeem-btn .icon-svg--spinner-button').css( 'animation', 'rotate 0.5s linear infinite');
+      $('#swell-checkout-redeem-btn .icon-svg--spinner-button').show();
+    }
+
+    Swell.Checkout.hideLoadingSpinner = function() {
+      $('#swell-checkout-redeem-btn .icon-svg--spinner-button').hide();
+      $('#swell-checkout-redeem-btn .icon-svg--spinner-button').css('opacity', '0');
+    }
+
+    var centsPerPoint = spapi.variableRedemptionOption ? spapi.variableRedemptionOption.discount_rate_cents : 1;
+    var cartTotal = {{ checkout.discounts_amount }} + {{ checkout.subtotal_price }};
+    var customerAccountBal = (spapi.customer.adjusted_points_balance * centsPerPoint) / 100;
+    var cartTotalAmmount = cartTotal/100;
+
+    var temp = customerAccountBal;
+
+    if(cartTotalAmmount < customerAccountBal) {
+      temp = cartTotalAmmount;
+    }
+
+    $(".input-holder").append('<input type="range" class="swell-range-slider" min="0" max="' + temp + '" step="0.1" value="'+ customerAccountBal + '">');
+
+
+
+    slider_value = parseFloat($(".swell-range-slider").val());
+
+    if (slider_value > cartTotalAmmount)
+    {
+      balanceAvailable = parseFloat(((cartTotalAmmount / centsPerPoint) * 100.0).toFixed(2));
+      $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+    }
+    else
+    {
+      balanceAvailable = parseFloat(((slider_value / centsPerPoint) * 100.0).toFixed(2));
+      $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+    }
+    balanceAvailable = Math.ceil(balanceAvailable);
+
+
+    $("#swell-checkout-points-amount").val(balanceAvailable);
+    $(".slider-point-balance").html(balanceAvailable);
+
+    $(".rangeslider__handle_span").html("$"+slider_value.toFixed(2));
+
+    $('input[type="range"]').rangeslider({
+      polyfill: false,
+      // Default CSS classes
+      rangeClass: 'rangeslider',
+      disabledClass: 'rangeslider--disabled',
+      horizontalClass: 'rangeslider--horizontal',
+      verticalClass: 'rangeslider--vertical',
+      fillClass: 'rangeslider__fill',
+      handleClass: 'rangeslider__handle',
+
+      // Callback function
+      onInit: function() {},
+
+      // Callback function
+      onSlide: function(position, value) {},
+
+      // Callback function
+      onSlideEnd: function(position, value) {}
+    });
+
+    $(".rangeslider__handle").append("<span class='rangeslider__handle_span'>$"+slider_value.toFixed(2)+"</span>");
+
+    $( ".swell-range-slider" ).change(function() {
+      $(".swell-range-slider").attr('step', 1);
+      var points_balance = {{ checkout.subtotal_price }}/100;
+      var centsPerPoint = spapi.variableRedemptionOption.discount_rate_cents;
+      slider_value = parseFloat($(".swell-range-slider").val());
+      if (slider_value > cartTotalAmmount)
+      {
+        balanceAvailable = parseFloat(((cartTotalAmmount / centsPerPoint) * 100.0).toFixed(2));
+        $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+      }
+      else
+      {
+        balanceAvailable = parseFloat(((slider_value / centsPerPoint) * 100.0).toFixed(2));
+        $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+      }
+
+      balanceAvailable = Math.ceil(balanceAvailable);
+      $("#swell-checkout-points-amount").val(balanceAvailable.toFixed(2));
+      $(".slider-point-balance").html(balanceAvailable);
+
+      $(".rangeslider__handle_span").html("$"+slider_value.toFixed(2));
+
+
+      //set slider max value
+      if (parseInt($(".swell-range-slider").val()) == parseInt($(".swell-range-slider").attr('max')))
+      {
+        $(".swell-range-slider").attr('step', 0.1);
+        slider_value = customerAccountBal;
+        if (slider_value > cartTotalAmmount)
+        {
+          balanceAvailable = parseFloat(((cartTotalAmmount / centsPerPoint) * 100.0).toFixed(2));
+          $(".swell-adjusted-point-balance").html(cartTotalAmmount.toFixed(2));
+        }
+        else
+        {
+          balanceAvailable = parseFloat(((slider_value / centsPerPoint) * 100.0).toFixed(2));
+          $(".swell-adjusted-point-balance").html(slider_value.toFixed(2));
+        }
+        balanceAvailable = Math.ceil(balanceAvailable);
+
+        $("#swell-checkout-points-amount").val(balanceAvailable);
+        $(".slider-point-balance").html(balanceAvailable);
+        $(".rangeslider__handle_span").html("$"+slider_value.toFixed(2));
+      }
+
+    });
+
+    //reset the last redeemPoints
+    $(document).on("swell:redemption", function(){
+      var lastRedeemPoints = $("#swell-checkout-points-amount").val();
+      setTimeout(function(){
+        $("#swell-checkout-points-amount").val(lastRedeemPoints);
+      }, 200);
+    });
+
+
+    /////////////////////////////////  28/04/2020 by lucas /////////////////////////////// 
+    
+    if(localStorage.getItem('currentLang') !== 'en'){
+      $(".redeem-locale-en").remove();
+      $(".redeem-locale-es").css("display", "block");
+    }
+    else{
+      $(".redeem-locale-en").css("display", "block");
+      $(".redeem-locale-es").remove();
+    }
+    $(".swell-checkout-error-message").css("display", "none");
+
+    {% comment %} $(".product-table").hide(); {% endcomment %}
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+  });
+
+  $("table.product-table tbody tr").each(function(){
+    $(this).find('.product__description__name').text(localStorage.getItem("translatedNames").split($(this).data('variant-id'))[1]);
+    $(this).find('.product__description__variant').hide();
+  });
+
+
+</script>

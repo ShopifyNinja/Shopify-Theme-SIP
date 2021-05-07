@@ -1,0 +1,49 @@
+
+{% paginate collection.products by collection.all_products_count %}
+	{% if customer %}
+	{{ collection.products }}
+		{% capture tags %}{% for tag in customer.tags %}{{ tag }} {% endfor %}{% endcapture %}
+		{% assign tags = tags | remove:'x' | split:' ' | uniq | join:' ' %}
+		{{ tag }}
+		
+		
+		{% for product in collections.all.products %}
+		</br>
+		
+			{% if tags contains product.id %}
+			
+				{% include 'product-item' with product_item: product %}
+				
+			{% endif %}
+		{% endfor %}
+	{% else %}
+	
+		<a class="wishlist" href="/account/login">
+						Please Login to create Wishlist
+		</a>
+	
+	{% endif %}
+	
+{% endpaginate %}
+
+{% form 'customer' %}	
+	<input type='hidden' name='contact[email]' value='{{ customer.email }}'/>
+	<input type='hidden' name='contact[tags]' class='remove-value' value='' />
+{% endform %}
+
+<form action='/cart/add' class='add-variant' method='post'>
+	<input type='hidden' name='id' class='product-select' value='' />
+</form>
+
+<script>
+	$('.remove').click(function() {
+		var value = $(this).attr('data');
+		$('.remove-value').val(value);
+		$('.contact-form').submit();
+	});
+	$('.add').click(function() {
+		var value = $(this).attr('data');
+		$('.product-select').val(value);
+		$('.add-variant').submit();
+	});
+</script>

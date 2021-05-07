@@ -1,0 +1,755 @@
+{% if product.description contains 'mw-gp-offer' %}
+  {% assign product_description = product.description | split: '<div id="mw-gp-offer' | first %}
+  {% assign productBundle = product.description | split: '<div id="mw-gp-offer' | last | prepend: '<div id="mw-gp-offer' %}
+{% else %}
+  {% assign product_description = product.description %}
+  {% assign productBundle = '' %}
+{% endif %}
+
+<div class="cart_listing_sce">
+<div class="text">
+  <div class="container">
+  	{% include 'breadcrumbs' %}
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">{% include 'shappify-sales-clock' %}</div>
+    <div class="{% if product.images.size == 1 %}col-md-5{% else %}col-md-5{% endif %} mobile-thumb-slick {% if product.title == 'Drop Ship My Order' %} drop-ship-img {% endif %}">
+      <div class="product_img_cart">
+        <section data-section-id="{{ section.id }}" data-section-type="product" class"d-flex">
+
+        {% if product.images.size > 0 %}
+          <div class="slider_wrap" data-slick='{"infinite": true, "slidesToShow": 1, "slidesToScroll": 4}' style="display: none;">
+            {% for image in product.images %}
+            <div class="slider_item">
+              <div class="slider_img_wrap">
+                <a href="{{ image | img_url: 'original' }}" class="fancybox" data-fancybox-group="mobile-{{ product.id }}">
+                  <img src="{{ image | img_url: 'original' }}" alt="{{ image.alt | escape  }}" class="slider_img">
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+          {% if product.images.size > 1 %}
+          <div class="multiple-images">
+            <ul class="product-thumbs">
+              {% for image in product.images %}
+                <li>
+                  <a data-thumbnail-id="{{ image.id }}" data-product-single-thumbnail{% if product.featured_image == image %} aria-current="true"{% endif %}>
+                    <img class="product-single__thumbnail-image galry_img{% if product.featured_image == image %} bodrround{% endif %}" src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}" data="{{ image.src | img_url: '300x' }}">
+                  </a>
+                </li>
+              {% endfor %}
+          	</ul>
+          </div>
+
+          {% endif %}
+
+          <script>
+            $(document).ready(function(){
+              $('.slider_wrap').slick({
+                swipeToSlide: !0,
+                arrows: !1,
+                dots: !0,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 1,
+                responsive: [
+                  {
+                    breakpoint: 480,
+                    settings: {
+                      centerPadding: '20px'
+                    }
+                  }
+                ]
+              });
+
+              $('.product-thumbs').slick({
+                arrows: true,
+    			      vertical: true,
+                verticalSwiping: true,
+                dots: false,
+                slidesToShow: 4,
+                speed: 1000,
+                {% if section.settings.slide_onoff %}
+                autoplay: true,
+    			      autoplaySpeed: 3000,
+                {% endif %}
+                prevArrow: "<span class='prev'></span>",
+                nextArrow: "<span class='next'></span>"
+              });
+
+              $('.add_to_cart').click(function(){
+                $('p.text-center').addClass('bounceIn animated');
+                setTimeout(function(){
+                  $('p.text-center').css('display','none');
+                  $('p.text-center').removeClass('bounceIn animated');
+                },3000);
+              });
+            });
+          </script>
+
+          {% if product.images.size == 1 %}
+          <div class="empty_thumbs"></div>
+          {% endif %}
+          <div class="img_product single_img">
+
+            {%- assign featured_image = product.featured_image -%}
+
+            {% for image in product.images %}
+              {% capture wrapper_class %}
+                {%- unless featured_image == image -%}
+                  hide
+                {%- endunless -%}
+              {% endcapture %}
+
+              <a href="{{ image | img_url: 'master' }}" class="fancybox" data-fancybox-group="desktop-{{ product.id }}">
+                {% include 'responsive-image' with
+                  image: image,
+                  max_width: 700,
+                  max_height: 800,
+                  image_attributes: "data-product-featured-image",
+                  wrapper_class: wrapper_class,
+                  wrapper_attributes: "data-product-image-wrapper",
+                %}
+              </a>
+
+            {% endfor %}
+          <div class="gallery_img">
+
+            {% if section.settings.show_share_buttons %}
+              {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+            {% endif %}
+            </div>
+          </div>
+        </section>
+        </div>
+    </div>
+    <div class="{% if product.images.size == 1 %}col-md-7{% else %}col-md-7{% endif %} {% if product.title == 'Drop Ship My Order' %} drop-ship-txt {% endif %}">
+      <div class="text_img_cart">
+        <h1 class="product-title">{{ product.title }}</h1>
+        {% if product.price == 0 %}
+          <span data-product-price class="product-price is-hidden">Free</span>
+        {% else %}
+          <span data-product-price class="product-price is-hidden">${{ product.price | amount | divided_by: 100.0 }}</span>
+        {% endif %}
+        {% if product.compare_at_price > 0 %}
+        <span class="product-compare-price">${{ product.compare_at_price | amount | divided_by: 100.0 }}</span>
+        {% endif %}
+        <div class="review-sku">
+           <!-- Yotpo bottomline -->
+          <div class="rev_product">
+                <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+          </div>
+
+          {% if product.title != 'Drop Ship My Order' %}
+          <span class="sku">{{ variant.sku }}</span>
+          {% endif %}
+        </div>
+        <div class="sezzle_badge">
+          or 4 interest-free payments of <strong>$</strong><strong class="amount">{{ product.price | amount | divided_by: 400.0 | round: 2 }}</strong> with <strong>Sezzle or Afterpay</strong>
+        </div>
+
+       <form action="/cart/add"
+                method="post"
+                class="shopify-product-form clearfix product_form init {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %}"
+                id="product-form-{{ product.id }}"
+                data-money-format="{{ shop.money_format }}"
+                data-shop-currency="{{ shop.currency }}"
+                data-select-id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+                data-enable-state="{% if template contains 'product' %}true{% else %}false{% endif %}"
+                data-product-id="{{ product.id }}">
+
+              {% if product.options.size > 1 %}
+                   <div class="select" style="display:none">
+                      <select id="product-id" name="id" class="multi_select">
+                          <option value=0></option>
+                          {% for v in product.variants %}
+                            {% capture option_values %}
+                              {% for option in product.options %}
+                                {% assign option_index = forloop.index0 %}
+                                 data-{{ option | handle }}="{{ v.options[option_index] | handle }}"
+                              {% endfor %}
+                            {% endcapture %}
+                            <option value="{{ v.id }}" data-sezzle-price="{{ v.price | divided_by: 400.0 | round: 2 }}" data-price="{{ v.price | money }}" data-sku="{{ v.sku }}" {{ option_values }} data-title="{{v.title}}">{{ v.title }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              {% elsif product.options.size == 1 and product.options[0] != "Title" %}
+                  <div class="select" style="display:none">
+                      <label>{{ product.options[0] }}</label>
+                      <select id="product-id" name="id"
+                              class="tertip">
+                          <option value=0></option>
+                          {% for v in product.variants %}
+                              <option value="{{ v.id }}" data-sezzle-price="{{ v.price | divided_by: 400.0 | round: 2 }}" data-price="{{ v.price | money }}" data-sku="{{ v.sku }}" data-title="{{v.title}}">{{ v.title }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+
+              {% else %}
+         		{% if product.available %}
+                  <input type="hidden" id="product-id" name="id" value="{{ product.first_available_variant.id }}"/>
+         		{% else %}
+         		  <input type="hidden" id="product-id" name="id" value="0"/>
+         		{% endif %}
+              {% endif %}
+         <input type="hidden" id="quantity" name="quantity" value="1"/>
+
+			{% comment%}
+           {% if product.available and bold_variants_size > 1 %}
+             {% for option in product.options %}
+             	{% include 'swatch' with option %}
+             {% endfor %}
+           {% endif %}
+         	{% endcomment %}
+ 			{% for option in product.options %}
+             	{% include 'swatch' with option %}
+             {% endfor %}
+           {% if product.tags contains 'nulls_extra' %}
+              <div class="swatch clearfix main_div_swatch mobile-hide" id="Embroidery">
+                 <div class="header">Embroidery</div>
+                 <div class="checkbox">
+                   <input type="checkbox">
+                   <label></label>
+                 </div>
+                 <div class="embroidery-value"><span class="embroidery-mark">?</span> + $14.99</div>
+                 <div class="embroidery-text">
+                   <p class="embroidery-notification">Embroidery Message (limit 10 characters)*</p>
+                   <input type="text" name="properties.embroidery" id="embroidery-text" maxlength="10" placeholder="{{ settings.nulls_net_embroidery_desc }}"/>
+                 </div>
+               </div>
+
+               <div class="swatch clearfix main_div_swatch mobile-show" id="Embroidery">
+                 <div class="header">Embroidery</div>
+                 <span class="embroidery-mark">?</span>
+                 <div class="checkbox">
+                   <input type="checkbox">
+                   <label></label>
+                 </div>
+                 <div class="embroidery-value"> + $14.99</div>
+                 <div class="embroidery-text">
+                   <p class="embroidery-notification">Embroidery Message (limit 10 characters)*</p>
+                   <input type="text" id="embroidery-text" maxlength="10" placeholder="{{ settings.nulls_net_embroidery_desc }}"/>
+                 </div>
+               </div>
+           {% endif %}
+
+         <style>
+           .nullsRadioLabel{{ product.id }}{
+             font-weight: normal;
+             text-transform: none;
+           }
+           .nullsEmBold{
+             font-weight: bold;
+           }
+           .nullsEmSlide{{ product.id }}{
+             display: none;
+           }
+         </style>
+
+        <script>
+            var inv_qty = [];
+            {% for var in product.variants %}
+            inv_qty[{{- var.id -}}] = {{ var.inventory_quantity | default: 0 }};
+            {% endfor %}
+
+            jQuery(document).ready(function(){
+              $('.rev_product').click(function(){
+                $('.text_img_cart .tabs li:nth-child(4) a').click();
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#tab-3").offset().top - 80
+                }, 1000);
+              });
+
+              var value = parseFloat(jQuery('.sezzle_badge .amount').html());
+              jQuery('.sezzle_badge .amount').html(value.toFixed(2));
+
+              jQuery('.swatch-element').click(function(){
+                var main_id = jQuery(this).closest('.main_div_swatch').attr('id');
+                
+                if(jQuery(this).hasClass('soldout')) {
+                	jQuery('.product_form button.addtocart span').text(localStorage.getItem('currentLang') === 'en'? 'Sold Out': 'Agotado');
+                  	jQuery('.product_form button.addtocart').addClass('sold-out');
+                  	
+                  	if(jQuery('.product_form #BIS_trigger').length == 0) jQuery('.product_form .sixe_outofstock').append('<button type="button" id="BIS_trigger">Size out of stock? Click here</button>');
+                  	
+                } else {
+                	jQuery('.product_form button.addtocart span').text(localStorage.getItem('currentLang') === 'en'? 'Add To Bag': 'Añadir a la bolsa');
+                  	jQuery('.product_form button.addtocart').removeClass('sold-out');
+//                   	jQuery('.product_form #BIS_trigger').remove();
+                }
+                
+                jQuery('#'+main_id+' input').removeAttr("checked", "checked");
+                jQuery(this).children('input:radio').attr("checked", "checked");
+                jQuery('.select option').removeAttr('selected');
+                setTimeout(function(){
+                  var the_value = getChecklistItems();
+                  var selected_variant = jQuery('.select option').filter(function() {
+                    return jQuery.trim( jQuery(this).data('title') ) == the_value;
+                  }).attr('selected',true);
+                  var variant_sku = selected_variant.data('sku');
+                  var variant_id = selected_variant.val();
+                  if(inv_qty[variant_id] == 0)
+                    $('#BIS_trigger').attr('data-variant-id', variant_id);
+                  jQuery('.review-sku .sku').html(variant_sku);
+                  jQuery('.product-price').html(selected_variant.data('price'));
+                  var value = parseFloat(selected_variant.data('sezzle-price'));
+                  jQuery('.sezzle_badge .amount').html(value.toFixed(2));
+                },200);
+              });
+
+              function getChecklistItems() {
+                var result = jQuery(".swatch input:checked").get();
+                var columns = jQuery.map(result, function(element) {
+                    return jQuery(element).val();
+                });
+                return columns.join(" / ");
+              }
+
+              jQuery('.swatch-element.color').click(function(){
+                var color_value = $(this).data('handle-value');
+                console.log("color_value", color_value);
+                $('.swatch-element.size').removeClass('available').addClass('soldout').hide();
+                $('.swatch-element.child-adult').removeClass('available').addClass('soldout').hide();
+                $('.shopify-product-form #product-id option[data-color='+color_value+']').each(function(){
+                  var variant_id = $(this).val();
+                  var size_val = $(this).data('size');
+                  var c_a_val = $(this).data('child-adult');
+                  if(inv_qty[variant_id] > 0) {
+                    $('.swatch-element.size.'+size_val).removeClass('soldout').addClass('available');
+                    $('.swatch-element.child-adult.'+c_a_val).removeClass('soldout').addClass('available');
+                  }
+                  $('.swatch-element.size.'+size_val).show();
+                  $('.swatch-element.child-adult.'+c_a_val).show();
+                });
+              });
+              jQuery('.swatch-element.type').click(function(){
+                var type_value = $(this).data('handle-value');
+                $('.swatch-element.size').removeClass('available').addClass('soldout').hide();
+                $('.swatch-element.child-adult').removeClass('available').addClass('soldout').hide();
+                $('.shopify-product-form #product-id option[data-type='+type_value+']').each(function(){
+                  var variant_id = $(this).val();
+                  var size_val = $(this).data('size');
+                  var c_a_val = $(this).data('child-adult');
+                  if(inv_qty[variant_id] > 0) {
+                    $('.swatch-element.size.'+size_val).removeClass('soldout').addClass('available');
+                    $('.swatch-element.child-adult.'+c_a_val).removeClass('soldout').addClass('available');
+                  }
+                  $('.swatch-element.size.'+size_val).show();
+                  $('.swatch-element.child-adult.'+c_a_val).show();
+                });
+              });
+
+              jQuery('#Embroidery input[type=checkbox]').change(function(){
+                if($(this).prop('checked')) {
+                  $(this).closest('.swatch').find('.embroidery-text').show();
+                } else {
+                  $(this).closest('.swatch').find('.embroidery-text').hide();
+                }
+              });
+
+              $(".shopify-product-form").on("submit", function(e){
+                e.preventDefault();
+                {% unless product.tags contains 'HiddenProduct' %}
+                  addItem($(this));
+                {% endunless %}
+                return false;
+              });
+
+//               $(".sixe_outofstock button").click(function(e){
+//                 {% if bold_variants_size > 1 %}
+//                 var current_variant_id = jQuery('.select select').val();
+//                 {% else %}
+//                 var current_variant_id = {{ variant.id }};
+//                 {% endif %}
+//                 if(inv_qty[current_variant_id] > 0) {
+//                   $('.sixe_outofstock p').html('Only ' + inv_qty[current_variant_id] + ' products left').show();
+//                 } else {
+
+//                 }
+//               });
+
+              $('.swatch-element.color:first').click();
+              $('.swatch-element.type:first').click();
+              setTimeout(function() {
+                $('select#product-id option').removeAttr('selected');
+                $('select#product-id option:first').attr('selected', 'selected');
+                $('select#product-id').val(0);
+              }, 1000);
+            });
+
+            function addItem(form_obj) {
+              {% if product.tags contains 'nulls_extra' %}
+                var embroidery_text = '';
+                var embroidery_checked = false;
+                if($(window).width() <= 768) {
+                  embroidery_checked = $('#Embroidery.mobile-show input[type=checkbox]').prop('checked');
+                  if(embroidery_checked)
+                    embroidery_text = $('#Embroidery.mobile-show #embroidery-text').val();
+                } else {
+                  embroidery_checked = $('#Embroidery.mobile-hide input[type=checkbox]').prop('checked');
+                  if(embroidery_checked)
+                    embroidery_text = $('#Embroidery.mobile-hide #embroidery-text').val();
+                }
+
+                if(!embroidery_checked) {
+                  addProductToCart();
+                  return;
+                }
+
+                if(embroidery_text != '') {
+                  jQuery.post('/cart/add.js', {
+                    quantity: 1,
+                    id: {{ all_products[settings.nulls_net_embroidery_product].selected_or_first_available_variant.id }},
+                    properties: {
+                        'For': '{{ product.title | escape }}',
+                        'Embroidery': embroidery_text
+                    }
+                  }, function(res) {
+                    addToCartOk(res);
+                    addProductToCart();
+                  }, 'json');
+                } else {
+                  if($(window).width() <= 768) {
+                    $('#Embroidery.mobile-show #embroidery-text').attr('required', 'required').focus();
+                  } else {
+                    $('#Embroidery.mobile-hide #embroidery-text').attr('required', 'required').focus();
+                  }
+                }
+              {% else %}
+                addProductToCart();
+              {% endif %}
+            }
+
+           function addProductToCart() {
+             var product_id = $('body .shopify-product-form #product-id').val();
+             var quantity = $('#quantity').val()
+             if(product_id == 0) {
+               $('.sixe_outofstock p').html(localStorage.getItem('currentLang') === 'en'? 'Select size or colors first!': '¡Seleccione tamaño o colores primero!').show();
+               return;
+             }
+             
+             $('.sixe_outofstock p').html('').hide();
+             var product_obj = {id: product_id, quantity: quantity};
+             if(inv_qty[product_id] == 0) {
+               $('#BIS_trigger').attr('data-variant-id', product_id);
+               $('#BIS_trigger').click();
+               return;
+             }
+
+             $.ajax({
+              type: 'POST',
+              url: '/cart/add.js',
+              dataType: 'json',
+              data: product_obj,
+              success: addToCartOk,
+              error: addToCartFail
+            });
+           }
+
+        </script>
+         <div class="purchase purchase{{ product.id }} clearfix {% if settings.display_product_quantity %}inline_purchase{% endif %}">
+           {% if settings.cart_action == 'reload_page' %}
+           <input type="hidden" name="return_to" value="back"/>
+           {% elsif settings.cart_action == 'redirect_checkout' %}
+           <input type="hidden" name="return_to" value="/checkout"/>
+           {% endif %}
+           
+           {% if product.tags contains 'mw_grouped_product' %}<div class="mw-gp-container"></div>{% endif %}
+
+           {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_bag' | t }}{% endif %}{% endcapture %}
+           {% if product.tags contains 'HiddenProduct' %}
+            <button type="submit" name="add" class="unavailable add_to_cart add_to_cart{{ product.id }}"
+                    data-label="{{ add_to_cart_label | json }}" {% if product.tags contains 'mw_grouped_product' %}data-mwgp-add-to-cart{% endif %}>
+              <span class="">Currently Unavailable</span>
+            </button>
+           {% else %}
+            <button type="submit" name="add" class="addtocart action_button add_to_cart add_to_cart{{ product.id }}"
+                     data-label="{{ add_to_cart_label | json }}" {% if product.tags contains 'mw_grouped_product' %}data-mwgp-add-to-cart{% endif %}>
+              <span class="mobile-hide nullsPick">{% unless product.available %}Sold Out{% else %}{{ add_to_cart_label }}{% endunless %}</span>
+              <span class="mobile-show nullsPick">{% unless product.available %}Sold Out{% else %}{{ add_to_cart_label }}{% endunless %}</span>
+            </button>
+          {% endif %}
+         </div>
+         {% if product.title == 'Drop Ship My Order' %}
+
+         {% elsif product.title == 'Sparkle in Pink Gift Card' %}
+
+         {% else %}
+           <div class="sixe_outofstock">
+             <p class="text-center"></p>
+             {% assign has_sold_out_variants = false %}
+             {% for variant in product.variants %}
+               {% if variant.inventory_quantity == 0 %}
+                 {% assign has_sold_out_variants = true %}
+             	 {% break %}
+               {% endif %}
+             {% endfor %}
+             
+             
+             	{% if has_sold_out_variants %}
+			 	      <button type="button" id="BIS_trigger">Size out of stock? Click here</button>
+             	{% else %}
+             	{% unless product.available %}
+             	<button type="button" id="BIS_trigger">Out of stock? Click here</button>
+             	{% endunless %}	
+             	{% endif %}
+           </div>
+         {% endif %}
+         {% if product.title != 'Drop Ship My Order' %}
+         <div class="over_order">
+          <p>{{ section.settings.order_overtitle }} <a href='/pages/shipping-information'>More info</a></p>
+          <h6 style="display:none;">{{ section.settings.order_over }}</h6>
+         </div>
+
+         {% endif %}
+        </form>
+        
+		{% if product.title != 'Drop Ship My Order' %}
+        <section class="index-usp-bottom product-purchasing-point">
+
+        <div class="max-wrap">
+          <div class="usp-banner">
+            <div class="row usp-banner__row">
+
+                <div class="col usp-banner__col d-flex">
+                  <div class="usp-banner__inner">
+                    <div class="usp-banner__icon-wrap">
+
+
+                        <img src="{{ 'pink-ranked.PNG' | asset_url }}" alt="#1 RANKED CHILDREN’S BOUTIQUE Icon" class="usp-banner__icon">
+
+                    </div>
+                    <h4 class="usp-banner__title">
+                      You {% if customer %}will{% else %}could{% endif %} earn
+                      <b class="swell-product-helper" data-mode="display-points" data-product-id="{{ product.id }}" data-price-cents="{{ product.price }}">{{ product.price | times: 0.03 | floor }}</b>
+                      sparkle bucks for purchasing this product!
+                    </h4>
+                    <a href="/pages/rewards">Learn more</a>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+
+        </div>
+        </section>
+        {% endif %}
+
+
+        {% if product.title != 'Drop Ship My Order' %}
+        <div class="col-sm-12 three_sec">
+            <div class="col-sm-4">
+            <div class="inner_con">
+                <img src="{{ section.settings.sec_imageo | img_url: 'medium' }}" class="three_sec_logo"/>
+                <h5>{{ section.settings.sec_imageo_title }}</h5>
+            </div>
+            </div>
+            <div class="col-sm-4">
+            <div class="inner_con">
+              <img src="{{ section.settings.sec_imaget | img_url: 'medium' }}" class="three_sec_logo"/>
+              <h5>{{ section.settings.sec_imaget_title }}</h5>
+            </div>
+            </div>
+            <div class="col-sm-4">
+            <div class="inner_con">
+              <img src="{{ section.settings.sec_imagett | img_url: 'medium' }}" class="three_sec_logo"/>
+              <h5>{{ section.settings.sec_imagett_title }}</h5>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="tabs_sec">
+        <ul class="tabs">
+          <li><a href="#tab-1">Description</a></li>
+          <li class="tab-item-mobile-hide"><a href="#tab-2">Shipping Information</a></li>
+          <li class="tab-item-mobile-show" style="display: none;"><a href="#tab-2">Shipping & Returns</a></li>
+          <li><a href="#tab-3">Reviews</a></li>
+        </ul>
+        <div id="tab-1">
+        {{ product_description }}
+        </div>
+        <div id="tab-2">
+        <p>
+        {{ section.settings.shipping_info }}
+        </p>
+        </div>
+        <div id="tab-3">
+<!--         <div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ product_description | escape }}">
+      </div> -->
+          
+          <!-- Start Yotpo main widget --> 
+          
+          <div class="yotpo yotpo-main-widget"
+              data-product-id="{{ product.id }}" 
+              data-price="{{ variant.price | money_without_currency }}"
+              data-currency="{{ shop.currency }}"
+              data-name="{{ product.title | escape }}"
+              data-url="{{ shop.url }}{{ product.url }}"
+              data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+              data-description="{{ product_description | escape }}"> 
+          </div>
+          
+          <!-- End Yotpo main widget -->
+          
+          
+          
+        </div>
+      </div>
+
+
+      <style>
+        @media(max-width: 768px){
+          .tab-item-mobile-show{
+            display: inline-block !important;
+          }
+          .tab-item-mobile-hide{
+            display: none !important;
+          }
+        }
+        
+        /********************** seo bulit style ******************************/
+        
+        #tab-1 ul,
+        #tab-1 ol{
+          text-align: left;
+        }
+        
+        #tab-1 li{
+          list-style: none;
+        }
+        
+        #tab-1 ol{
+          padding-left: 0px;
+          list-style: none;
+          counter-reset: my-awesome-counter;
+        }
+        #tab-1 ol li{
+          counter-increment: my-awesome-counter;
+        }
+        
+        #tab-1 ul li,
+        #tab-1 ol li{
+          position: relative;
+          font-size: 16px;
+          font-family: Lato, sans-serif;
+          color: #7b7b7b;
+          font-weight: 300;
+          line-height: 24px;
+        }
+        
+        #tab-1 ul li{
+          padding-left: 12px;
+        }
+        
+        #tab-1 ol li{
+          padding-left: 0px;
+        }
+        
+        #tab-1 ul li:before{
+          content: "•";
+          height: 8px;
+          width: 8px;
+          font-size: 24px;
+          color: rgb(255, 165, 187);
+          display: inline-block;
+          margin-right: 6px;
+          float: left;
+          position: absolute;
+          left: -5px;
+        }
+        
+        #tab-1 ol li:before{
+          content: counter(my-awesome-counter) ". ";
+          color: rgb(255, 165, 187);
+        }
+        
+        /********************** end seo bulit style ******************************/
+        #tab-1 p a{
+          text-decoration: underline;
+          color: #191919;
+        }
+      </style>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "slide_onoff",
+        "label": "Slide On/Off",
+        "default": true
+      },
+	  {
+		"type": "header",
+		"content": "Three Section"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "sec_imageo",
+		"label": "Section one image"
+      },
+      {
+		"type": "text",
+		"id": "sec_imageo_title",
+		"label": "Section title"
+      },
+      {
+		"type": "image_picker",
+		"id": "sec_imaget",
+		"label": "Section Second image"
+      },
+      {
+		"type": "text",
+		"id": "sec_imaget_title",
+		"label": "Section title"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "sec_imagett",
+		"label": "Section Third image"
+	  },
+	  {
+		"type": "text",
+		"id": "sec_imagett_title",
+		"label": "Section title"
+	  },
+	  {
+		"type": "richtext",
+		"id": "shipping_info",
+		"label": "Shipping Tab info"
+	  },
+	  {
+		"type": "text",
+		"id": "order_overtitle",
+		"label": "Over order title"
+	  },
+      {
+		"type": "richtext",
+		"id": "order_over",
+		"label": "Free shipping on over order"
+	  }
+    ]
+  }
+{% endschema %}

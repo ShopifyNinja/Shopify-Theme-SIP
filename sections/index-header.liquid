@@ -1,0 +1,122 @@
+{% if section.settings.enable_heading %}
+<div class="addorable-title" style="display:none;">
+  {{ section.settings.heading_text }}
+</div>
+{% endif %}
+<div class="max-wrap" data-index-header>
+  {% for block in section.blocks %}
+    {% if block.settings.link_url != blank %}
+      {% assign href = "href='" | append: block.settings.link_url | append: "'" %}
+    {% else %}
+      {% assign href = "" %}
+    {% endif %}
+    <a class="index-header__slide" {{ href }}>
+      {% assign wrap_class = "index-header__bg-wrap" %}
+      {% if block.settings.bg_mobile %}
+        {% assign wrap_class = "index-header__bg-wrap d-none d-sm-block" %}
+      {% endif %}
+
+      {% if block.settings.bg %}
+        {% include 'responsive-image' with
+          image: block.settings.bg,
+          max_width: 1600,
+          max_height: 750,
+          wrapper_class: wrap_class,
+          image_class: "index-header__bg-image",
+          span: true,
+      	  alt: block.settings.bg.alt %}
+      {% endif %}
+      {% comment %} different background for mobile {% endcomment %}
+      {% if block.settings.bg_mobile %}
+        {% include 'responsive-image' with
+          image: block.settings.bg_mobile,
+          max_width: 600,
+          max_height: 600,
+          wrapper_class: "index-header__bg-wrap d-sm-none",
+          image_class: "index-header__bg-image",
+          span: true,
+      	  alt: block.settings.bg_mobile.alt	%}
+      {% endif %}
+      {% if block.settings.title != blank %}
+        <span class="index-header__title-wrap">
+          {% if block.settings.smear %}
+            <img class="index-header__smear" src="https://cdn.shopify.com/s/files/1/0407/8285/files/BANNER_TEXT_134x134_crop_center@2x.png?v=1560325952" alt="#" />
+          {% endif %}
+          <h2 class="index-header__title">{{ block.settings.title }}</h2>
+        </span>
+      {% endif %}
+      {% if block.settings.link_text != blank %}
+        <span class="index-header__link-wrap">
+          <span class="index-header__link">{{ block.settings.link_text }}</span>
+        </span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+{% schema %}
+  {
+    "name": "Index Header",
+    "class": "index-header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_heading",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "heading_text",
+        "label": "Content",
+        "default": "Adorable Made Affordable"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "bg",
+            "label": "Background",
+            "info": "1600x730"
+          },
+          {
+            "type": "image_picker",
+            "id": "bg_mobile",
+            "label": "Background Mobile"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "checkbox",
+            "id": "smear",
+            "label": "Show background smear"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link URL"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link Text"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Slider Header",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

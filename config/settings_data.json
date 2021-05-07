@@ -1,0 +1,492 @@
+{
+  "current": {
+    "color_accent": "#c4cdd5",
+    "color_body_text": "#161d25",
+    "color_main_bg": "#ffffff",
+    "font_heading": "lato_n4",
+    "font_body": "helvetica_n4",
+    "share_image": "",
+    "social_sharing_blog": true,
+    "share_facebook": true,
+    "share_twitter": false,
+    "share_googleplus": false,
+    "share_linkedin": true,
+    "share_instagram": true,
+    "social_twitter_link": "",
+    "social_facebook_link": "https:\/\/www.facebook.com\/officialsparkleinpink",
+    "social_google-plus_link": "",
+    "social_pinterest_link": "https:\/\/www.pinterest.com\/sparkleinpinkit\/",
+    "social_linkedin_link": "",
+    "social_instagram_link": "https:\/\/instagram.com\/sparkleinpink",
+    "social_snapchat_link": "https:\/\/www.snapchat.com\/add\/sparkleinpinkco",
+    "social_tumblr_link": "",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UC8iZ-FCqm86c8O6r1RVzJgw",
+    "social_vimeo_link": "",
+    "cart_notes_enable": true,
+    "contact_phone": "1-866-328-9752",
+    "contact_email": "support@sparkleinpink.com",
+    "favicon": "shopify:\/\/shop_images\/SIP_Logo_192x192.png",
+    "nulls_net_embroidery_desc": "Input your embroidery message here",
+    "nulls_net_embroidery_product": "embroidery",
+    "products_per_page": "48",
+    "products_per_page_mobile": "48",
+    "bc_baby_clothing": "0-3 Months; 3-6 Months; 3XS-6-12 Months; XXS-12-18 Months;",
+    "bc_kid_clothing": "XS-2T; Small-3T; Medium-4T; Large-5T; XL-6T; XXL-7\/8 Years; 3XL-8\/9 Years; 4XL-10\/12 Years; 5XL-12\/14 Years",
+    "bc_mom_clothing": "MOM-XS; MOM-Small; MOM-Medium; MOM-Large; MOM-XL; MOM-2XL; MOM-3XL; MOM-4XL; MOM-1X (Plus); MOM-2X (Plus);",
+    "bc_kid_shoes": "KIDS-4T; KIDS-5T; KIDS-6T; KIDS-7T; KIDS-8T; KIDS-9T; KIDS-10T; KIDS-11T; KIDS-12T; KIDS-13T; KIDS-1K; KIDS-2K; KIDS-3K; KIDS-4K",
+    "bc_mom_shoes": "MOM-5.5; MOM-6; MOM-6.5; MOM-7; MOM-7.5; MOM-8; MOM-8.5; MOM-9; MOM-9.5; MOM-10; MOM-10.5; MOM-11",
+    "bc_dad_clothing": "DAD-Small; DAD-Medium; DAD-Large; DAD-XL; DAD-2XL; DAD-3XL; DAD-3XL; DAD-4XL; DAD-1X (Plus); DAD-2X (Plus);",
+    "bc_pet": "Pet Bandana",
+    "mob_app_top_section": "new-arrivals",
+    "mob_app_top_section_button_text": "",
+    "mob_app_top_section_bg_color": "#ffffff",
+    "mob_app_featured_section": "featured-collection",
+    "mob_app_mystery_collection": "",
+    "mob_app_mystery_collection_button_text": "",
+    "mob_app_mystery_collection_bg_color": "#ffffff",
+    "mob_app_category_1": "dresses",
+    "mob_app_category_1_subtitle": "",
+    "mob_app_category_1_bg_color": "#f4c0b2",
+    "mob_app_category_2": "mommy-me",
+    "mob_app_category_2_subtitle": "",
+    "mob_app_category_2_bg_color": "#ffa6b2",
+    "mob_app_category_3": "halloween",
+    "mob_app_category_3_subtitle": "",
+    "mob_app_category_3_bg_color": "#8fd1d8",
+    "mob_app_category_4": "accessories",
+    "mob_app_category_4_subtitle": "",
+    "mob_app_category_4_bg_color": "#ffa6b2",
+    "mob_app_category_5": "clearance",
+    "mob_app_category_5_subtitle": "",
+    "mob_app_category_5_bg_color": "#8fd1d8",
+    "mob_app_bottom_section": "boutique-outfits",
+    "mob_app_bottom_section_button_text": "",
+    "mob_app_bottom_section_bg_color": "#ffffff",
+    "mob_app_promo_banner_text": "Orders Ship Within 1-2 Business Days",
+    "checkout_header_image": "",
+    "checkout_logo_image": "shopify:\/\/shop_images\/Artboard_1_640x_cc156017-97bb-4eb0-b5cd-148bc22e0959.png",
+    "checkout_logo_position": "center",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "Open Sans",
+    "checkout_body_font": "Open Sans",
+    "checkout_accent_color": "#ffa5bb",
+    "checkout_button_color": "#ffa5bb",
+    "checkout_error_color": "#ff6d6d",
+    "share_pinterest": true,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "announcement_bar_enabled": true,
+          "announcement_bar_home_page_only": false,
+          "announcement_bar_text": "Free Shipping on orders Over $<span class=\"order_limit\">125<\/span>",
+          "announcement_bar_link": "",
+          "announcement_bar_text_mobile": "JOIN OUR REWARDS PROGRAM",
+          "announcement_bar_link_mobile": "shopify:\/\/pages\/rewards",
+          "logo": "shopify:\/\/shop_images\/Artboard_1.png",
+          "logo_max_width": 1400,
+          "logo_sticky": "shopify:\/\/shop_images\/SIP-Logo.png",
+          "menu": "blue-stout-main-menu",
+          "speed": "7000",
+          "msg_head1": "GET REWARDED",
+          "msg_shead1": "with <pink> diamond rewards <\/pink>",
+          "msg_url1": "shopify:\/\/pages\/rewards",
+          "msg_head2": "NEW ARRIVALS",
+          "msg_shead2": "every <pink> single day <\/pink>",
+          "msg_url2": "shopify:\/\/collections\/new-arrivals",
+          "mmsg_head1": "FREE SHIPPING",
+          "mmsg_shead1": "<p class=\"site-header__rewards-text\">on orders <span style=\"color:#ffa5b4;\"> over $<span class=\"order_limit\">125<\/span><\/span><\/p>",
+          "mmsg_url1": "shopify:\/\/pages\/rewards",
+          "mmsg_head2": "NEW ARRIVALS",
+          "mmsg_shead2": "<p class=\"site-header__rewards-text\">every <span style=\"color:#ffa5b4;\"> single day<\/span><\/p>",
+          "mmsg_url2": "shopify:\/\/collections\/new-arrivals",
+          "order_limit_vip_gold": "125",
+          "order_limit_vip_platinum": "100",
+          "order_limit_vip_diamond": "75"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_linklist_company": "footer",
+          "footer_linklist_service": "customer-service",
+          "footer_logo": "shopify:\/\/shop_images\/footerlogo.png"
+        }
+      },
+      "product": {
+        "type": "product",
+        "settings": {
+          "show_share_buttons": true,
+          "slide_onoff": true,
+          "sec_imageo": "shopify:\/\/shop_images\/icon_shipping.png",
+          "sec_imageo_title": "VERY FAST SHIPPING",
+          "sec_imaget": "shopify:\/\/shop_images\/design.png",
+          "sec_imaget_title": "UNIQUE DESIGNS",
+          "sec_imagett": "shopify:\/\/shop_images\/pricing.png",
+          "sec_imagett_title": "AFFORDABLE PRICING",
+          "shipping_info": "<p>For <strong>Standard Shipping<\/strong>, our processing time is 1-2 business days. Once orders ship, shipping takes 2-8 business days to be delivered.<\/p>\n<p>If you need your order sooner, priority shipping methods are available at checkout as well.<\/p>\n<p>To learn more about all of our shipping options, <a href=\"\/pages\/shipping-information\" title=\"Shipping Information\">click here<\/a>.<\/p>",
+          "order_overtitle": "Free Shipping on Orders Over $<span class=\"order_limit\">$125<\/span>",
+          "order_over": "<p>Lorem Ipsum&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,&nbsp;<\/p>"
+        }
+      },
+      "index-newsletter": {
+        "type": "index-newsletter",
+        "settings": {
+          "title": "Join the <span class=\"theme-color\">SIP<\/span> family",
+          "message": "Get 10% off your first order, and be in the know of new arrivals,\ndiscounts and special promotions."
+        }
+      },
+      "promobar": {
+        "type": "promobar",
+        "settings": {
+          "enable": true,
+          "bg": "",
+          "m_bg": "",
+          "link_url": "shopify:\/\/collections\/new-arrivals",
+          "title": "We're Fully Operational!",
+          "sub_title": "Expect Shipping Delays ✈",
+          "btn_text": "Shop Now!",
+          "button_url": "shopify:\/\/collections\/new-arrivals"
+        }
+      },
+      "index-offers": {
+        "type": "index-offers",
+        "settings": {
+          "title": "",
+          "collection": ""
+        }
+      },
+      "collection-banner-section": {
+        "type": "collection-banner-section",
+        "settings": {}
+      },
+      "index-instagram": {
+        "type": "index-instagram",
+        "settings": {}
+      },
+      "featured-tab-products": {
+        "type": "featured-tab-products",
+        "settings": {
+          "title": "",
+          "link_url": ""
+        }
+      },
+      "about-us": {
+        "type": "about-us",
+        "settings": {
+          "image-desktop": "shopify:\/\/shop_images\/About_Us_Header_00000.jpg",
+          "welcome_msg": "WELCOME TO SPARKLE IN PINK",
+          "description_msg": "Sparkle In Pink is a family owned business In Draper, Utah",
+          "image-mobile": "shopify:\/\/shop_images\/About_Us_Header_Mobile_00000.jpg"
+        }
+      },
+      "1582651603660": {
+        "type": "index-header",
+        "blocks": {
+          "1594409597877": {
+            "type": "slide",
+            "settings": {
+              "bg": "shopify:\/\/shop_images\/New_Fall_Collection_Cheetah_Sherpa_Vest_Banner_1f10070f-099d-46fb-8c6e-8aaf737abd59.jpg",
+              "bg_mobile": "shopify:\/\/shop_images\/New_Fall_Collection_Cheetah_Sherpa_Vest_Banner_1f10070f-099d-46fb-8c6e-8aaf737abd59.jpg",
+              "title": "",
+              "smear": false,
+              "link_url": "shopify:\/\/collections\/new-arrivals",
+              "link_text": ""
+            }
+          },
+          "1591147535559": {
+            "type": "slide",
+            "settings": {
+              "bg": "shopify:\/\/shop_images\/Match_With_Your_Bestie_Banner.jpg",
+              "bg_mobile": "shopify:\/\/shop_images\/Match_With_Your_Bestie_Banner.jpg",
+              "title": "",
+              "smear": false,
+              "link_url": "https:\/\/sparkleinpink.com\/search?q=best*+friend*&type=product",
+              "link_text": ""
+            }
+          },
+          "1582651695254": {
+            "type": "slide",
+            "settings": {
+              "bg": "shopify:\/\/shop_images\/New_Swim_Hawaii_Banner2.jpg",
+              "bg_mobile": "shopify:\/\/shop_images\/New_Swim_Hawaii_Banner2.jpg",
+              "title": "",
+              "smear": false,
+              "link_url": "shopify:\/\/collections\/swimsuits",
+              "link_text": ""
+            }
+          },
+          "1592336844528": {
+            "type": "slide",
+            "settings": {
+              "bg": "shopify:\/\/shop_images\/Early_Fall_Sherpa_Sale_Banner.jpg",
+              "bg_mobile": "shopify:\/\/shop_images\/Early_Fall_Sherpa_Sale_Banner.jpg",
+              "title": "",
+              "smear": false,
+              "link_url": "shopify:\/\/products\/mom-me-sherpa-drawstring-hoodie-forest-green-cheetah",
+              "link_text": ""
+            }
+          }
+        },
+        "block_order": [
+          "1594409597877",
+          "1591147535559",
+          "1582651695254",
+          "1592336844528"
+        ],
+        "settings": {
+          "enable_heading": false,
+          "heading_text": "Adorable Made Affordable"
+        }
+      },
+      "1582653207917": {
+        "type": "index-introduction",
+        "settings": {
+          "title": "Adorable Made Affordable",
+          "content": "At Sparkle In Pink, we are committed to providing high quality, stylish clothing at affordable prices to make kids feel their best!"
+        }
+      },
+      "1582653254918": {
+        "type": "index-usp-top",
+        "blocks": {
+          "1582653262865": {
+            "type": "usp",
+            "settings": {
+              "title": "Very Fast SHIPPING",
+              "icon": "shopify:\/\/shop_images\/icon_shipping_9d9ee0f4-54fa-42ba-beda-ab6555e20c5f.png"
+            }
+          },
+          "1582653264249": {
+            "type": "usp",
+            "settings": {
+              "title": "Exclusive DESIGNS",
+              "icon": "shopify:\/\/shop_images\/design_c832358f-561f-4046-8569-aff1e9df49a5.png"
+            }
+          },
+          "1582653265732": {
+            "type": "usp",
+            "settings": {
+              "title": "AFFORDABLE PRICING",
+              "icon": "shopify:\/\/shop_images\/pricing_ef51edf0-66ab-4c02-9551-292493ab597a.png"
+            }
+          }
+        },
+        "block_order": [
+          "1582653262865",
+          "1582653264249",
+          "1582653265732"
+        ],
+        "settings": {}
+      },
+      "1582653379584": {
+        "type": "index-f-collections",
+        "blocks": {
+          "1582653404163": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "new-arrivals",
+              "image": "shopify:\/\/shop_images\/New_Fall_Website_Block.jpg",
+              "title": "New Arrivals",
+              "link_text": "Shop Now"
+            }
+          },
+          "1582653405662": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "mommy-me",
+              "image": "shopify:\/\/shop_images\/Best_Friend_Mom_Me_Tie_Dye_Tops_Website_Block.jpg",
+              "title": "Mom & Me",
+              "link_text": "Shop Now"
+            }
+          },
+          "1582653407689": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "back-to-school",
+              "image": "shopify:\/\/shop_images\/Back_to_School_Naviagtion_Box.jpg",
+              "title": "Back to School",
+              "link_text": "Shop Now"
+            }
+          },
+          "1582653418576": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "accessories",
+              "image": "shopify:\/\/shop_images\/Tie_Dye_Pastel_Romper_Website_Block.jpg",
+              "title": "Accessories",
+              "link_text": "Shop Now"
+            }
+          }
+        },
+        "block_order": [
+          "1582653404163",
+          "1582653405662",
+          "1582653407689",
+          "1582653418576"
+        ],
+        "settings": {
+          "link_text": "",
+          "link_url": ""
+        }
+      },
+      "1582655380433": {
+        "type": "featured-tab-products",
+        "blocks": {
+          "1582655408380": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "featured-collection",
+              "product_num": 16,
+              "title": "Featured"
+            }
+          },
+          "1582655409975": {
+            "type": "collection_block",
+            "settings": {
+              "collection": "mommy-me",
+              "product_num": 12,
+              "title": "Mom & Me"
+            }
+          }
+        },
+        "block_order": [
+          "1582655408380",
+          "1582655409975"
+        ],
+        "settings": {
+          "title": "Featured Collection",
+          "link_url": "shopify:\/\/collections\/new-arrivals"
+        }
+      },
+      "1583403275308": {
+        "type": "index-f-products",
+        "settings": {
+          "title": "Featured Products",
+          "disable_quick_view": false,
+          "link_text": "See more Products",
+          "link_url": "shopify:\/\/collections\/new-arrivals",
+          "collection": "featured-collection",
+          "product_num": 16
+        }
+      },
+      "1583404011161": {
+        "type": "index-offers",
+        "settings": {
+          "title": "Special Offers",
+          "collection": "daily-deals"
+        }
+      },
+      "1583404087093": {
+        "type": "index-story",
+        "settings": {
+          "title": "Our Story",
+          "content": "<p>Sparkle In Pink is not like most other boutiques around. We design our clothing so we are original and focus on selling only the trendiest and highest quality items. We are always searching for new ideas and keeping our eye on the latest trends so we can offer you the latest fashions at wholesale pricing. SIP is more than just a clothing store, at least we think so. We get to make little girls all around the world feel like princesses and make them feel beautiful for any occasion! If we can put a smile on a little girl's face and make them feel beautiful like they are, we have done our job!<\/p>",
+          "link_text": "Learn More",
+          "link_url": "shopify:\/\/pages\/about-us"
+        }
+      },
+      "1583546562545": {
+        "type": "index-testimonials",
+        "blocks": {
+          "1583546586530": {
+            "type": "logo",
+            "settings": {
+              "logo": "shopify:\/\/shop_images\/Press_Logo_01_Grayscale00000_107676fe-e4fe-4f75-b0b7-0a954f999e70.png",
+              "url": "https:\/\/www.bbb.org\/us\/ut\/draper\/profile\/clothing\/sparkle-in-pink-llc-1166-90014179"
+            }
+          },
+          "1583546589333": {
+            "type": "logo",
+            "settings": {
+              "logo": "shopify:\/\/shop_images\/Press_Logo_02_00000_945de4df-8cc7-414f-b3fe-1763af1b0fc2.png",
+              "url": "https:\/\/www.inc.com\/profile\/sparkle-in-pink"
+            }
+          },
+          "1583546591131": {
+            "type": "logo",
+            "settings": {
+              "logo": "shopify:\/\/shop_images\/Press_Logo_03_Grayscale00000_449af328-b662-43f4-9033-db1a16594fd4.png",
+              "url": "https:\/\/www.abc4.com\/gtu\/gtu-sponsor\/adorable-clothes-made-affordable\/"
+            }
+          }
+        },
+        "block_order": [
+          "1583546586530",
+          "1583546589333",
+          "1583546591131"
+        ],
+        "settings": {
+          "title": "Real Reviews from Real Customers",
+          "content": "Don't take our word for it, hear what all of our amazing customers are saying about Sparkle In Pink!"
+        }
+      },
+      "1583547370072": {
+        "type": "index-usp-bottom",
+        "blocks": {
+          "1583547379088": {
+            "type": "usp",
+            "settings": {
+              "title": "#1 RANKED CHILDREN’S BOUTIQUE",
+              "icon": "shopify:\/\/shop_images\/ranked_77a16829-795f-46f5-b11a-bd664d664992.png"
+            }
+          },
+          "1583547381171": {
+            "type": "usp",
+            "settings": {
+              "title": "4.87 Star Average Rating",
+              "icon": "shopify:\/\/shop_images\/rating_a2b49bc5-67ee-473d-ae62-e51510798de7.png"
+            }
+          },
+          "1583547388415": {
+            "type": "usp",
+            "settings": {
+              "title": "Inc 5000 FASTEST GROWING COMPANY",
+              "icon": "shopify:\/\/shop_images\/company_6402c856-323f-43f0-b546-8ff1c8c7c366.png"
+            }
+          }
+        },
+        "block_order": [
+          "1583547379088",
+          "1583547381171",
+          "1583547388415"
+        ],
+        "settings": {}
+      },
+      "1583547931983": {
+        "type": "index-instagram",
+        "settings": {}
+      },
+      "1583547976160": {
+        "type": "index-newsletter",
+        "settings": {
+          "title": "Join the <span class=\"theme-color\">SIP<\/span> family",
+          "message": "Get 10% off your first order, and be in the know of new arrivals,\ndiscounts and special promotions."
+        }
+      }
+    },
+    "content_for_index": [
+      "1582651603660",
+      "1582653207917",
+      "1582653254918",
+      "1582653379584",
+      "1582655380433",
+      "1583403275308",
+      "1583404011161",
+      "1583404087093",
+      "1583546562545",
+      "1583547370072",
+      "1583547931983",
+      "1583547976160"
+    ]
+  },
+  "presets": {
+    "Default": {
+      "content_for_index": []
+    }
+  }
+}

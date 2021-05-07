@@ -1,0 +1,234 @@
+<style>
+  .promo * {
+    font-family: "Open Sans";
+  }
+
+  .shopfy-section.promobar {
+    max-width: 100% !important;
+  }
+
+  .container.promo {
+    max-width: 100% !important;
+  }
+
+  .promo {
+    text-align: center;
+  }
+  .promo.bg-img{
+      background-image: url('{{ section.settings.bg | img_url: "master" }}');
+      height: 80px;
+      width: auto;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+  .promo.bg-solid{
+  	  background-color:black;
+      height: 80px;
+      width: auto;
+      background-size: contain;
+  }
+  .promo h5 {
+    width: auto !important;
+    font-size: 23px;
+    font-weight: normal;
+    letter-spacing: 4px;
+    color: white;
+    transform: translateY(5px);
+    margin-bottom: 7px;
+    max-width: calc(100% - 400px);
+  }
+
+  .promo .index-introduction__content {
+    color: white;
+    font-size: 19px;
+    letter-spacing: 3px;
+    max-width: calc(100% - 400px);
+  }
+
+  .promo button {
+    padding: 10px 15px;
+    color: white;
+    border: 1px solid white;
+    background: transparent;
+  }
+
+  .promo .promo_action_btn {
+    margin-top: -50px;
+    float: right;
+    margin-right: 70px;
+  }
+
+  @media (max-width: 1080px) {
+    .promo h5 {
+      font-size: 20px;
+    }
+
+    .promo .index-introduction__content {
+      font-size :17px;
+    }
+
+  }
+
+  @media (max-width: 980px) {
+
+    .container.promo {
+      height: 65px !important;
+    }
+
+    .promo h5 {
+      max-width: calc(100% - 110px);
+      line-height: 1em;
+      font-size: 16px;
+      text-align: left;
+      margin-left: 5px;
+      margin-bottom: 5px;
+      transform: translateY(12px);
+      overflow: hidden;
+      max-height: 16px;
+    }
+
+    .promo .index-introduction__content {
+      margin-left: 5px !important;
+      max-width: calc(100% - 110px);
+      text-align: left;
+      transform: translateY(15px);
+      letter-spacing: 3px;
+      font-size: 13px;
+      line-height: 18px;
+      overflow: hidden;
+      max-height: 18px;
+    }
+
+    .promo .promo_action_btn {
+      margin-top: -29px !important;
+      margin-right: 0px !important;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .promo .promo_action_btn button {
+      padding: 6px 8px !important;
+      font-size: 13px;
+    }
+  }
+  @media (max-width: 768px) {
+    .template-login .promo.bg-solid, .template-register .promo.bg-solid{
+      margin-bottom: 40px;
+    }
+  }
+  @media(max-width: 480px){
+    .promo.bg-img{
+      {% if section.settings.m_bg != nil %}
+      background-image: url('{{ section.settings.m_bg | img_url: "master" }}');
+      {% endif %}
+    }
+  }
+  @media(max-width: 390px){
+    .promo h5 {
+      letter-spacing: 2px !important;
+    }
+    
+    .container.promo{
+      background-size: cover !important;
+    }
+
+    .promo .index-introduction__content {
+      letter-spacing: 2px !important;
+    }
+  }
+
+  @media (max-width: 340px) {
+    .promo h5 {
+      letter-spacing: 1px !important;
+    }
+    .promo .index-introduction__content {
+      letter-spacing: 1px !important;
+    }
+  }
+  @media(min-width:768px){
+  	.shopfy-section .promo {
+    	display:none ;
+  	}
+  }
+</style>
+
+{% if section.settings.enable %}
+{% if section.settings.bg != nil or section.settings.title != "" or section.settings.sub_title != "" %}
+<div class="container promo {% if section.settings.bg != nil %}bg-img{% else %}bg-solid{% endif %}">
+  {% if section.settings.title != "" %}
+    <h5 class="index-introduction__title">{{ section.settings.title }}</h5>
+  {% endif %}
+  {% if section.settings.sub_title != "" %}
+    <div class="index-introduction__content">
+      {{ section.settings.sub_title }}
+    </div>
+  {% endif %}
+
+  {% if section.settings.button_url != blank %}
+    <a href="{{ section.settings.button_url }}" class="promo_action_btn"><button>{{ section.settings.btn_text }}</button></a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endif %}
+
+{% schema %}
+
+{
+    "name": "promobar",
+    "class": "promobar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable",
+        "label": "Enable",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "bg",
+        "label": "Background | Desktop",
+        "info": "1605 x 75"
+      },
+	  {
+        "type": "image_picker",
+        "id": "m_bg",
+        "label": "Background | Mobile",
+        "info": "600 x 95"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "Link URL"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub Title"
+      },
+	  {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+		"default": "ENTER NOW"
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "Action URL"
+      }
+
+    ],
+    "presets": [{
+        "name": "promobar",
+        "category": "promobar"
+    }]
+}
+
+{% endschema %}

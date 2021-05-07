@@ -1,0 +1,50 @@
+{
+  "switcher": {
+    "version": "2.0.0",
+    "customCSS": "",
+    "languageDetection": true,
+    "languageDetectionDefault": "en",
+    "breakpoints": [
+      {
+        "key": 0,
+        "label": "0px",
+        "config": {
+          "type": "custom",
+          "corner": "bottom_right",
+          "position": "fixed",
+          "show_flags": true,
+          "show_label": true,
+          "show_custom_name": true,
+          "show_name": false,
+          "show_iso_code": false,
+          "round_flags": false,
+          "is_dark": false,
+          "is_transparent": false,
+          "dropdown_open": false,
+          "h_space": 0,
+          "v_space": 0
+        }
+      },
+      {
+        "key": 1000,
+        "label": "1000px",
+        "config": {
+          "type": "custom",
+          "corner": "bottom_right",
+          "position": "fixed",
+          "show_flags": true,
+          "show_label": true,
+          "show_custom_name": true,
+          "show_name": false,
+          "show_iso_code": false,
+          "round_flags": false,
+          "is_dark": false,
+          "is_transparent": false,
+          "dropdown_open": false,
+          "h_space": 0,
+          "v_space": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,197 @@
+.model-search-form {
+
+    margin: 0 auto;
+    max-width: 549px;
+  	width:60%;
+  	position: absolute;
+	top: 50%;
+	left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 27px;
+    color: #ffff;
+    text-align: center;
+    display:inline-block;
+  	height:50px;
+  .append-button {
+    width: 100%;
+	display:flex;
+    height:100%;
+    input{
+      display:inline-block;
+      height:100%;
+      border: 1px solid #FFA5BB;
+      border-right:none;
+      background-color:#F5F5F5;
+      color: #7B7B7B;
+	  font-size: 18px;
+      font-family:"Lato";
+  	}
+    button{
+      background-color: #F5F5F5;
+      width: 50px;
+       border: 1px solid #FFA5BB;
+      display: flex;
+      justify-content: center;
+      display: block;
+      padding: 15px 20px 15px 10px;
+      border-left: none;
+      margin: 0;
+      svg{
+      	width:20px;
+        margin:0;
+        color: black !important;
+      }
+    }
+  }
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .bannre_text_collection{
+  position:relative;
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .bannre_text_collection img{
+  height: 198px;
+  width: 1920px;
+  display:block;
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product{
+  padding-top:53px;
+  .search_row{
+    margin-left:0;
+    margin-right:0;
+    .product-item__img-container{
+      margin: 0 0 10px;
+    }
+  }
+  .pagination_sec{
+    margin-top: 10px;
+	margin-bottom: 90px;
+  }
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .container{
+  padding:0;
+  max-width:1224px;
+}
+.model-search-form .fa{
+  color:#293341;
+  font-size:20px;
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product .search_row{
+  
+}
+.template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product .search_products{
+  padding: 5px 3px 0 3px !important;
+  margin: 0 0 40px;
+}
+.bannre_text_collection{
+  img{
+  	width:100%;
+  }
+}
+.pagination .page{
+  	
+    margin: 0 5px;
+  }
+.search-rc{
+	max-width:1405px;
+  	margin:0 auto;
+}
+.sr-title, .sr-sub-title{
+  	margin-bottom:14px;
+    font-weight:500;
+}
+.sr-title{
+  font-family:"Poppins";
+  font-size:31px;
+  color:#293341;
+}
+.sr-sub-title{
+  font-family:"Lato";
+  font-size:16px;
+  color:#7B7B7B;
+}
+.pagination_sec{
+	margin-top:40px;
+  	margin-bottom:80px;
+}
+@media (min-width:769px) and (max-width:1240px){
+ .template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product{
+    padding: 30px 10px 0 10px;
+  }
+}
+@media (max-width:768px){
+/*   .bannre_text_collection img{
+  	display:none;
+  } */
+  .template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product{
+    padding: 20px 6px 0 6px;
+  }
+  .template-search.theme-store-id-0.swym-no-touch.swym-ready .recent_product .search_products{
+  	 margin: 0 0 20px;
+  }
+  .template-search.theme-store-id-0.swym-no-touch.swym-ready .bannre_text_collection img{
+    display:none;
+  }
+  .model-search-form{
+    position:static;
+    transform: translateX(0) translateY(0);
+    margin-left:20%;
+    margin-top:30px;
+  }
+/*   .bannre_text_collection form{
+  	margin-top:35px;
+    width:80%;
+  } */
+  .pagination .page{
+  	padding:10px 13px;
+    margin: 0 3px;
+  }
+}
+@media(max-width:500px){
+  .model-search-form{
+    width:100%;
+    padding:0 10px;
+    margin-left:0;
+    margin-top:20px;
+    
+  }
+}
+/* @media(min-width:967px) and (max-width:1404px){
+  .recent_product{
+  	padding:60px 60px 0 60px;    
+  }
+} */
+
+.pagination span{
+  color:#293341;
+  font-size:16px;
+}
+.pagination .prev,.pagination .next{
+  border: 1px solid #ddd !important;  
+  display:inline-block;
+  width:49px;
+  height:49px;
+  padding:15px!important;
+}
+.pagination span.page.current{
+  border: 1px solid #fe90ad;
+  color:white!important;
+  padding:15px;
+}
+.pagination .page, .deco{
+  display:none;
+}
+.pagination .current, .pagination .current + .page{
+  display:inline-block!important;
+  width:49px;
+  height:49px;
+  padding:15px 0;
+}
+.pagination .prev1{
+  display:inline-block!important;
+  width:49px;
+  height:49px;
+  padding-top:15px;
+}
+.prev.disabled.prev1,.next.disabled{
+  padding-top:15px!important;
+  color:#EEEEEE;
+}

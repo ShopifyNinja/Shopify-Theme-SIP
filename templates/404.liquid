@@ -1,0 +1,104 @@
+<style>
+  .container_404 {
+    background-color: #FAFAFA;
+    padding-top: 179px;
+    padding-bottom: 65px;
+  }
+  .upper {
+    font-family: Open Sans;
+    font-size: 30px;
+    color: #222222;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 420px;
+  }
+  .p_404
+  {
+    font-family: Open Sans;
+    font-size: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 210px;
+    text-align: center;
+    color: #FDA6B8;
+    font-weight: bold;
+  }
+  .description
+  {
+    font-family: Open Sans;
+    font-size: 16px;
+    color: #222222;
+    line-height: 30px;
+    max-width: 420px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .btn {
+    height: 50px;
+    width: 290px;
+    border: 1px solid #000000;
+    background-color: #000000;
+    font-size: 14px;
+    color: #FFFFFF;
+    padding-top: 14px;
+    font-family: Open Sans;
+    border-radius: 0px;
+  }
+  
+  .bottom_div
+  {
+    text-align: center;
+    padding-top: 44px;
+    padding-bottom: 93px;
+  }
+  
+  @media (max-width: 480px) 
+    {
+      .upper {
+        max-width: 286px;
+        font-size: 22px;
+      }
+      .p_404
+      {
+        max-width: 300px;
+        font-size: 160px;
+      }
+      .description
+      {
+        max-width: 300px;
+      }
+      .container_404 {
+        padding-top: 80px;
+        padding-bottom: 45px;
+      }
+      .bottom_div
+      {
+        padding-top: 24px;
+        padding-bottom: 50px;
+      }
+      
+      .btn
+      {
+        width: 240px;
+        height: 40px;
+        padding-top: 9px;
+      }
+
+    }
+</style>
+<div class="container_404">
+  <div class="upper">Looks like you are lost!</div>
+  <div class="p_404">404</div>
+  <div class="description">
+    You seem to have reached a page that doesn't exist.<br>
+    Don't worry we can help you find your way back home!
+  </div>
+</div>
+<div class="bottom_div">
+  <a href="/" class="btn">GO BACK TO OUR HOME PAGE</a>
+</div>
+
+
+{% include 'SEOManager-404' %}

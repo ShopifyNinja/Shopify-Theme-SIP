@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!--><html lang="{{ shop.locale }}"><!--<![endif]-->
+<head>
+  {% include 'booster-seo' %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="robots" content="index,follow">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_accent }}">
+  <meta name="p:domain_verify" content="320bb3235401c5e8af5c85649ae56b7f"/>
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+
+  {%- capture seo_title -%}
+    {{ page_title }}
+    {%- if current_tags -%}
+      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {%- endif -%}
+    {%- if current_page != 1 -%}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {%- endif -%}
+    {%- assign escaped_page_title = page_title | escape -%}
+    {%- unless escaped_page_title contains shop.name -%}
+      &ndash; {{ shop.name }}
+    {%- endunless -%}
+  {%- endcapture -%}
+  {% comment %}<title>{{ seo_title | strip }}</title>{% endcomment %}
+
+  {%- if page_description -%}
+    {% comment %}<meta name="description" content="{{ page_description | escape }}">{% endcomment %}
+  {%- endif -%}
+
+  {% include 'social-meta-tags' %}
+
+  {% include 'head_styles' %}{% comment %}
+  {{ content_for_header }}
+  {%- render 'bold-common' -%}
+
+  {{ 'bold-brain-widget.css' | asset_url | stylesheet_tag }}
+  {% endcomment %}
+  
+  {% include 'head_scripts' content_for_header: content_for_header %}
+
+  {% include 'limespot' %}
+  {% comment %}
+  {% assign nowts = "now" | date: "%s" %}{% assign metats = shop.metafields._ls_meta.check %}{% assign timediff = nowts | minus: metats %}{% if timediff < 604800 %}<script async="async" src="https://livesearch.okasconcepts.com/js/livesearch.init.min.js?v=2&shop=sparkle-in-pink.myshopify.com"></script>{% endif %}
+  {% endcomment %}
+ 
+{% render 'weglot_hreftags' %}
+{% render 'weglot_switcher' %}
+
+
+{%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+{%- assign time_now = 'now' | date: '%s' %}
+{%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+{%- assign diffSeconds = time_now | minus: yotpo_live_time %}
+{%- if yotpo_offload_content == 'yes' and diffSeconds < 86400 -%}
+{{ 'yotpo-full-css.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+</head>
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}" data-asset-url="{{ 'asset_url' | asset_url | split: 'asset_url' | first }}">
+  <div class="overlays" style="display: none;"></div>
+  <!-- <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a> -->
+{% if true %}
+  {% section 'header' %}
+
+  <main role="main" id="MainContent" {% if template contains 'collection' %}data-soldout-img-url="{{ 'soldout.png' | asset_url }}"{% endif %}>
+    {% section 'promobar' %}
+    {{ content_for_layout }}
+  </main>
+
+  {% if template contains 'search' or template contains '404' %}
+  <div class="container limespot-cc">
+    <limespot></limespot>
+  </div>
+  {% endif %}
+
+  {% section 'footer' %}
+  {% include 'smile-initializer' %}
+  
+
+  {% if template contains 'page' %}
+  <script type="text/javascript">
+    var _learnq = _learnq || [];
+
+    _learnq.push(['account', 'MDKp8p']);
+
+    (function () {
+    var b = document.createElement('script'); b.type = 'text/javascript'; b.async = true;
+    b.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'a.klaviyo.com/media/js/analytics/analytics.js';
+    var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(b, a);
+    })();
+  </script>
+  {% endif %}
+  
+  {% if template contains 'collection' %}
+  {% include 'bc-sf-filter' %}
+  {% endif %}
+  
+  {% include 'swymSnippet' %}
+
+  {% comment %} {% include 'swymAddAllToCart' %} {% endcomment %}
+
+  
+  {% include 'script-tags', layout: 'theme' %}
+  
+  {% include 'mw_GP_objects' %}
+  
+  {{ 'esNamesToCheckout.js'  | asset_url | script_tag  }}
+
+  <!--Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}{% capture gorgiasChat %}<script src="https://config.gorgias.io/production/qgaXzxaPYo7vDWOp/chat/dY4gQxze407Wnv8l.js" defer></script>{% endcapture %}</div><!--Gorgias Chat Widget End-->
+  {% endif %}
+</body>
+</html>

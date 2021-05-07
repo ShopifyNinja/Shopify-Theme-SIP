@@ -1,0 +1,81 @@
+
+
+{% for link in linklists[header_menu].links %}
+    {% if link.links != blank %}
+	  {% assign index = 0 %}
+      {% assign tmp_index = index %}
+      <li class="menu-item toggle closed" index="{{ index }}" is_open="false">
+        <a class="menu-target" href="javascript:;">
+          <span class="menu-title"> {{ link.title }} </span>
+          {% comment %}{{ "icon-white-direction-down.png" | asset_url | img_tag }}{% endcomment %}
+        </a>
+        {% assign menu_flag = 0 %}
+        {% for childlink in link.links %}
+          {% if childlink.links != blank %}
+            {% assign menu_flag = 1 %}
+            {% break %}
+          {% endif %}
+        {% endfor %} 
+
+        {% if menu_flag == 1 %}
+          <ul class="menu-submenu menu-submenu-drop index{{ index }}">
+            <span class="globmenu-caret"></span>
+            <li class="menu-submenu-sublist menu-submenu-container">
+              <ul>
+                {% assign tmp_index = index %}
+                {% assign tmp_index = tmp_index | plus : 1 %}
+                {% for childlink in link.links %}
+                    {% if childlink.links != blank %}
+
+                      <li class="menu-item toggle closed" index="{{ tmp_index }}" is_open="false">
+                        <a class="menu-target" href="javascript:;">
+                          <span class="menu-target-title menu-target-text">{{ childlink.title }}</span>
+                          {% comment %}{{ "icon-white-direction-down.png" | asset_url | img_tag }}{% endcomment %}
+                        </a>
+                        <ul class="menu-submenu menu-submenu-type-stack index{{ tmp_index }}">
+                          {% for child in childlink.links %}
+                            <li class="menu-item  gin"> <a class="menu-target " href="{{ child.url }}">
+                              <span class="menu-target-title menu-target-text">{{ child.title }}</span></a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li class="menu-item toggle closed" index="{{ tmp_index }}" is_open="false">
+                        <a class="menu-target" href="javascript:;">
+                          <span class="menu-target-title menu-target-text">{{ childlink.title }}</span>
+                          {% comment %}{{ "icon-white-direction-down.png" | asset_url | img_tag }}{% endcomment %}
+                        </a>
+                      </li>
+                    {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        {% else %}
+          {% assign tmp_index = index %}
+          <ul class="menu-submenu toggle closed index{{ tmp_index }}" is_open="false">
+            <span class="globmenu-caret"></span>
+            {% for childlink in link.links %}
+                  <li class="menu-item">
+                    <a class="menu-target" href="{{ childlink.url }}">
+                      <span class="menu-target-title menu-target-text">{{ childlink.title }}</span>
+                      {% comment %}{{ "icon-white-direction-down.png" | asset_url | img_tag }}{% endcomment %}
+                    </a>
+                  </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+
+    {% else %}
+    
+      <li class="menu-item  menu-item-level-0 gin">
+        <a class="menu-target " href="{{ link.url }}"><span class="menu-target-title menu-target-text">
+          {{ link.title }}
+        </span></a>
+      </li>
+    {% endif %}
+  {% assign index = index | plus : 1 %}
+  {% endfor %}
+

@@ -1,0 +1,62 @@
+<div class="banner">
+
+  {% if section.settings.image-desktop != blank %}
+  <div class="banner-desktop">
+  {% include 'responsive-image' with
+  image: section.settings.image-desktop,
+  max_width: 2000,
+  min_width:2000
+  %}
+    <div class="about-us-msg">
+      <p class="welcome_msg">{{ section.settings.welcome_msg }}</p>
+      <p class="description_msg">{{ section.settings.description_msg }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if section.settings.image-mobile != blank %}
+  <div class="banner-mobile">
+  {% include 'responsive-image' with
+  image: section.settings.image-mobile,
+  max_width: 767,
+  max_height: 767
+  %}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "About Us Image",
+    "settings": [
+	  {
+		"type": "image_picker",
+		"id": "image-desktop",
+		"label": "Image Desktop"
+	  },
+	  {
+		"type": "text",
+		"id": "welcome_msg",
+		"label": "Welcome Message",
+		"default": "WELCOME TO SPARKLE IN PINK"
+	  },
+	  {
+		"type": "text",
+		"id": "description_msg",
+		"label": "Description",
+		"default": "Sparkle In Pink is a family owned business In Draper, Utah"
+	  },
+	  {
+		"type": "image_picker",
+		"id": "image-mobile",
+		"label": "Image mobile"
+
+	  }
+	],
+	"presets": [
+      {
+		"name": "About Us",
+		"category": "Image"
+	  }
+    ]
+  }
+{% endschema %}

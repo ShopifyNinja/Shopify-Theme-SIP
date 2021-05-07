@@ -1,0 +1,147 @@
+<style>
+
+  @media (max-width: 768px){
+    .shopify-section.index-newsletter {
+      background: whitesmoke;
+      padding-top: 20px;
+      padding-bottom: 15px;
+      margin-bottom: 0px;
+    }
+
+    .shopify-section.index-newsletter .index-newsletter__title{
+      line-height: 33px;
+      font-family: Lato !important;
+      color: #1a1a1a;
+      text-transform: capitalize;
+      font-size: 18px !important;
+    }
+
+    .shopify-section.index-newsletter .index-newsletter__message{
+      line-height: 18px !important;
+      margin-top: 2px;
+      font-size: 12px;
+    }
+
+    .shopify-section.index-newsletter .row .col-md-6:nth-child(2) {
+      margin-top: 10px;
+    }
+
+    .index-newsletter button span.desktop {
+      display: none;
+    }
+
+    .index-newsletter button span.mobile {
+      display: block !important;
+    }
+
+    .index-newsletter .input-group.password__input-group input#Email {
+      width: calc(100% - 30px) !important;
+      height: 41px !important;
+      background-color: #fff;
+    }
+
+    .index-newsletter .input-group.password__input-group span.input-group__btn {
+      width: 47px !important;
+      height: 47px !important;
+      border-radius: 50%;
+      padding-top: 16px;
+      margin-left: -20px;
+      margin-top: -2px;
+      z-index: 101;
+    }
+
+    .index-newsletter .input-group.password__input-group span.input-group__btn button#Subscribe {
+      padding: 0px !important;
+    }
+  }
+
+  .index-newsletter button span.mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .index-newsletter .input-group.password__input-group input#Email {
+      border: 0 !important;
+      font-family: Lato;
+    }
+  }
+  .form--success {
+    font-size: 18px;
+	font-family: Lato;
+	font-weight: bold;
+	color: #7b7b7b;
+  }
+</style>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      {% if section.settings.title %}
+        <h3 class="index-newsletter__title">Join the <span class="theme-color">SIP</span> family</h3>
+      {% endif %}
+      {% if section.settings.message %}
+        <div class="index-newsletter__message">Get 10% off your first order, and be in the know of new arrivals,
+discounts and special promotions.</div>
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+     <div class="join_the_SIP newsletter-section{% if section.settings.show_background %} index-section--newsletter-background{% endif %}">
+  <div class="text-center">
+
+    {% form 'customer' %}
+      {{ form.errors | default_errors }}
+      {% if form.posted_successfully? %}
+        <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+      {% else %}
+        <div class="input-group password__input-group">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input class="newsletter-inputbox" type="email"
+            name="contact[email]"
+            id="Email"
+            class="input-group__field newsletter__input"
+            value="{% if customer %}{{ customer.email }}{% endif %}"
+            placeholder="Enter your email address"
+            autocorrect="off"
+            autocapitalize="off">
+          <span class="input-group__btn">
+            <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
+              <span class="newsletter__submit-text--large desktop">{{ 'general.newsletter_form.submit' | t }}</span>
+              <span class="newsletter__submit-text--large mobile">
+                <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon-white-arrow-right.png' | asset_url }}">
+              </span>
+            </button>
+          </span>
+        </div>
+      {% endif %}
+    {% endform %}
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Newsletter",
+    "class": "index-newsletter",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "message",
+        "label": "Message"
+      }
+    ],
+    "presets": [{
+        "name": "Newsletter",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

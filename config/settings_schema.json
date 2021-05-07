@@ -1,0 +1,518 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Starter theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https:\/\/github.com\/Shopify\/starter-theme",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/starter-theme\/issues",
+    "theme_packaged_with": "@shopify\/slate-tools@1.0.0-beta.15"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#c4cdd5",
+        "info": "Buttons and special ornaments"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Text",
+        "default": "#161d25"
+      },
+      {
+        "type": "color",
+        "id": "color_main_bg",
+        "label": "Background",
+        "default": "#fff"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "default": "helvetica_n4",
+        "label": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "default": "helvetica_n4",
+        "label": "Body text"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing image"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Image",
+        "info": "Shown when sharing a link on social media. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) about image thumbnails."
+      },
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_sharing_blog",
+        "label": "Enable sharing for blog articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_googleplus",
+        "label": "Tweet on Google Plus",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_linkedin",
+        "label": "Pin on LinkedIn",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_instagram",
+        "label": "Tweet on Instagram",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_google-plus_link",
+        "label": "Google+ link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "LinkedIn link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat link"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr link"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo link"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Contact",
+    "settings": [
+      {
+        "type": "text",
+        "id": "contact_phone",
+        "label": "Contact phone number"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Contact email"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Nulls.Net Settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "nulls_net_embroidery_desc",
+        "label": "Desc"
+      },
+      {
+        "type": "product",
+        "id": "nulls_net_embroidery_product",
+        "label": "Embroidery product"
+      }
+    ]
+  },
+  {
+    "name": "Product Filter & Search Group",
+    "settings": [
+      {
+        "type": "select",
+        "id": "products_per_page",
+        "label": "Products per Page",
+        "info": "Desktop",
+        "options": [
+          {
+            "value": "16",
+            "label": "16"
+          },
+          {
+            "value": "20",
+            "label": "20"
+          },
+          {
+            "value": "24",
+            "label": "24"
+          },
+          {
+            "value": "28",
+            "label": "28"
+          },
+          {
+            "value": "32",
+            "label": "32"
+          },
+          {
+            "value": "36",
+            "label": "36"
+          },
+          {
+            "value": "40",
+            "label": "40"
+          },
+          {
+            "value": "44",
+            "label": "44"
+          },
+          {
+            "value": "48",
+            "label": "48"
+          },
+          {
+            "value": "60",
+            "label": "60"
+          }
+        ],
+        "default": "48"
+      },
+      {
+        "type": "select",
+        "id": "products_per_page_mobile",
+        "label": "Products per Page",
+        "info": "Mobile",
+        "options": [
+          {
+            "value": "16",
+            "label": "16"
+          },
+          {
+            "value": "20",
+            "label": "20"
+          },
+          {
+            "value": "24",
+            "label": "24"
+          },
+          {
+            "value": "28",
+            "label": "28"
+          },
+          {
+            "value": "32",
+            "label": "32"
+          },
+          {
+            "value": "36",
+            "label": "36"
+          },
+          {
+            "value": "40",
+            "label": "40"
+          },
+          {
+            "value": "44",
+            "label": "44"
+          },
+          {
+            "value": "48",
+            "label": "48"
+          },
+          {
+            "value": "60",
+            "label": "60"
+          }
+        ],
+        "default": "48"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_baby_clothing",
+        "label": "Baby Clothing"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_kid_clothing",
+        "label": "Kid Clothing"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_mom_clothing",
+        "label": "Mom Clothing"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_kid_shoes",
+        "label": "Kid Shoes"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_mom_shoes",
+        "label": "Mom Shoes"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_dad_clothing",
+        "label": "Dad Clothing"
+      },
+      {
+        "type": "textarea",
+        "id": "bc_pet",
+        "label": "Pet"
+      }
+    ]
+  },
+  {
+    "name": "Mobile App Settings - NEW",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Top Section"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_top_section",
+        "label": "Collection on top"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_top_section_button_text",
+        "label": "Top Collection button text"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_top_section_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Featured Section"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_featured_section",
+        "label": "Featured Collection"
+      },
+      {
+        "type": "header",
+        "content": "Mystery Box Section"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_mystery_collection",
+        "label": "Mystery Box Collection"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_mystery_collection_button_text",
+        "label": "Mystery Box button text"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_mystery_collection_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Main Categories"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_category_1",
+        "label": "Category 1"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_category_1_subtitle",
+        "label": "Category 1 subtitle"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_category_1_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_category_2",
+        "label": "Category 2"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_category_2_subtitle",
+        "label": "Category 2 subtitle"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_category_2_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_category_3",
+        "label": "Category 3"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_category_3_subtitle",
+        "label": "Category 3 subtitle"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_category_3_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_category_4",
+        "label": "Category 4"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_category_4_subtitle",
+        "label": "Category 4 subtitle"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_category_4_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_category_5",
+        "label": "Category 5"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_category_5_subtitle",
+        "label": "Category 5 subtitle"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_category_5_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Bottom Section"
+      },
+      {
+        "type": "collection",
+        "id": "mob_app_bottom_section",
+        "label": "Collection on bottom"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_bottom_section_button_text",
+        "label": "Bottom Collection button text"
+      },
+      {
+        "type": "color",
+        "id": "mob_app_bottom_section_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Promotional Banner"
+      },
+      {
+        "type": "text",
+        "id": "mob_app_promo_banner_text",
+        "label": "Promotion Banner Text"
+      }
+    ]
+  }
+]

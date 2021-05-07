@@ -1,0 +1,664 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+{% if swatch == blank %}
+<div class="swatch error">
+  <p>You must include the snippet swatch.liquid with the name of a product option.</p> 
+  <p>Use: <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+  <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+</div>
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == swatch %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    <style>
+      label[for="product-select-option-{{ option_index }}"] { display: none; }
+      #product-select-option-{{ option_index }} { display: none; }
+      #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    </style>
+    {% assign downcased_option = swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+<div class="swatch error">
+  <p>You included the snippet swatch.liquid with the name of a product option — <code>'{{ swatch }}'</code> — that does not belong to your product.</p>
+  <p>Use <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+  <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+  <p><strong>This is case-sensitive!</strong> Do not put in <code>'color'</code> if your product option name is <code>'Color'</code>.</p>
+</div>
+{% else %}
+  {% assign values = '' %}
+  {% assign array_mom = ''%}
+  {% assign array_adult = ''%}
+  {% assign array_baby = ''%}
+  {% assign array_child = ''%}	
+  {% assign array_dad = ''%}
+  {% assign array_boy = ''%}
+  {% assign array_girl = ''%}
+  {% assign array_pet = ''%}	
+  {% assign mom_flag = false %}
+  {% assign array_me = ''%}
+  {% assign family_flag = false %}
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}
+      {% assign values = values | append: ',' | append: value %}
+	  {% if value contains 'FAMILY'%}
+		{% assign family_flag = true %}
+		{% if value contains 'MOM'%}
+      		{% assign array_mom = array_mom | append: value | append: ','%}
+      	{% elsif value contains 'DAD' %}
+        	{% assign array_dad = array_dad | append: value | append: ','%}
+		{% elsif value contains 'BOY' %}
+        	{% assign array_boy = array_boy | append: value | append: ','%}
+		{% elsif value contains 'GIRL' %}
+        	{% assign array_girl = array_girl | append: value | append: ','%}
+		{% elsif value contains 'PET' %}
+        	{% assign array_pet = array_pet | append: value | append: ','%}
+        {% elsif value contains 'BABY' %}
+                    {% assign array_baby = array_baby | append: value | append: ','%}
+        {% elsif value contains 'CHILD' %}
+                    {% assign array_child = array_child | append: value | append: ','%}
+		{% elsif value contains 'ADULT' %}
+                    {% assign array_adult = array_adult | append: value | append: ','%}
+		{% else %}
+      	{% endif %}
+		
+	  {% else %}
+        {% if value contains 'MOM' or value contains 'ADULT' %}
+          {% assign array_mom = array_mom | append: value | append: ','%}
+        {% elsif value contains 'CHILD' %}
+          {% assign array_child = array_child | append: value | append: ','%}
+		{% elsif value contains 'KIDS' %}
+          {% assign array_baby = array_baby | append: value | append: ','%}
+        {% endif %}
+	  {% endif %}	
+    {% endunless %}
+  {% endfor %}
+  {% if family_flag %}
+	{% assign mom_options =  array_mom  | split: ',' %}
+    {% assign dad_options =  array_dad  | split: ',' %}
+    {% assign boy_options =  array_boy  | split: ',' %}
+    {% assign girl_options =  array_girl  | split: ',' %}
+    {% assign pet_options =  array_pet  | split: ',' %}
+	{% assign baby_options =  array_baby  | split: ',' %}
+    {% assign child_options =  array_child  | split: ',' %}
+    {% assign adult_options =  array_adult  | split: ',' %}	
+  {% else %}
+	{% assign mom_options =  array_mom  | split: ',' %}
+    {% assign me_options =  array_child  | split: ',' %}
+	{% assign baby_options =  array_baby  | split: ',' %}
+  {% endif %}	
+  
+  
+{% if is_color %}
+ <div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+  <div class="header">{{ swatch }}
+  </div>
+  {% assign values = '' %}
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}   
+      {% assign values = values | append: ',' | append: value %}   
+      {% assign values = values | split: ',' %}
+   	  {% assign white_flag = value | split: ' ' | last | handle %}
+   	  {% assign img_url= variant.image.src | img_url %}
+   	  {% assign v_available = false %}	
+   	   {% for variant_item in product.variants %}
+   	   		{% if variant_item.title contains value %}
+   				{% if variant_item.available %}
+   					{% assign v_available = true %}
+   					{% break %}
+   				{% endif %}
+   			{% endif %}
+   	   {% endfor %}
+      <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element color {{ value | handle }} {% if v_available %}available{% else %}soldout{% endif %}">
+   		<div class="tooltip">{{ value }}</div>
+        <input  id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless v_available %}disabled{% endunless %} />
+        <label for="swatch-{{ option_index }}-{{ value | handle }}" {% if img_url contains 'no-image'%} data="{{ product.featured_image |img_url: '300x' }}" {% else %} data="{{variant.image.src | img_url: '300x'}}" {% endif %}class=" product_color_swatch {{ value | split: ' ' | last | handle }}"  style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }}) {% if white_flag contains 'white'%}; border:1px solid #ffa5bb {% endif %} ">
+          <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+        </label>
+       </div>
+      {% if v_available %}
+      <script>
+        jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+      </script>
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+ </div>
+{% elsif swatch contains 'Child/Adult'%}
+      <div class="swatch clearfix main_div_swatch" id="{{ swatch | handle}}" data-option-index="{{ option_index }}">
+              <div class="header">{{ swatch }}
+              </div>
+        		<div class="swatchs_container">
+                  {% assign values = '' %}
+                  {% for variant in product.variants %}
+                    {% assign value = variant.options[option_index] %}
+                    {% unless values contains value %}
+                      {% assign values = values | join: ',' %}
+                      {% assign values = values | append: ',' | append: value %} 
+                      {% assign values = values | split: ',' %}
+                  	 
+                      <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                        <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                        <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                          {{ value }}
+                          <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                        </label>
+                      </div>
+                      {% if variant.available %}
+                      <script>
+                        jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                      </script>
+                      {% endif %}
+                    {% endunless %}
+                  {% endfor %}
+          	    </div>
+	</div>
+{% elsif swatch contains 'Type'%}
+ <div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+  <div class="header">{{ swatch }}
+  </div>
+  {% assign values = '' %}
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}   
+      {% assign values = values | append: ',' | append: value %}   
+      {% assign values = values | split: ',' %}
+   	  {% assign white_flag = value | split: ' ' | last | handle %}
+   	  {% assign img_url= variant.image.src | img_url %}
+   	  {% assign v_available = false %}	
+   	   {% for variant_item in product.variants %}
+   	   		{% if variant_item.title contains value %}
+   				{% if variant_item.available %}
+   					{% assign v_available = true %}
+   					{% break %}
+   				{% endif %}
+   			{% endif %}
+   	   {% endfor %}
+      <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element type  {{ value | handle }} {% if v_available %}available{% else %}soldout{% endif %}">
+        <input  id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless v_available %}disabled{% endunless %} />
+        <label for="swatch-{{ option_index }}-{{ value | handle }}" {% if img_url contains 'no-image'%} data="{{ product.featured_image |img_url: '300x' }}" {% else %} data="{{variant.image.src | img_url: '300x'}}" {% endif %}class=" product_type_swatch {{ value | split: ' ' | last | handle }}"  >
+          {{ value }}
+          <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+        </label>
+       </div>
+      {% if v_available %}
+      <script>
+        jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+      </script>
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+ </div>
+{% elsif swatch contains "Amount"%}
+	<div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+              <div class="header">
+                {{ swatch }}
+              </div>
+              {% assign values = '' %}
+              {% for variant in product.variants %}
+                {% assign value = variant.options[option_index] %}
+                {% unless values contains value %}
+                  {% assign values = values | join: ',' %}
+                  {% assign values = values | append: ',' | append: value %} 
+                  {% assign values = values | split: ',' %}
+                  <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                    <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                    <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                      {{ value }}
+                      <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                    </label>
+                  </div>
+                  {% if variant.available %}
+                  <script>
+                    jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                  </script>
+                  {% endif %}
+                {% endunless %}
+              {% endfor %}
+          </div>
+{% elsif swatch contains 'Size' %}
+	{% if family_flag %}
+		<div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+            <div class="header">{{ swatch }}s of Family Sets
+              <a href="/pages/size-chart" target="_blank" class="go-size-guide">Size Guide</a>
+            </div>
+          {% if adult_options.size >= 1 %}
+            <h5 class="option-title"> Adult </h5>
+            <div class="swatchs_container">
+              {% for adult_option in adult_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+                    {% assign flag = false %}
+                    {% unless values contains value %}
+                        {% if adult_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                              {% assign value = value |remove:'ADULT-' |remove:'-FAMILY'%}
+                              {{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+        {% endif %}
+          {% if dad_options.size >= 1 %}
+            <h5 class="option-title"> Dad </h5>
+            <div class="swatchs_container">
+              {% for dad_option in dad_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+                    {% assign flag = false %}
+                    {% unless values contains value %}
+                        {% if dad_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                              {% assign value = value |remove:'DAD-' |remove:'-FAMILY'%}
+                              {{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+        {% endif %}
+        {% if mom_options.size >= 1 %}
+            <h5 class="option-title"> Mom </h5>
+            <div class="swatchs_container">
+              {% for mom_option in mom_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if mom_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'MOM-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if child_options.size >= 1 %}
+            <h5 class="option-title"> Child </h5>
+            <div class="swatchs_container">
+              {% for child_option in child_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if child_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'CHILD-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if baby_options.size >= 1 %}
+            <h5 class="option-title"> Baby </h5>
+            <div class="swatchs_container">
+              {% for baby_option in baby_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if baby_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'BABY-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if boy_options.size >= 1 %}
+            <h5 class="option-title"> Boy </h5>
+            <div class="swatchs_container">
+              {% for boy_option in boy_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if boy_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'BOY-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if girl_options.size >= 1 %}
+            <h5 class="option-title"> Girl </h5>
+            <div class="swatchs_container">
+              {% for girl_option in girl_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if girl_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'GIRL-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if pet_options.size >= 1 %}
+            <h5 class="option-title"> Pet </h5>
+            <div class="swatchs_container">
+              {% for pet_option in pet_options %}
+                {% assign values = '' %}
+                {% for variant in product.variants %}
+                  {% assign value = variant.options[option_index] %}
+
+                    {% unless values contains value %}
+                        {% if pet_option == value %}
+                          {% assign values = values | join: ',' %}
+                          {% assign values = values | append: ',' | append: value %} 
+                          {% assign values = values | split: ',' %}
+                          <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                            <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% assign value = value |remove:'PET-' |remove:'-FAMILY'%}
+                              	{{ value }}
+                              <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                            </label>
+                          </div>
+                          {% if variant.available %}
+                          <script>
+                            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                          </script>
+                          {% endif %}
+                        {% endif %}
+                    {% endunless %}
+
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+	{% else %}
+      {% if mom_options.size >= 1 or me_options.size >= 1 or baby_options.size >= 1 %}
+          <div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+            <div class="header">{{ swatch }}
+              <a href="/pages/size-chart" target="_blank" class="go-size-guide">Size Guide</a>
+            </div>
+            {% if me_options.size >= 1 %}
+              <h5 class="option-title"> Child </h5>
+              <div class="swatchs_container">
+                {% for me_option in me_options %}
+                  {% assign values = '' %}
+                  {% for variant in product.variants %}
+                    {% assign value = variant.options[option_index] %}
+                      {% assign flag = false %}
+                      {% unless values contains value %}
+                          {% if me_option == value %}
+                            {% assign values = values | join: ',' %}
+                            {% assign values = values | append: ',' | append: value %} 
+                            {% assign values = values | split: ',' %}
+                            <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                              <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                              <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                               
+                                	{{ value |remove:'CHILD -' | remove: 'CHILD-' | remove:'CHILD'}}
+                          
+                                <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                              </label>
+                            </div>
+                            {% if variant.available %}
+                            <script>
+                              jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                            </script>
+                            {% endif %}
+                          {% endif %}
+                      {% endunless %}
+
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if baby_options.size >= 1 %}
+              <h5 class="option-title"> Kids </h5>
+              <div class="swatchs_container">
+                {% for baby_option in baby_options %}
+                  {% assign values = '' %}
+                  {% for variant in product.variants %}
+                    {% assign value = variant.options[option_index] %}
+                      {% assign flag = false %}
+                      {% unless values contains value %}
+                          {% if baby_option == value %}
+                            {% assign values = values | join: ',' %}
+                            {% assign values = values | append: ',' | append: value %} 
+                            {% assign values = values | split: ',' %}
+                            <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                              <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                              <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                               
+                                	{{ value |remove:'KIDS -' | remove: 'KIDS-' | remove:'KIDS'}}
+                          
+                                <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                              </label>
+                            </div>
+                            {% if variant.available %}
+                            <script>
+                              jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                            </script>
+                            {% endif %}
+                          {% endif %}
+                      {% endunless %}
+
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if mom_options.size >= 1 %}
+              <h5 class="option-title"> Adult </h5>
+              <div class="swatchs_container">
+                {% for mom_option in mom_options %}
+                  {% assign values = '' %}
+                  {% for variant in product.variants %}
+                    {% assign value = variant.options[option_index] %}
+
+                      {% unless values contains value %}
+                          {% if mom_option == value %}
+                            {% assign values = values | join: ',' %}
+                            {% assign values = values | append: ',' | append: value %} 
+                            {% assign values = values | split: ',' %}
+                            <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                              <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                              <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                                {% if value contains 'MOM' %}
+                                  {{ value | remove:'MOM-'|remove:'MOM -'|remove:'MOM'}}
+
+                                {% elsif value contains 'ADULT'%}
+                                  {{ value | remove:'ADULT -' |remove:'ADULT-'|remove:'ADULT'}}
+                                {% endif %}
+
+                                <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                              </label>
+                            </div>
+                            {% if variant.available %}
+                            <script>
+                              jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                            </script>
+                            {% endif %}
+                          {% endif %}
+                      {% endunless %}
+
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+      {% else %}
+          <div class="swatch clearfix main_div_swatch" id="{{ swatch }}" data-option-index="{{ option_index }}">
+              <div class="header">{{ swatch }}
+                <a href="/pages/size-chart" target="_blank" class="go-size-guide">Size Guide</a>
+              </div>
+              {% assign values = '' %}
+              {% for variant in product.variants %}
+                {% assign value = variant.options[option_index] %}
+                {% unless values contains value %}
+                  {% assign values = values | join: ',' %}
+                  {% assign values = values | append: ',' | append: value %} 
+                  {% assign values = values | split: ',' %}
+                  <div data-value="{{ value | escape }}" data-handle-value="{{ value | handle }}" class="swatch-element {{ option | handle }} {{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+                    <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+                    <label for="swatch-{{ option_index }}-{{ value | handle }}" data-varaint-id="{{ variant.id }}">
+                      {{ value }}
+                      <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+                    </label>
+                  </div>
+                  {% if variant.available %}
+                  <script>
+                    jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+                  </script>
+                  {% endif %}
+                {% endunless %}
+              {% endfor %}
+          </div>
+      {% endif %}
+	{% endif %}
+{% endif %}
+
+{% endunless %}
+
+{% endif %}
+
+<style>
+  .swatch.main_div_swatch#Color .swatch-element.color.soldout label{
+    width: 25px;
+    height: 25px !important;
+    min-width: 25px !important;
+    border-radius: 50%;
+  }
+</style>

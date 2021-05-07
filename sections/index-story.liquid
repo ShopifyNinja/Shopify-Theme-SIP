@@ -1,0 +1,73 @@
+
+
+
+
+<div class="container">
+  {% if section.settings.title %}
+    <h2 class="index-story__title">{{ section.settings.title }}</h2>
+  {% endif %}
+
+  {% if section.settings.content %}
+    <div class="index-story__content desktop">{{ section.settings.content }}</div>
+    <div class="index-story__content mobile">
+      <div class="item">
+        <div class="img">
+          <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon_niddle.png' | asset_url }}">
+        </div>
+        <div class="title">Established in<br>2011</div>
+      </div>
+      <div class="item">
+        <div class="img">
+          <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon_dress.png' | asset_url }}">
+        </div>
+        <div class="title">Family<br>Owned</div>
+      </div>
+      <div class="item">
+        <div class="img">
+          <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon_hanger.png' | asset_url }}">
+        </div>
+        <div class="title">Utah<br>Based</div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.link_text %}
+    <div class="index-story__more-wrap">
+      <a href="{{ section.settings.link_url }}" class="index-story__more-link desktop">{{ section.settings.link_text }} ➡</a>
+      <a href="{{ section.settings.link_url }}" class="index-story__more-link mobile">READ OUR STORY <i class="fa fa-long-arrow-right"></i></a>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Our Story",
+    "class": "index-story",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content"
+      },
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "More link text"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "More link url"
+      }
+    ],
+    "presets": [{
+        "name": "Our Story",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

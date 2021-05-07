@@ -1,0 +1,10 @@
+<div class="pagination">
+  {% if current_page == 1 %}
+  <span class="prev disabled"><i class="fa fa-caret-left"></i></span>
+  {% endif %}
+  {{ paginate |  default_pagination: next: '<i class="fa fa-caret-right"></i>', previous: '<i class="fa fa-caret-left"></i>'}}
+  {% if current_page == paginate.pages %}
+    <span class="next disabled"><i class="fa fa-caret-right"></i></span>
+  {% endif %}
+  
+</div>

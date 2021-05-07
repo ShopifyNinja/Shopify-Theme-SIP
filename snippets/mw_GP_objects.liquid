@@ -1,0 +1,22 @@
+<script>
+window.mwGroupedProductsObjects = {
+    product: {{ product | json }},
+    cart: {{ cart | json }},
+    template_name: {{ template.name | json }},
+    shop: {
+    domain: {{ shop.permanent_domain | json }},
+    money_format : {{ shop.money_format  | json }},
+    money_with_currency_format : {{ shop.money_with_currency_format  | json }}
+    }   
+};
+
+if (document.getElementsByTagName('html')[0].innerHTML.indexOf('files-shopify.mageworx.com/groupedproducts/source.js') > -1) {
+    var container = document.getElementsByClassName('mw-gp-container');
+
+    if (container.length > 0) {
+    container[0].innerHTML = '<div class="mw-gp-spinner"></div>';
+
+    setTimeout(function(){ document.getElementsByClassName('mw-gp-spinner')[0] && document.getElementsByClassName('mw-gp-spinner')[0].remove(); }, 4000);
+    }
+}
+</script>

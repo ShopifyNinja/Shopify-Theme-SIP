@@ -1,0 +1,628 @@
+{% assign header_menu = section.settings.menu %}
+<nav role="navigation" class="navigation-menu mobile">
+  <ul class="mobile-menu">
+    <div id="search"  class="mobile_search">
+       <form action="/search" method="get" role="search" class="">
+          <div class="inner_div">
+              <input type="search" name="q" id="Search-{{ section.id }}" value="{{ search.terms | escape }}" placeholder="Search" autocapitalize="off" autocomplete="off" autocorrect="off">
+              <input type="hidden" name="type" value="product" />
+              <button type="submit" class="button">
+                <i class="fa fa-search search_sectin" aria-hidden="true"></i>
+                <span class="fallback-text">Search Icon</span>
+              </button>
+          </div>
+       </form>
+    </div>
+    {% include 'mobile-menu-content' %}
+    <li class="menu-item toggle closed gin login" index="0" is_open="false">
+        <a class="menu-target" href="javascript:;">
+          <span class="menu-target-title menu-target-text">{% if customer %}Account{% else %}SIGN IN{% endif %}</span>
+      	</a>
+      	<ul class="menu-submenu toggle closed index0" is_open="false">
+          <span class="globmenu-caret"></span>
+          {% if customer %}
+          <li class="menu-item">
+            <a class="menu-target" href="/account">
+              <span class="menu-target-title menu-target-text">Account</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-target" href="/account/logout">
+              <span class="menu-target-title menu-target-text">Sign Out</span>
+            </a>
+          </li>
+          {% else %}
+          <li class="menu-item">
+            <a class="menu-target" href="/account/login">
+              <span class="menu-target-title menu-target-text">Sign In</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-target" href="/account/register">
+              <span class="menu-target-title menu-target-text">Sign Up</span>
+            </a>
+          </li>
+          {% endif %}
+          <!--<li class="menu-item">
+            <a class="menu-target" href="/apps/tracktor/track">
+              <span class="menu-target-title menu-target-text">Track Your Order</span>
+            </a>
+          </li>-->
+          <li class="menu-item">
+            <a class="menu-target" href="/pages/returns">
+              <span class="menu-target-title menu-target-text">Initate A Return</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-target" href="/pages/rewards">
+              <span class="menu-target-title menu-target-text">Diamond Rewards</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+    <div class="contact-info">
+      <a href="tel:{{ settings.contact_phone }}">
+        <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="phone-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-phone-alt fa-w-16 fa-fw fa-2x"><path fill="currentColor" d="M493.09 351.3L384.7 304.8a31.36 31.36 0 0 0-36.5 8.9l-44.1 53.9A350 350 0 0 1 144.5 208l53.9-44.1a31.35 31.35 0 0 0 8.9-36.49l-46.5-108.5A31.33 31.33 0 0 0 125 .81L24.2 24.11A31.05 31.05 0 0 0 0 54.51C0 307.8 205.3 512 457.49 512A31.23 31.23 0 0 0 488 487.7L511.19 387a31.21 31.21 0 0 0-18.1-35.7zM456.89 480C222.4 479.7 32.3 289.7 32.1 55.21l99.6-23 46 107.39-72.8 59.5C153.3 302.3 209.4 358.6 313 407.2l59.5-72.8 107.39 46z" class=""></path></svg> {{ settings.contact_phone }}
+      	<span class="fallback-text">Contact Phone Icon</span>
+      </a>
+      <a href="mailto:{{ settings.contact_email }}" target="_top"> <i class="fa fa-envelope-o"></i> {{ settings.contact_email }}</a>
+    </div>
+    {% include 'social-sharing' %}
+    <div class="weglot-container" style="" data-switcher-id="1" id="weglot-switcher-2" data-switcher-style-opt="{&quot;with_name&quot;:true,&quot;full_name&quot;:true,&quot;is_dropdown&quot;:true,&quot;with_flags&quot;:true,&quot;custom_css&quot;:&quot;&quot;,&quot;flag_type&quot;:&quot;shiny&quot;}">
+    </div>
+  </ul>
+</nav>
+<section data-section-id="{{ section.id }}" data-section-type="header">
+  {%- if section.settings.announcement_bar_enabled -%}
+    <div class="site-header__announcement-bar">
+      {%- if section.settings.announcement_bar_home_page_only == false or template.name == 'index' -%}
+        {%- if section.settings.announcement_bar_link != blank -%}
+          <a class="site-header__announcement-link" href="{{ section.settings.announcement_bar_link }}">
+            {{ section.settings.announcement_bar_text }}
+          </a>
+        {%- else -%}
+        <p class="site-header__announcement-text desktop">{{ section.settings.announcement_bar_text }}</p>
+        {%- endif -%}
+        <a href="{{ section.settings.announcement_bar_link_mobile }}"><p class="site-header__announcement-text mobile">{{ section.settings.announcement_bar_text_mobile }}{% include 'icon-caret-right' %}</p></a><span class="rw-close">x</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+<style>
+  .slide {
+    display: inline-block;
+  }
+</style>
+  <header class="max-wrap" role="banner">
+    <div class="row no-gutters">
+      <div class="col">
+        <div class="site-header__rewards  desktop">
+          <div class="customroate">
+            <div class="singleslider" data-speed="{{section.settings.speed}}">
+              <div class="slide">
+               <a href="{{ section.settings.msg_url1 }}">
+                 <h4 class="site-header__rewards-title">{{section.settings.msg_head1}}</h4>
+                 <p class="site-header__rewards-text">{{section.settings.msg_shead1}}</p>
+               </a>
+              </div>
+              <div class="slide">
+                <a href="{{ section.settings.msg_url2 }}">
+                  <h4 class="site-header__rewards-title">{{section.settings.msg_head2}}</h4>
+                  <p class="site-header__rewards-text">{{section.settings.msg_shead2}}</p>
+                </a>
+          		</div>
+             </div>
+            </div>
+        </div>
+        <div class="site-header__rewards mobile">
+          <div class="customroate">
+            <div class="singleslider" data-speed="{{section.settings.speed}}">
+              <div class="slide">
+               <a href="{{ section.settings.mmsg_url1 }}">
+                 <h4 class="site-header__rewards-title">{{section.settings.mmsg_head1}}</h4>
+                 {{section.settings.mmsg_shead1}}
+               </a>
+              </div>
+              <div class="slide">
+                <a href="{{ section.settings.mmsg_url2 }}">
+                  <h4 class="site-header__rewards-title">{{section.settings.mmsg_head2}}</h4>
+                  {{section.settings.mmsg_shead2}}
+                </a>
+          		</div>
+             </div>
+            </div>
+        </div>
+
+      </div>
+      <div class="col desktop">
+        {% if template.name == 'index' %}
+          <h1 class="site-header__logo-container">
+        {% else %}
+          <div class="site-header__logo-container">
+        {% endif %}
+            <a href="/" class="site-header__logo-link">
+              {% if section.settings.logo != blank %}
+                {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                <img class="site-header__logo lazyload"
+                  src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                  data-src="{{ section.settings.logo | img_url: '640x' }}"
+                  alt="{{ section.settings.logo.alt | default: shop.name }}" />
+              {% else %}
+                {{ shop.name }}
+              {% endif %}
+            </a>
+        {% if template.name == 'index' %}
+          </h1>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col">
+        <div class="site-header__contact-wrap">
+			<div class="contact_detail">
+              <a href="tel:{{ settings.contact_phone }}">
+                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="phone-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-phone-alt fa-w-16 fa-fw fa-2x"><path fill="currentColor" d="M493.09 351.3L384.7 304.8a31.36 31.36 0 0 0-36.5 8.9l-44.1 53.9A350 350 0 0 1 144.5 208l53.9-44.1a31.35 31.35 0 0 0 8.9-36.49l-46.5-108.5A31.33 31.33 0 0 0 125 .81L24.2 24.11A31.05 31.05 0 0 0 0 54.51C0 307.8 205.3 512 457.49 512A31.23 31.23 0 0 0 488 487.7L511.19 387a31.21 31.21 0 0 0-18.1-35.7zM456.89 480C222.4 479.7 32.3 289.7 32.1 55.21l99.6-23 46 107.39-72.8 59.5C153.3 302.3 209.4 358.6 313 407.2l59.5-72.8 107.39 46z" class=""></path></svg>
+                <span class="contact phone">
+                </span>
+                <span class="fallback-text">Contact Phone Icon</span>
+              </a>
+              <a href="mailto:{{ settings.contact_email }}" target="_top">
+                <img class="message-icon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'message.png' | asset_img_url: "48x" }}" alt="Message Icon"/>
+                <span class="contact msg-content"></span>
+              </a>
+			</div>
+          	<a href="" class="site-header__contact"></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="site-header__menus">
+    <div class="row">
+  <div class="col-md-12 menu_imain_Sec">
+    <div class="fixed_logo m_ipad_hidden">
+    {% if section.settings.logo_sticky %}
+      <a href="/"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{section.settings.logo_sticky | img_url: "300X"}}" alt="{{section.settings.logo_sticky.alt }}"/>   </a>
+    {% endif %}
+  </div>
+	{% include 'globo-megamenu-script' %}
+	<nav role="navigation" class="navigation-menu">
+  	  <a class=" globomenu-responsive-toggle globomenu-responsive-toggle-content-align-left"><i class="fa fa-bars"></i>SHOP</a>
+      <ul class="globomenu globomenu-main globomenu-horizontal globomenu-transition-shift globomenu-items-align-left globomenu-sub-indicators globomenu-trigger-hover globomenu-responsive globomenu-responsive-collapse">
+		{% include 'globo-megamenu-content' %}
+	  </ul>
+	</nav>
+	<div class="logo mobile">
+          <h1 class="site-header__logo-container">
+            <a href="/" class="site-header__logo-link">
+              {% if section.settings.logo != blank %}
+                {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                <img class="site-header__logo lazyload"
+                  src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                  data-src="{{ section.settings.logo | img_url: '640x' }}"
+                  alt="{{ section.settings.logo.alt | default: shop.name }}" />
+              {% else %}
+                {{ shop.name }}
+              {% endif %}
+            </a>
+          </h1>
+      </div>
+    <div class="RESPONSIVE_NAV">
+    	<ul class="menu_sign_in_sec">
+    		<li class="dropdown">
+    			<a href="/account" class="dropdown-toggle" style="cursor-pointer:none;">{% if customer %}Account{% else %}Sign In{% endif %}<span class="caret"></span></a>
+    			<ul class="dropdown-menu">
+    			{% if customer %}
+                  <li><button type="button" class="btn btn-default"><a href="/account">Account</a></button></li>
+                  <li><button type="button" class="btn btn-default"><a href="/account/logout">Sign Out</a></button></li>
+                {% else %}
+                  <li><button type="button" class="btn"><a href="/account/login" style="color:#fff;">Sign In</a></button></li>
+                  <li><button type="button" class="btn btn-default"><a href="/account/register">Sign Up</a></button></li>
+                {% endif %}
+                  <!--<li><a href="/apps/tracktor/track"><img class="icon_track lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon_track.png' | asset_url }}" alt="Tranck Your Order Icon">Track Your Order</a></li>-->
+                  <hr class="menu-spliter">
+                  <li><a href="/pages/returns"><img class="icon_return lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'icon_return.png' | asset_url }}" alt="Initiate a Return Icon">Initiate a Return</a></li>
+                  <hr class="menu-spliter">
+                  <li><a href="/pages/rewards"><img class="icon_diamond lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'diamond1.png' |asset_url }}" alt="Diamond Rewards">&nbsp;Diamond Rewards</a></li>
+    			</ul>
+    		</li>
+		</ul>
+	</div>
+    <div class="search_icon a123">
+    		<ul>
+              <a id="mi_wish" href="#swym-wishlist" class="site-header__utility-link"><img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ 'like.png' | asset_url }}"></a>
+              <li class="search-box">
+                    <a class="search_sh"  style="cursor:pointer;"><i class="fa fa-search search_sectin" aria-hidden="true"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                          <form action="/search" method="get" role="search" class="search_bar">
+                            <div class="inner_div">
+                              <input type="search" name="q" id="Search-{{ section.id }}" value="{{ search.terms | escape }}" placeholder="Search">
+                              <input type="hidden" name="type" value="product" />
+                              <span class="search-close">x</span>
+                            </div>
+                         </form>
+                      </li>
+                    </ul>
+    		   </li>
+              <div class="cart-box">
+                <a class="site-header__utility-link mini_cart_icon {% unless template.name == 'cart' %}available{% endunless %}">
+                  {% include 'icon-cart' %}
+                  <div class="cart_count">{{ cart.item_count }}</div>
+                </a>
+                {% unless cart.item_count == 0 %}
+                {% include 'bold-cart' %}
+                {% endunless %}
+
+                {% unless template.name == 'cart' %}
+                <div class="header_cart_sec">
+                  <form action="/checkout" method="post" id="cart" class="hj mm-menu mm-theme-white mm-offcanvas mm-right mm-front mm-current">
+
+                    <h2><a href="/cart"> Shopping <strong>Bag</strong></a></h2>
+                    <a href="#" class="cart-close hamburger hamburger--collapse"><i class="close"></i></a>
+                    <a href="/cart" class="goto-cart">Edit Bag</a>
+                    <div class="earning_sec">
+                      <p>$<span class="order_limit_r">x</span> away from earning <span>FREE Shipping</span></p>
+                    </div>
+                    <div class="item-container">
+                      <ul data-money-format="{{ shop.money_format }}" data-shop-currency="{{ shop.currency }}"
+                          data-shop-name="{{ shop.name | escape }}" class="">
+                        {% if cart.item_count == 0 %}
+                        <li class="empty_cart">Your cart is currently empty.</li>
+                        {% else %}
+                        {% for item in cart.items %}
+                        <li class="cart_item {% if forloop.first %} new_cart_item {% endif %} {% if forloop.last %}last_cart_item{% endif %}">
+                          <i class="item-close">{% include 'icon-close' %}</i>
+                          <a href="{{ item.url }}">
+                            {% if item.image %}
+                            <div class="cart_image">
+                              <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}" />
+                            </div>
+                            {% endif %}
+                          </a>
+                          <div class="mini_cart-detail">
+                            <div class="item_title">{{ item.title }}</div>
+                            <div class="mm-counter">
+                              <div class="icon_sve">
+                                <span class="icon-minus minus sub">{% include 'icon-minus' %}<span class="fallback-text">Minus Item Icon</span></span>
+                                <input type="text" class="quantity" id="updates_{{ item.id }}" name="updates[]" data-product-id="{{ item.id }}" value="{{ item.quantity }}" />
+                                <span class="icon-plus plus add">{% include 'icon-plus' %}<span class="fallback-text">Plus Item Icon</span></span>
+                              </div>
+                              <strong class="price">
+                                <span class="money"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>${{ item.price | amount | divided_by: 100.0 }}</span>
+                              </strong>
+                            </div>
+                          </div>
+                        </li>
+                        <div class="separator"></div>
+                        {% endfor %}
+                        {% endif %}
+                      </ul>
+                      <div class="mm-total-subtitle">
+                        {% unless cart.item_count == 0 %}
+                        <li class="mm-label total">
+                          <strong>Subtotal:</strong>
+                          <p class="mm-counter">
+                            <span class="money"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_total" style="display:none !important;"></span>${{ cart.total_price | amount | divided_by: 100.0 }}</span>
+                          </p>
+                        </li>
+                        <li class="mm-subtitle clearfix">
+                          <input type="submit" name="checkout" class="action_button right" value="Checkout" />
+                        </li>
+                        {% endunless %}
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                {% endunless %}
+              </div>
+        </ul>
+      </div>
+  </div>
+</div>
+  </div>
+</section>
+<script>
+  var customer_order_limit = 0;
+  $(document).on("swell:setup", function(){
+    var order_limit = {
+      Gold:{{section.settings.order_limit_vip_gold}},
+      Platinum:{{section.settings.order_limit_vip_platinum}},
+      Diamond:{{section.settings.order_limit_vip_diamond}}
+    };
+    var customerDetails = swellAPI.getCustomerDetails();
+	var vipTier = customerDetails.vipTier;
+    if(!vipTier)
+      vipTier = 'Gold';
+    else
+      vipTier = vipTier.name;
+
+    vipTier = 'Gold';
+
+    customer_order_limit = order_limit[vipTier];
+    $('.order_limit').html(customer_order_limit);
+    var order_limit_remain ;
+    {% if template.name == 'cart' %}
+    	order_limit_remain=$('span.cart-total-price').first().text();
+    {% else %}
+    	order_limit_remain=$('.mm-label.total span.money').text();
+    {% endif %}
+    if (order_limit_remain == ''){
+      order_limit_remain = 0;
+    }
+    else{
+      order_limit_remain = order_limit_remain.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+      order_limit_remain = parseFloat(order_limit_remain);
+    }
+
+    order_limit_remain = customer_order_limit - order_limit_remain;
+    if (order_limit_remain<=0){
+      $('h4.free-shipping').html('<strong>Congratulations!</strong>  You\'ve earned <strong>FREE Shipping.</strong>');
+      $('.earning_sec').html('<p><span>Congratulations!</span> You\'ve earned <span>FREE Shipping.</span>')
+    }
+    else{
+      order_limit_remain = order_limit_remain.toFixed(2);
+      $('.order_limit_r').html(order_limit_remain);
+    }
+    $('header').css('display','block');
+  });
+
+  //remove after swell configured
+  $(document).ready(function(){
+    customer_order_limit = 125;
+    $('.order_limit').html(customer_order_limit);
+    var order_limit_remain ;
+    {% if template.name == 'cart' %}
+    	order_limit_remain=$('span.cart-total-price').first().text();
+    {% else %}
+    	order_limit_remain=$('.mm-label.total span.money').text();
+    {% endif %}
+    if (order_limit_remain == ''){
+      order_limit_remain = 0;
+    }
+    else{
+      order_limit_remain = order_limit_remain.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '');
+      order_limit_remain = parseFloat(order_limit_remain);
+    }
+
+    order_limit_remain = customer_order_limit - order_limit_remain;
+    if (order_limit_remain<=0){
+      $('h4.free-shipping').html('<strong>Congratulations!</strong>  You\'ve earned <strong>FREE Shipping.</strong>');
+      $('.earning_sec').html('<p><span>Congratulations!</span> You\'ve earned <span>FREE Shipping.</span>')
+    }
+    else{
+      order_limit_remain = order_limit_remain.toFixed(2);
+      $('.order_limit_r').html(order_limit_remain);
+    }
+  });
+
+</script>
+
+{% if section.settings.logo != blank %}
+  <style>
+    .logo-image {
+      display: block;
+      max-width: {{ section.settings.logo_max_width }}px;
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Header",
+    "class": "site-header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Announcement bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enabled",
+        "label": "Show announcement",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_home_page_only",
+        "label": "Show on home page only",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_text",
+        "label": "Announcement text",
+        "default": "Announce something here",
+        "info": "for desktop"
+      },
+      {
+        "type": "url",
+        "id": "announcement_bar_link",
+        "label": "Announcement link",
+        "info": "for desktop"
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_text_mobile",
+        "label": "Announcement text",
+        "default": "Announce something here",
+        "info": "for mobile"
+      },
+      {
+        "type": "url",
+        "id": "announcement_bar_link_mobile",
+        "label": "Announcement link",
+        "info": "for mobile"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 100,
+        "max": 1400,
+        "step": 50,
+        "unit": "px",
+        "label": "Custom logo width",
+        "default": 900
+      },
+	  {
+        "type": "image_picker",
+        "id": "logo_sticky",
+        "label": "Sticky Logo"
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+	  {
+		"type":"header",
+		"content":"Rotating Message"
+	  },
+	  {
+        "type": "select",
+        "id": "speed",
+        "label": "Speed",
+        "default": "3000",
+        "options": [
+          {
+            "value": "3000",
+            "label": "3s"
+          },
+          {
+            "value": "5000",
+            "label": "5s"
+          },
+          {
+            "value": "7000",
+            "label": "7s"
+          }
+        ]
+      },
+	  {
+		"type":"text",
+		"id":"msg_head1",
+		"label":"Heading1 For Desktop"
+	  },
+	  {
+		"type":"text",
+		"id":"msg_shead1",
+		"label":"Sub Heading1 For Desktop"
+	  },
+	  {
+		"type":"url",
+		"id":"msg_url1",
+		"label":"Link1 For Desktop"
+	  },
+	  {
+		"type":"text",
+		"id":"msg_head2",
+		"label":"Heading2 For Desktop"
+	  },
+	  {
+		"type":"text",
+		"id":"msg_shead2",
+		"label":"Sub Heading2 For Desktop"
+	  },
+	  {
+		"type":"url",
+		"id":"msg_url2",
+		"label":"Link2 For Desktop"
+	  },
+	  {
+		"type":"text",
+		"id":"mmsg_head1",
+		"label":"Heading1 For Mobile"
+	  },
+	  {
+		"type":"text",
+		"id":"mmsg_shead1",
+		"label":"Sub Heading1 For Mobile"
+	  },
+	  {
+		"type":"url",
+		"id":"mmsg_url1",
+		"label":"Link1 For Mobile"
+	  },
+	  {
+		"type":"text",
+		"id":"mmsg_head2",
+		"label":"Heading2 For Mobile"
+	  },
+	  {
+		"type":"text",
+		"id":"mmsg_shead2",
+		"label":"Sub Heading2 For Mobile"
+	  },
+	  {
+		"type":"url",
+		"id":"mmsg_url2",
+		"label":"Link2 For Mobile"
+	  },
+	  {
+		"type":"text",
+		"id":"order_limit_vip_gold",
+		"label":"Order Limit VIP(Gold)"
+	  },
+	  {
+		"type":"text",
+		"id":"order_limit_vip_platinum",
+		"label":"Order Limit VIP(Platinum)"
+	  },
+	  {
+		"type":"text",
+		"id":"order_limit_vip_diamond",
+		"label":"Order Limit VIP(Diamond)"
+	  }
+    ]
+  }
+{% endschema %}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "{{ shop.name }}",
+  {% if section.settings.logo %}
+    {% assign image_size = section.settings.logo.width | append:'x' %}
+    "logo": "https:{{ section.settings.logo | img_url: image_size }}",
+  {% endif %}
+  "sameAs": [
+    "{{ settings.social_twitter_link }}",
+    "{{ settings.social_facebook_link }}",
+    "{{ settings.social_pinterest_link }}",
+    "{{ settings.social_instagram_link }}",
+    "{{ settings.social_tumblr_link }}",
+    "{{ settings.social_snapchat_link }}",
+    "{{ settings.social_youtube_link }}",
+    "{{ settings.social_vimeo_link }}"
+  ],
+  "url": "{{ shop.url }}{{ page.url }}"
+}
+</script>
+
+{% comment %}
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}
+{% endcomment %}

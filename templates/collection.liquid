@@ -1,0 +1,529 @@
+
+{{ 'collection-customize.scss.css' | asset_url | stylesheet_tag }}
+{% include 'breadcrumbs' %}
+
+{% section 'collection-banner-section' %}
+
+{% assign desc_top = "" %}
+{% assign desc_bottom = "" %}
+
+{% if collection.description != blank %}
+
+  {% if collection.description contains "<!-- split -->" %}
+    {% assign desc_top = collection.description | split: "<!-- split -->" | first %}
+    {% assign desc_bottom = collection.description | split: "<!-- split -->" | last %}
+  {% else %}
+    {% assign desc_top =collection.description %}
+  {% endif %}
+  
+  {% if desc_top != blank %}  
+    <div class="collection-description desc-top">
+      <div class="container">
+        <div class="desc-content">
+          {{ desc_top }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+<div class="border_sec">
+  <div class="container">
+    <div id="bc-sf-filter-tree-h">
+    </div>
+    <div class="collection-cf row">
+      <div class="filter-sidebar ">
+        <div id="bc-sf-filter-tree-mobile"></div>
+        <div id="bc-sf-filter-tree"></div>
+        <style>
+          .swym-button.swym-add-to-watchlist-view-product:not(.swym-loaded){display: none;}
+        /* Contain floats: nicolasgallagher.com/micro-clearfix-hack/ */
+        .clearfix:before, .clearfix:after { content: ""; display: table; }
+        .clearfix:after { clear: both; }
+        .clearfix { zoom: 1; }
+        /* Subnavigation styles */
+        .subnav { clear: both; list-style-type: none; margin: 35px 0; padding: 0; }
+        .subnav li { display: block; float: left; }
+        .subnav li a {
+          display: block;
+          height: 28px;
+          line-height: 28px;
+          padding: 0 7px;
+          -webkit-border-radius: 7px;
+          -moz-border-radius: 7px;
+          border-radius: 7px;
+          background: #eee;
+          margin: 0 7px 7px 0;
+          color: #666;
+        }
+        .subnav li a:hover, .subnav li.active a {
+          background: #666;
+          color: #fff;
+        }
+        .bannre_text_collection h1 span a, .bannre_text_collection h1 span {
+            color: #333 !important;
+            font-size: 22px;
+            text-align: center;
+            font-weight: normal;
+        }
+        ul.pagination-custom li {
+            width: 20px;
+
+            padding: 15px 18px;
+            color: #000;
+            display: inline;
+        }
+        ul.pagination-custom .active {
+            color: #fff;
+            background: #ffa5bb;
+        }
+        ul.pagination-custom {
+            text-align: center;
+            margin: 32px 0 32px;
+        }
+          span.active {
+            position: relative;
+        }
+        ul.pagination-custom .active::after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            background: #ffa5bb;
+            width: 38px;
+            height: 41px;
+            top: 0;
+            left: 0;
+        }
+          ul.subnav.clearfix {
+            height: 900px;
+            overflow-y: scroll;
+            padding: 20px;
+        }
+        </style>
+        </div>
+        <div class="right_side_bar">
+
+        <h2>Shop</h2>
+
+  <div class="main-header-block">
+    <div class="header-block">
+      <div class="top-left-sort">
+        <span><span id="ttlprod">{{ collection.all_products_count }}</span> Products Found	</span>
+      </div>
+      <div id="bc-sf-filter-top-sorting"></div>
+
+      <!--       <div class="right-icons-block">
+<div class="right-icons"><a href=""><i class="fa fa-th-large"></i></a></div>
+<div class="right-icons"><a href=""><i class="fa fa-bars"></i></a></div>
+</div> -->
+
+
+      <div class="filters-toolbar__item right-icons-block">
+        <div id="bc-sf-filter-top-display-type">
+          <span class="bc-sf-filter-skeleton-text bc-sf-filter-skeleton-width3"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container index-f-products__container">
+    {% if section.settings.title %}
+    <h2 class="index-f-products__title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div id="bc-sf-filter-products"   class="row index-f-products__row">
+
+    </div>
+  </div>
+  <div id="bc-sf-filter-bottom-pagination"></div>
+</div>
+
+
+</div>
+
+
+</div>
+
+<div class="container limespot-c-collection">
+  <limespot></limespot>
+</div>
+
+{% if desc_bottom != blank %}  
+  <div class="collection-description desc-bottom">
+    <div class="container has-after">
+      <div class="desc-content">
+        {{ desc_bottom }}
+      </div>
+    </div>
+    <button id="showMoreDesc" is_more="false">Show more</button>
+  </div>
+{% endif %}
+
+</div>
+
+{% section 'index-newsletter' %}
+
+<style>
+
+  
+  /********************** seo bulit style ******************************/
+  .collection-description .desc-content ul,
+  .collection-description .desc-content ol{
+    text-align: left;
+  }
+
+  .collection-description .desc-content li{
+    list-style: none;
+  }
+  
+  .collection-description .desc-content ul{
+    padding-left: 6px;
+  }
+
+  .collection-description .desc-content ol{
+    padding-left: 0px;
+    list-style: none;
+    counter-reset: my-awesome-counter;
+  }
+  .collection-description .desc-content ol li{
+    counter-increment: my-awesome-counter;
+  }
+
+  .collection-description .desc-content ul li,
+  .collection-description .desc-content ol li{
+    position: relative;
+    padding-left: 12px;
+    font-size: 16px;
+    font-family: HelveticaNeue-Light, "Helvetica Neue Light", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    color: #7b7b7b;
+    font-weight: 300;
+    line-height: 24px;
+  }
+
+  .collection-description .desc-content ul li{
+    padding-left: 12px;
+  }
+
+  .collection-description .desc-content ol li{
+    padding-left: 0px;
+  }
+
+  .collection-description .desc-content ul li:before{
+    content: "•";
+    height: 8px;
+    width: 8px;
+    font-size: 24px;
+    color: rgb(255, 165, 187);
+    display: inline-block;
+    margin-right: 6px;
+    float: left;
+    position: absolute;
+    left: -5px;
+  }
+
+  .collection-description .desc-content ol li:before{
+    content: counter(my-awesome-counter) ". ";
+    color: rgb(255, 165, 187);
+  }
+  
+  /********************** end seo bulit style ******************************/
+  
+<!-- Hide when not loaded - Best practice - Move to a css file -->
+
+
+  @media(min-width: 769px){
+    #shopify-section-index-newsletter{
+      display: none !important;
+    }
+  }
+
+  #shopify-section-index-newsletter{
+    display: inline-block;
+  }
+
+  #shopify-section-index-newsletter > .container{
+    padding: 0px;
+  }
+
+  /************************************* 30/04/2020 by lucas **************************************/
+
+  .collection-description.desc-bottom{
+    max-width: 1200px;
+    margin: 0px auto;
+    border-bottom: none !important;
+  }
+
+  .collection-description .desc-content,
+  .collection-description .desc-content *{
+    text-align: justify;
+    font-family: HelveticaNeue-Light, "Helvetica Neue Light", HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    color: #7b7b7b;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 768px){
+    .collection-description.desc-top{
+      padding: 20px 0px;
+    }
+  }
+
+  @media (max-width: 1240px){
+    .collection-description.desc-top .container{
+      padding-left: 35px;
+      padding-right: 35px;
+    }
+  }
+  @media (max-width: 979px){
+    .collection-description.desc-top .container{
+      padding-left: 21px;
+      padding-right: 21px;
+    }
+  }
+
+  @media (max-width: 1299px) and (min-width: 1024px){
+    .collection-description.desc-bottom{
+      max-width: 980px;
+    }
+  }
+
+  @media (max-width: 1023px) and (min-width: 769px){
+    .collection-description.desc-bottom{
+      max-width: 650px;
+    }
+    #showMoreDesc,
+    .collection-description.desc-bottom .desc-content,
+    .collection-description.desc-bottom .desc-content *{
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 768px) and (min-width: 480px){
+    .collection-description.desc-bottom{
+      max-width: 100%;
+      padding-left: 21px;
+      padding-right: 21px;
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-bottom: 20px;
+    }
+    #showMoreDesc{
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 767px){
+    .collection-description.desc-bottom{
+      max-width: 100%;
+      padding-left: 21px;
+      padding-right: 21px;
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: 60px;
+      margin-bottom: 20px;
+    }
+    .collection-description.desc-bottom .desc-content,
+    .collection-description.desc-bottom .desc-content *{
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 479px){
+    #showMoreDesc{
+      font-size: 12px;
+    }
+  }
+
+  .collection-description.desc-bottom .container{
+    position: relative;
+    height: 70px;
+    overflow: hidden;
+    transition-property: height;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    margin-bottom: 20px;
+    padding: 0px !important;
+  }
+
+  .collection-description.desc-bottom .container.has-after:after{
+    content: '';
+    transition-property: top;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+    background-image: linear-gradient(rgba(255,255,255,0), #fff 100%);
+    position: absolute;
+    top: calc(100% - 6.25em);
+    left: 0;
+    height: 6.25em;
+    width: 100%;
+  }
+
+  #showMoreDesc{
+    color: #6B6D76;
+    border: solid 1px #e3e3e3;
+    border-radius: 3px;
+    background-color: transparent;
+    padding: 8px 18px;
+    font-weight: 600;
+  }
+
+  #showMoreDesc:hover{
+    background-color: transparent;
+    border-color: #6A6C77;
+  }
+
+  /************************************************************************************************/
+
+</style>
+
+
+<script>
+  // Declare bcSfFilterConfig variable
+  var bcSfFilterConfig = {
+    label: {
+      sorting: {% assign temp = 'collections.sorting.title' | t  %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Sorting" {% endunless %},
+      sorting_best_selling: {% assign temp = 'collections.sorting.best_selling' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Best Selling" {% endunless %},
+      sorting_featured: {% assign temp = 'collections.sorting.featured' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Featured" {% endunless %},
+      sorting_title_ascending: {% assign temp = 'collections.sorting.az' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Alphabetically, A-Z" {% endunless %},
+      sorting_title_descending: {% assign temp = 'collections.sorting.za' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Alphabetically, Z-A" {% endunless %},
+      sorting_price_ascending: {% assign temp = 'collections.sorting.price_ascending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Lowest Price" {% endunless %},
+      sorting_price_descending: {% assign temp = 'collections.sorting.price_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Highest Price" {% endunless %},
+      sorting_date_ascending: {% assign temp = 'collections.sorting.date_ascending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Date, Old to New" {% endunless %},
+      sorting_date_descending: {% assign temp = 'collections.sorting.date_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Date, New to Old" {% endunless %},
+      sorting_sale_descending: {% assign temp = 'collections.sorting.sale_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "% Off" {% endunless %},
+      sorting_relevance: {% assign temp = 'collections.sorting.relevance' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Relevance" {% endunless %},
+      search_general_title: {% assign temp = 'product_filter_search.search_general_title' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} 'Search' {% endunless %},
+      search_result_header: {% assign temp = 'product_filter_search.search_result_header' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} {% raw %}'Search Results for "{{ terms }}"'{% endraw %} {% endunless %},
+      search_result_empty: {% assign temp = 'product_filter_search.search_result_empty' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} {% raw %}'Your search for "{{ terms }}"" didn\'t match any results'{% endraw %} {% endunless %},
+      search_result_number: {% assign temp = 'product_filter_search.search_result_number' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} {% raw %}'Showing {{ count }} results for "{{ terms }}"'{% endraw %} {% endunless %},
+      
+      extra_sort1_descending: "New Products",
+      extra_sort2_descending: "New Popular Products",
+    },
+    custom: {
+      products_per_page: {{ settings.products_per_page }},
+      products_per_page_mobile: {{ settings.products_per_page_mobile }},
+	  sizes: [
+        {
+          label: 'Baby Clothing',
+          value: {{settings.bc_baby_clothing | json}}
+        },
+        {
+          label: 'Kid Clothing',
+          value: {{settings.bc_kid_clothing | json}}
+        },
+        {
+          label: 'Mom Clothing',
+          value: {{settings.bc_mom_clothing | json}}
+        },
+        {
+          label: 'Kid Shoes',
+          value: {{settings.bc_kid_shoes | json}}
+        },
+        {
+          label: 'Mom Shoes',
+          value: {{settings.bc_mom_shoes | json}}
+        },
+        {
+          label: 'Dad Clothing',
+          value: {{settings.bc_dad_clothing | json}}
+        },
+        {
+          label: 'Pet',
+          value: {{settings.bc_pet | json}}
+        }
+      ]
+    }
+  };
+
+    
+  ////////////////////////////// 29/04/2020 by lucas /////////////////////////////////////////
+
+  $(".main-header-block #ttlprod").hide();
+
+  document.addEventListener("collectionProductsLoaded", function(event) {
+    $(".main-header-block #ttlprod").show();
+    
+    $("#bc-sf-filter-products .index-f-products__col .product-item__price .grid-link__meta").each(function(){
+  
+      if(parseFloat($(this).text().replace("$","")) == 0){
+        $(this).text("Free");
+      }
+    });
+    
+    $("#bc-sf-filter-products .list-view-item .product-price__price").each(function(){
+  
+      if(parseFloat($(this).text().replace("$","")) == 0){
+        $(this).text("Free");
+      }
+    });
+
+  });
+
+  
+  function waitForEl(selector, callback){
+    var poller1 = setInterval(function(){
+        $jObject = $(selector);
+        if($jObject.length < 1){
+            return;
+        }
+
+        var products_count = $("#bc-sf-filter-products").children().length;
+        
+        if(products_count < 48){
+          if($("#bc-sf-filter-products #bc-sf-filter-message").length == 1)
+            products_count = 0;
+
+          $(".main-header-block #ttlprod").text(products_count);
+        }
+
+        $(".main-header-block #ttlprod").show();
+        
+        clearInterval(poller1);
+        callback($jObject)
+    },100);
+  }
+
+  waitForEl("#bc-sf-filter-message");
+
+
+   //////////////////////  SEO content optimization  /////////////////////
+
+  var originHeight = 0;
+  {% comment %} $(".collection-description.desc-bottom .container").children().each(function(){
+    originHeight += $(this).height();
+  }); {% endcomment %}
+
+  $("#showMoreDesc").on("click", function(){
+    
+    originHeight = 0;
+    $(this).prev().children().each(function(){
+      originHeight += $(this).height();
+    });
+
+    var btnText = "";
+
+    if($(this).attr("is_more") == "false"){
+      btnText = "Show less";
+      if(localStorage.getItem('currentLang') == 'es'){
+        btnText = "Muestra menos";
+      }
+      $(this).prev().css("height", originHeight+"px");
+      $(this).attr("is_more", "true").text(btnText);
+      $(this).prev().removeClass("has-after");
+    }
+    else{
+      btnText = "Show more";
+      if(localStorage.getItem('currentLang') == 'es'){
+        btnText = "Muestra más";
+      }
+      $(this).prev().css("height", "70px");
+      $(this).attr("is_more", "false").text(btnText);
+      $(this).prev().addClass("has-after");
+    }
+  });
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+</script>
+

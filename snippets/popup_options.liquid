@@ -1,0 +1,32 @@
+<h5 class="option-title"> {{ option_title }} </h5>
+<ul>
+    {% for value in custom_options %}
+  	  {% for variant in product_item.variants %}
+  	    {% if variant.title contains value %}
+  		{% assign variant_item = variant %}
+  		{% break %}
+  		{% endif %}
+      {% endfor %}
+  
+      <li class="product-item__size-option">
+        {% if variant_item.inventory_quantity > 0 %}
+        {% assign variant_available = true %}
+        {% else %}
+        {% assign variant_available = false %}
+        {% endif %}
+        <input
+          type="radio"
+          class="product-item__size-input"
+          id="Option{{ option.position }}-{{ randomNumber }}-{{ value }}-pid-{{ product_item.id }}"
+          name="id"
+          {% unless variant_available %}disabled=disabled{% endunless %}
+          value="{{ variant_item.id }}"{% if option.selected_value == value %} checked{% endif %} />
+        <label
+          class="product-item__size-label {% unless variant_available %}unavailable{% endunless %}"
+          for="Option{{ option.position }}-{{ randomNumber }}-{{ value }}-pid-{{ product_item.id }}">
+            {{ value | upcase | remove:'KIDS-' | remove: "ADULT-" | remove: "DAD-" | remove: "MOM-" | remove: "CHILD-" | remove: "BOY-" | remove: "GIRL-" | remove: "BABY-" | remove: "PET-" | remove:'-FAMILY' }}
+          {% unless variant_available %}<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />{% endunless %}
+          </label>
+      </li>
+    {% endfor %}
+</ul>

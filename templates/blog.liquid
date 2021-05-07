@@ -1,0 +1,206 @@
+<style>
+  .container.limespot-cc{
+    display: none;
+  }
+  @media(max-width: 767px){
+    .container.limespot-cc{
+      display: block;
+    }
+  }
+</style>
+
+{%- assign blog_title = blog.title -%}
+<div class="blog_header">
+  <h3 class="blog_title_mobile"><a href="/">Home</a>/Blog</h3>
+  <h1 class="blog_title">{{ blog_title }}</h1>
+</div>
+<div class="paginate_6">
+
+{% paginate blog.articles by 6 %}
+
+<div class="blog_content">
+
+  <!--   {% if current_tags %}
+      {% capture blog_title %}{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}{% endcapture %}
+    {% endif %} -->
+
+
+        <div class="articles">
+          {% for article in blog.articles %}
+          {% cycle '<div class="clearfix">', '', '', '</div>' %}
+            <div class="article_div">
+              <div class="image_container">
+                <a href="{{ article.url }}">
+                  <img class="article_img" src="{{ article.image | img_url: '1024x1024'}} "/>
+                </a>
+              </div>
+              <div class="description_container">
+                <p class="author_info">
+                  POSTED IN {{ blog.title | upcase }}<span class="divider">|</span>BY {{ article.author }}
+                </p>
+                <h3 class="article_title">
+                  <a href="{{ article.url }}">{{ article.title }}</a>
+                </h3>
+                <p class="article_date">
+                  {{ article.created_at | date: "%d %b, %Y" }}
+                </p>
+                <p class="article_excerpt">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt | strip_html | truncatewords: 16 }}
+                  {% else %}
+                    <span>
+                      {{ article.content | strip_html | truncatewords: 16 }}
+                    </span>
+                  {% endif %}
+
+                </p>
+
+               {% comment %}
+               {% if blog.comments_enabled? or article.tags.size > 0 %}
+                  <ul>
+                    {% if blog.comments_enabled? %}
+                      <li>
+                        <a href="{{ article.url }}#comments">
+                          {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                        </a>
+                      </li>
+                    {% endif %}
+
+                    {% if article.tags.size > 0 %}
+                      {% for tag in article.tags %}
+                        <li>
+                          <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+                          {% unless forloop.last %}, {% endunless %}
+                        </li>
+                      {% endfor %}
+                    {% endif %}
+                  </ul>
+                {% endif %}
+             {% endcomment %}
+              </div>
+            </div>
+			{% cycle '<div class="clearfix">', '', '', '</div>' %}
+          {% endfor %}
+  		 {% if blog.articles.size | modulo: 2 == 1 %}</div>{% endif %}
+        </div>
+
+
+          {% if paginate.pages > 1 %}
+			<div class="blog_pagination">
+            {% include 'pagination' %}
+            </div>
+          {% endif %}
+
+  {% endpaginate %}
+</div>
+<div class="paginate_2">
+{% paginate blog.articles by 8 %}
+
+<div class="blog_content">
+
+  <!--   {% if current_tags %}
+      {% capture blog_title %}{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}{% endcapture %}
+    {% endif %} -->
+
+
+        <div class="articles">
+          {% for article in blog.articles %}
+          {% cycle '<div class="clearfix">', '', '', '</div>' %}
+            <div class="article_div">
+              <div class="image_container">
+                <a href="{{ article.url }}">
+                  <img class="article_img" src="{{ article.image | img_url: '1024x1024'}} "/>
+                </a>
+              </div>
+              <div class="description_container">
+
+
+                <p class="author_info">
+                  POSTED IN {{ blog.title | upcase }}<span class="divider">|</span>BY {{ article.author }}
+                </p>
+                <h3 class="article_title">
+                  <a href="{{ article.url }}">{{ article.title }}</a>
+                </h3>
+
+            <!--     {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %} -->
+
+                <p class="article_date">
+                  {{ article.created_at | date: "%d %b, %Y" }}
+                </p>
+
+
+
+                <p class="article_excerpt">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt | strip_html | truncatewords: 16 }}
+                  {% else %}
+                    <span>
+                      {{ article.content | strip_html | truncatewords: 16 }}
+                    </span>
+                  {% endif %}
+
+                </p>
+
+               {% comment %}
+                 {% if blog.comments_enabled? or article.tags.size > 0 %}
+                    <ul>
+                      {% if blog.comments_enabled? %}
+                        <li>
+                          <a href="{{ article.url }}#comments">
+                            {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                          </a>
+                        </li>
+                      {% endif %}
+
+                      {% if article.tags.size > 0 %}
+                        {% for tag in article.tags %}
+                          <li>
+                            <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+                            {% unless forloop.last %}, {% endunless %}
+                          </li>
+                        {% endfor %}
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+               {% endcomment %}
+              </div>
+            </div>
+			{% cycle '<div class="clearfix">', '', '', '</div>' %}
+          {% endfor %}
+  		 {% if blog.articles.size | modulo: 2 == 1 %}</div>{% endif %}
+        </div>
+
+
+          {% if paginate.pages > 1 %}
+			<div class="blog_pagination">
+            {% include 'pagination' %}
+            </div>
+          {% endif %}
+
+  {% endpaginate %}
+</div>
+
+<script>
+$(document).ready(function(){
+var windowWidth = $(window).width();
+if( windowWidth < 767 ){
+	$('.paginate_6').hide();
+  	$('.paginate_2').show();
+}
+else
+{
+	$('.paginate_2').hide();
+  	$('.paginate_6').show();
+}
+});
+
+  $('span.current').prev().addClass('prev1');
+
+</script>
+
+
+{% section 'index-instagram' %}
+<div class="container limespot-cc">
+  <limespot></limespot>
+</div>
+{% section 'index-newsletter' %}

@@ -1,0 +1,140 @@
+{{ 'model-search.scss.css' | asset_url | stylesheet_tag }}
+
+
+{% paginate search.results by 9999 %}
+
+{% assign page_index = 1 %}
+{% assign loop_index = 0 %}
+{% assign pagination_arr = "" %}
+
+<header role="banner ">
+  <div class="bannre_text_collection">
+{{ 'collection-banner.jpg' | asset_url | img_tag: 'collection-banner' }}
+      <form class="model-search-form" action="/search" method="get" role="search">
+        <div class="append-button">
+          <input type="hidden" name="type" value="product" />
+        <input type="search"
+               name="q"
+               id="Search"
+               value="{{ search.terms|replace:'*','' | escape }}"
+               placeholder="{{ 'general.search.placeholder' | t }}">
+        <button type="submit" class="button">
+          <i class="fa fa-search"></i>
+
+        </button>
+        </div>
+      </form>
+
+	</div>
+  </header>
+
+<div class="container" style="">
+  <div class="recent_product">
+    <h1 class="sr-title">Search results</h1>
+   <h3 class="sr-sub-title">
+    {% assign product_tags = search.results | map: 'tags' %} 
+    {% assign split_tags = product_tags | split: 'HiddenProduct' %}
+    
+    {% assign results_count = search.results_count | minus: split_tags.size | plus: 1 %}
+
+      {% if search.performed %}
+        <span class="visually-hidden">{{ 'general.search.heading' | t: count: results_count }}...</span>
+          Showing {{ 'general.search.results_with_count' | t: terms: search.terms, count: results_count }}...
+      {% else %}
+        {{ 'general.search.title' | t }}...
+      {% endif %}
+    </h3>
+    {% if search.performed %}
+      {% if results_count == 0 %}
+        <p>{{ 'general.search.no_results_html' | t: terms: search.terms|replace:'*','' }}</p>
+      {% else %}
+        <h2 class="visually-hidden">{{ 'general.search.heading' | t: count: results_count }}</h2>
+         <div class="row search_row">
+           {% for item in search.results %}
+            {% unless item.tags contains 'HiddenProduct' %}
+              {% assign page_index = loop_index | plus: 12 | divided_by: 12 | times: 1 %}
+
+              <div class="col-lg-3 col-6 index-f-products__col search_products" data-page-index={{page_index}} {% if page_index > 1 %}style="display: none;"{% endif %}>
+                {% if item.object_type == 'product' %}
+                  {% assign product = item %}
+                    {% include 'product-item' with product_item: product %}
+
+                {% elsif item.object_type == 'article' %}
+                  {% assign article = item %}
+                  <div class="image_container">
+                    <a href="{{ article.url }}">
+                      <img class="article_img" src="{{ article.image | img_url: '1024x1024'}} "/>
+                    </a>
+                  </div>
+                  <div class="description_container">
+                    <p class="author_info">
+                      POSTED IN SIP Blog<span class="divider">|</span>BY {{ article.author }}
+                    </p>
+                    <h3 class="article_title">
+                      <a href="{{ article.url }}">{{ article.title }}</a>
+                    </h3>
+                    <p class="article_date">
+                      {{ article.created_at | date: "%d %b, %Y" }}
+                    </p>
+                  </div>
+                {% endif %}
+              </div>
+
+              {% assign loop_index = loop_index | plus: 1 %}
+            {% endunless %}
+
+          {% endfor %}
+         </div>
+
+        <div class="pagination_sec">
+          <div class="pagination">
+            <span class="prev"><a href="javascript:;" title=""><i class="fa fa-caret-left"></i></a></span>
+            {% assign idx = 0 %}
+            {% for idx in (1..page_index) %}
+              <span class="page {%if forloop.index0 == 0%}current{%endif%}"><a href="javascript:;" data-page-index="{{forloop.index}}" title="">{{forloop.index}}</a></span>
+            {% endfor %}
+
+            <span class="next"><a href="javascript:;" title=""><i class="fa fa-caret-right"></i></a></span>
+          </div>
+        </div>
+
+        </div>
+      {% endif %}
+    {% endif %}
+
+  {% endpaginate %}
+  </div>
+</div>
+
+<script>
+  $('span.current').prev().addClass('prev1');
+
+  $(function(){
+    $(".pagination_sec .pagination span.page a").on("click", function(){
+      var pageIndex = $(this).data("page-index");
+
+      $(".pagination_sec .pagination span.page.current").removeClass("current");
+      $(this).parent().addClass("current");
+      $(".index-f-products__col.search_products").hide();
+      $(".index-f-products__col.search_products[data-page-index='"+pageIndex+"']").show();
+    });
+
+    $(".pagination_sec .pagination span.prev a").on("click", function(e){
+      e.preventDefault();
+
+      var currentPage = $(".pagination_sec .pagination span.page.current");
+      if(!currentPage.prev().hasClass("prev")){
+        currentPage.prev().find("a").trigger("click");
+      }
+    });
+
+    $(".pagination_sec .pagination span.next a").on("click", function(e){
+      e.preventDefault();
+
+      var currentPage = $(".pagination_sec .pagination span.page.current");
+      if(!currentPage.next().hasClass("next")){
+        currentPage.next().find("a").trigger("click");
+      }
+    });
+  });
+</script>

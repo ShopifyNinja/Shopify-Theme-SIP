@@ -1,0 +1,36 @@
+<div class="container">
+  {% if section.settings.title %}
+    <h2 class="index-introduction__title">{{ section.settings.title }}</h2>
+  {% endif %}
+  {% if section.settings.content %}
+    <div class="index-introduction__content">
+      {{ section.settings.content }}
+    </div>
+  {% else %}
+    <div class="index-introduction__content">{{ page.content }}</div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Index Introduction",
+    "class": "index-introduction",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content",
+        "info": "Defaults to page content"
+      }
+    ],
+    "presets": [{
+        "name": "Introduction",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

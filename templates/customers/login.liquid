@@ -1,0 +1,415 @@
+
+<div class="form-success hide" data-reset-success>
+  {{ 'customer.recover_password.success' | t }}
+</div>
+
+<div id="CustomerLoginForm" data-login-form>
+  {% form 'customer_login' %}
+    <h2 class="index-f-products__title">{{ 'customer.login.title' | t }}</h2>
+
+    {{ form.errors | default_errors }}
+
+    <label for="CustomerEmail" class="my_login_sec">
+      {{ 'customer.login.email' | t }}
+    </label>
+    <input type="email"
+           name="customer[email]"
+           id="CustomerEmail"
+           class="{% if form.errors contains 'email' %}input-error{% endif %}"
+           placeholder="Enter your email"
+           spellcheck="false"
+           autocomplete="off"
+           autocapitalize="off"
+           autofocus>
+
+    {% if form.password_needed %}
+      <label for="CustomerPassword" class="my_login_sec">
+        {{ 'customer.login.password' | t }}
+      </label>
+      <input type="password"
+             name="customer[password]"
+             id="CustomerPassword"
+             class="{% if form.errors contains 'password' %}input-error{% endif %}"
+             placeholder="Enter your password">
+    {% endif %}
+	<div class="recover_pas_sec">
+
+<!--     <label class="pure-material-checkbox">
+      <input type="checkbox">
+      <span>Stay signed in</span>
+    </label> -->
+
+{% if form.password_needed %}
+      <a href="#recover" data-recover-toggle>{{ 'customer.login.forgot_password' | t }}</a>
+    {% endif %}
+	</div>
+	<div class="Submit_button_sce">
+    <input type="submit" class="button" value="{{ 'customer.login.sign_in' | t }}">
+	</div>
+	
+  	<hr class="sign_spliter">
+	
+  	<div class="go-signup-section">
+      <label class="label-sign-up">Don’t have an account?</label>
+      <a href="/account/register">
+        Sign Up
+      </a>
+    </div>
+
+      {% endform %}
+
+
+</div>
+
+<div class="hide" data-recover-form>
+  <h2>{{ 'customer.recover_password.title' | t }}</h2>
+  <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+  {% form 'recover_customer_password' %}
+    {{ form.errors | default_errors }}
+
+    {% if form.posted_successfully? %}
+      <span class="hide" data-form-state></span>
+    {% endif %}
+
+    <label for="RecoverEmail" class="label-hidden">
+      {{ 'customer.recover_password.email' | t }}
+    </label>
+    <input type="email"
+           name="email"
+           id="RecoverEmail"
+           placeholder="Enter your email"
+           spellcheck="false"
+           autocomplete="off"
+           autocapitalize="off">
+
+    <input type="submit" class="button" value="{{ 'customer.recover_password.submit' | t }}">
+
+    <button type="button" data-recover-toggle>
+      {{ 'customer.recover_password.cancel' | t }}
+    </button>
+  {% endform %}
+
+</div>
+
+{% if shop.checkout.guest_login %}
+  <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+  {% form 'guest_login' %}
+    <input type="submit" class="button" value="{{ 'customer.login.guest_continue' | t }}">
+  {% endform %}
+{% endif %}
+
+
+<style>
+  body.template-login #CustomerLoginForm{
+    padding-top:34px;
+    width:395px;
+    margin-bottom:70px;
+  }
+  body.template-login #customer_login .index-f-products__title{
+    color: #0F0F0F;	
+    font-family: "Open Sans" !important;	
+    font-size: 30px;	
+    line-height: 1;
+    text-align: center;
+    margin-bottom:55px;
+  }
+  body.template-login #customer_login .index-f-products__title:after{
+    width: 212px;
+    margin-top: 15px;
+  }
+  body.template-login #CustomerLoginForm .my_login_sec{
+    margin: 21px 0 5px;
+  }
+  body.template-login #customer_login label.my_login_sec{
+    color: #202124;	
+    font-family: Lato;	
+    font-size: 12px;	
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+  body.template-login #customer_login input[type="email"],
+  body.template-login #customer_login input[type="password"]{
+    cursor: auto;
+    border: 1px solid #BDBDBD;	
+    background-color: #FFF;
+    padding: 11px 25px;
+    color: #202124;	
+    font-family: Lato;	
+    font-size: 14px;	
+    line-height: 24px;
+    box-shadow: none;
+  }
+  body.template-login #customer_login input[type="email"]::placeholder,
+  body.template-login #customer_login input[type="password"]::placeholder{
+    color: #909090;
+	font-size: 13px;
+    font-family:"Lato";
+  }
+  body.template-login #customer_login input[type="email"]:focus,
+  body.template-login #customer_login input[type="password"]:focus{
+    border: 1px solid #81a6e4;
+	border-radius: 2px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  }
+  
+  body.template-login #customer_login a[data-activator="#recover"]{
+    color: #FFA6B4;	
+    font-family: Lato;	
+    font-size: 14px;	
+    line-height: 24px;	
+  }
+  body.template-login #customer_login input[type="submit"]{
+    border: 1px solid #000000;	
+    background-color: #212121;
+    font-family: "Open Sans";	
+    font-size: 18px;	
+    font-weight: 500;	
+    line-height: 19px;
+    height:62px !important;
+  }
+  
+  body.template-login #customer_login .stay-signin{
+/*     text-transform: capitalize; */
+    color: #ACACAC;	
+    font-family: Lato;	
+    font-size: 14px;	
+    line-height: 24px;
+  }
+  
+  body.template-login #customer_login label.label-sign-up{
+    color: #202124;	
+    font-family: "Open Sans";	
+    font-size: 14px;	
+    font-weight: 600;	
+    line-height: 19px;
+  }
+  body.template-login #customer_login .recover_pas_sec{
+    padding-top:25px;
+    padding-bottom: 43px;
+  }
+  
+  body.template-login #customer_login .recover_pas_sec a{
+    font-size: 14px;
+  }
+  
+  body.template-login #customer_login hr.sign_spliter{
+    margin: 30px -80px 30px -80px;
+    margin-bottom: 20px;
+    display: block; 
+    height: 1px;
+    border: 0; 
+    border-top: 1px solid #EDEDED;
+    padding: 0;
+  }
+  
+  body.template-login #customer_login .label-sign-up + a{
+    color: #FFA6B4;	
+    font-family: "Open Sans";	
+    font-size: 14px;	
+    font-weight: normal;	
+    line-height: 19px;
+    padding: 0 0 0 18px;
+    text-decoration:underline;
+  }
+  
+  body.template-login #customer_login .go-signup-section{
+    text-align: center;
+  }
+  
+  
+  @media(max-width: 768px){
+    body.template-login #CustomerLoginForm{
+      width: calc(100% - 20px);
+      margin: -20px 10px 30px 10px;
+      padding-top:0;
+    }
+    
+    body.template-login #customer_login .index-f-products__title{
+      font-size: 18pt;
+      margin-bottom: 10px;
+    }
+    body.template-login #customer_login .index-f-products__title:after{
+      width: 91pt;
+      margin-top: 5pt;
+    }
+    body.template-login #customer_login hr.sign_spliter{
+      margin: 16px 0px;
+      margin-bottom: 14px;
+    }
+    body.template-login #customer_login .recover_pas_sec{
+      padding-top: 9px;
+      padding-bottom: 20px;
+    }
+    body.template-login #CustomerLoginForm .my_login_sec{
+      margin: 14px 0 5px;
+    }
+    
+    body.template-login #customer_login input[type="email"],
+    body.template-login #customer_login input[type="password"]{
+      padding: 11px 15px;
+    }
+    body.template-login #customer_login input[type="submit"]{
+      height:50px !important;
+    }
+    body.template-login #customer_login .recover_pas_sec .pure-material-checkbox{
+      font-size:13px;
+    }
+    body.template-login #customer_login .recover_pas_sec .pure-material-checkbox > span::before{
+      margin: 1px 10px 3px 1px;
+    }
+    body.template-login #customer_login .recover_pas_sec .pure-material-checkbox > span::after{
+      top:3px;
+      left:2px;
+    }
+    body.template-login #customer_login .recover_pas_sec a{
+      font-size:13px;
+    }
+  }
+  
+  
+  .pure-material-checkbox {
+    z-index: 0;
+    position: relative;
+    display: inline-block;
+/*     color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.87); */
+/*     font-family: var(--pure-material-font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system); */
+    font-size: 14px;
+    font-family:"Lato";
+    color:#ACACAC;
+    line-height: 1.5;
+}
+
+/* Input */
+.pure-material-checkbox > input {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    z-index: -1;
+    position: absolute;
+    left: -10px;
+    top: -8px;
+    display: block;
+    margin: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+/*     background-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.6); */
+    box-shadow: none;
+    outline: none;
+    opacity: 0;
+    transform: scale(1);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+/* Span */
+.pure-material-checkbox > span {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Box */
+.pure-material-checkbox > span::before {
+    content: "";
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 3px 11px 3px 1px;
+    border: solid 2px; /* Safari */
+    border-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.6);
+    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    vertical-align: top;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* Checkmark */
+.pure-material-checkbox > span::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 2px;
+    width: 10px;
+    height: 5px;
+    border: solid 2px transparent;
+    border-right: none;
+    border-top: none;
+    transform: translate(3px, 4px) rotate(-45deg);
+}
+
+/* Checked, Indeterminate */
+.pure-material-checkbox > input:checked,
+.pure-material-checkbox > input:indeterminate {
+/*     background-color: rgb(var(--pure-material-primary-rgb, 33, 150, 243)); */
+}
+
+.pure-material-checkbox > input:checked + span::before,
+.pure-material-checkbox > input:indeterminate + span::before {
+    border-color: rgb(var(--pure-material-primary-rgb, 255, 166, 180));
+    background-color: rgb(var(--pure-material-primary-rgb, 255, 166, 180));
+}
+
+.pure-material-checkbox > input:checked + span::after,
+.pure-material-checkbox > input:indeterminate + span::after {
+    border-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+}
+
+.pure-material-checkbox > input:indeterminate + span::after {
+    border-left: none;
+    transform: translate(4px, 3px);
+}
+
+/* Hover, Focus */
+.pure-material-checkbox:hover > input {
+    opacity: 0.04;
+}
+
+.pure-material-checkbox > input:focus {
+    opacity: 0.12;
+}
+
+.pure-material-checkbox:hover > input:focus {
+    opacity: 0.16;
+}
+
+/* Active */
+.pure-material-checkbox > input:active {
+    opacity: 1;
+    transform: scale(0);
+    transition: transform 0s, opacity 0s;
+}
+
+.pure-material-checkbox > input:active + span::before {
+    border-color: rgb(var(--pure-material-primary-rgb, 255, 166, 180));
+}
+
+.pure-material-checkbox > input:checked:active + span::before {
+    border-color: transparent;
+/*     background-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.6); */
+}
+
+/* Disabled */
+.pure-material-checkbox > input:disabled {
+    opacity: 0;
+}
+
+.pure-material-checkbox > input:disabled + span {
+    color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);
+    cursor: initial;
+}
+
+.pure-material-checkbox > input:disabled + span::before {
+    border-color: currentColor;
+}
+
+.pure-material-checkbox > input:checked:disabled + span::before,
+.pure-material-checkbox > input:indeterminate:disabled + span::before {
+    border-color: transparent;
+    background-color: currentColor;
+}
+
+</style>

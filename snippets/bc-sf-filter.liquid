@@ -1,0 +1,99 @@
+<script>
+  // Declare bcSfFilterConfig variable
+  var bcSfFilterMainConfig = {
+    api: {
+      filterUrl: 'https://services.mybcapps.com/bc-sf-filter/filter',
+      searchUrl: 'https://services.mybcapps.com/bc-sf-filter/search',
+      suggestionUrl: 'https://services.mybcapps.com/bc-sf-filter/search/suggest',
+    },
+    shop: {
+      name: '{{ shop.name | escape }}',
+      url: '{{ shop.url }}',
+      domain: '{{ shop.permanent_domain }}',
+      currency: '{{ shop.currency }}',
+      money_format: '{{ shop.money_format | replace: "'", '"' }}'
+    },
+    general: {
+      file_url: "{{ '' | file_url }}",
+      asset_url: "{{ 'bc-sf-filter.js' | asset_url }}",
+      collection_id: {{ collection.id | default: 0 }},
+      collection_handle: "{{ collection.handle }}",
+      {% if template contains 'collection' and collection.handle %}
+      collection_count: {{ collection.products_count  }},
+      {% endif %}
+      collection_tags: {{ current_tags | json }},
+      current_tags: {{ current_tags | json }},
+      default_sort_by: "extra-sort1-descending",
+      swatch_extension: "png",
+      no_image_url: "{{ 'bc-sf-filter-no-image.gif' | asset_url }}",
+      search_term: "{{ search.terms | default: '' }}",
+      template: "{{ template }}"
+    },
+    {% if shop.metafields.bc-sf-filter.settings != blank %}
+    settings: {{ shop.metafields.bc-sf-filter.settings }},
+    {% endif %}
+  };
+  function mergeObject(obj1, obj2){
+    var obj3 = {};
+    for (var attr in obj1) { obj3[attr] = obj1[attr]; }
+    for (var attr in obj2) { obj3[attr] = obj2[attr]; }
+    return obj3;
+  }
+  if (typeof bcSfFilterConfig !== 'undefined') {
+    var bcSfFilterConfig = mergeObject(bcSfFilterConfig, bcSfFilterMainConfig);
+  } else {
+    var bcSfFilterConfig = mergeObject({}, bcSfFilterMainConfig);
+  }
+</script>
+
+
+<script>
+  var bc_sf_filter_jsps = '{{ "bc-sf-filter-lib-jsps.js" | asset_url }}';
+  var bc_sf_filter_htoolbar = '{{ "bc-sf-filter-lib-htoolbar.js" | asset_url }}';
+  var bc_sf_filter_script = '{{ "bc-sf-filter.js" | asset_url }}';
+  var template_name = "{{ template.name }}";
+
+  if(template_name == "collection"){
+
+    if($(window).width() > 768){
+      var fileref_d = document.createElement('script');
+
+      fileref_d.setAttribute("type","text/javascript");
+      fileref_d.setAttribute("src", bc_sf_filter_jsps);
+      fileref_d.setAttribute("id", "bc_sf_filter_jsps");
+
+      (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(fileref_d);
+    }else{
+
+      var fileref_m = document.createElement('script');
+
+      fileref_m.setAttribute("type","text/javascript");
+      fileref_m.setAttribute("src", bc_sf_filter_htoolbar);
+      fileref_m.setAttribute("id", "bc_sf_filter_jsps");
+
+      (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(fileref_m);
+    }
+
+    
+    document.addEventListener("collectionProductsLoaded", function(event) {
+      setTimeout(function(){ $('body .product-item .bc-sf-filter-lazyload').addClass('lazyload') }, 2300);
+    });
+  }
+
+
+</script>
+
+
+<!-- Include Resources -->
+
+
+<!-- Initialize App -->
+<script>
+</script>
+
+<!-- Initialize & Customize Filter -->
+{% if template contains 'collection' %}
+{% unless template contains 'bc-original' %}
+<script>//bcsffilter.initFilter();</script>
+{% endunless %}
+{% endif %}

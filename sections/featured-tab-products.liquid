@@ -1,0 +1,147 @@
+<style>
+  body .index-f-collections__item {
+      background-position: top center;
+  }
+
+  @media (min-width: 480px) and (max-width: 768px) {
+    .shopify-section.index-f-collections .col-md-6.index-f-collections__col {
+      width: 50% !Important;
+    }
+
+    body .index-f-collections__item {
+      height: 250px !important;
+    }
+
+    body .index-f-collections__more-link {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+
+    body .index-f-collections__col {
+      padding-left: 1px !important;
+      padding-right: 1px !important;
+      margin: 0px !important;
+    }
+
+    body .index-f-collections__col a {
+      margin-top: 1px !important;
+      margin-bottom: 1px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    body .index-f-collections__row {
+      margin-bottom: 10px !important;
+    }
+  }
+  .tabs_sec{
+    width: 100%;
+  }
+
+</style>
+{% if section.blocks.size > 0 %}
+
+
+  {% if section.settings.title %}
+    <h2 class="index-f-products__title">{{ section.settings.title }}</h2>
+  {% endif %}
+
+  {% assign new_products_block = section.blocks[0] %}
+  {% assign recom_products_block = section.blocks[1] %}
+  {% assign collection1 = collections[new_products_block.settings.collection] %}
+  {% assign collection2 = collections[recom_products_block.settings.collection] %}
+  {% assign limit_1 = new_products_block.settings.product_num %}
+  {% assign limit_2 = recom_products_block.settings.product_num %}
+<div class="tabs_sec is-loading" data-permanent_domain="{{shop.permanent_domain}}" data-tab-1="{{ collection1.handle }}" data-tab-1-limit="{{ limit_1 }}" data-tab-2="{{ collection2.handle }}" data-tab-2-limit="{{ limit_2 }}">
+  <ul class="tabs">
+    <li><a href="#tab-1">All</a></li>
+    {% for block in section.blocks %}
+    <li><a href="#tab-{{ forloop.index | plus: 1 }}">{{ block.settings.title }}</a></li>
+    {% endfor %}
+  </ul>
+  <div id="tab-1">
+    <div class="container featured-new-products__container">
+        <div class="row justify-content-center featured-new-products__row">          
+
+        </div>
+    </div>
+  </div>
+  
+  <div id="tab-2">
+    <div class="container featured-new-products__container">
+        <div class="row justify-content-center featured-new-products__row">
+          
+        </div>
+    </div>
+  </div>
+
+  <div id="tab-3">
+    <div class="container featured-new-products__container">
+        <div class="row justify-content-center featured-new-products__row">
+          
+        </div>
+    </div>
+  </div>
+  
+  <div class="index-f-collections__separator"></div>
+</div>
+<script>
+  document.addEventListener("StartAppLoading", function(event) { 
+    if($(window).width() <= 768) {
+      loadJS("{{ 'featured-tab-products.js' | asset_url }}");
+    }
+  });
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "class": "mobile-f-products",
+    "name": "Mobile Featured Products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "More link url"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_block",
+        "name": "Collection",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          },
+		      {
+            "type": "range",
+            "id": "product_num",
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "label": "Number of products",
+            "default": 4
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "Will default to the collection title"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Mobile Featured Products",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

@@ -1,0 +1,729 @@
+<style>
+
+
+  .btn-mobile-logout{
+    display: none;
+  }
+
+  #account .site-header__menus {
+    margin-bottom: 0px;
+  }
+  .breadcrumb {
+    background: #FFA5BB;
+    padding: 24px 50px;
+  }
+
+  .breadcrumb h2 {
+    font-size: 20px;
+    font-weight: normal;
+    max-width: 1440px;
+    margin: 0px auto;
+  }
+
+  .breadcrumb span {
+    color: #fff;
+    font-weight: normal;
+  }
+
+  #main_content {
+    max-width: 1540px;
+    margin: 0px auto;
+    text-align: right;
+    padding: 150px 50px 100px 50px;
+    font-family:"Lato";
+  }
+
+  .page-tabs {
+    width:350px;
+    float: left;
+    text-align: left;
+  }
+  .page-tabs > div{
+    padding-top:30px;
+  }
+
+  #main_content .page_content {
+    width: calc(100% - 350px);
+  }
+
+  #main_content .page_content table {
+    width: 100%;
+  }
+
+  #main_content > div {
+    display: inline-block;
+  }
+
+  #main_content h2 {
+    font-family: "Open Sans";
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #main_content h2:after {
+    content: '';
+    width: 30px;
+    height: 3px;
+    background-color: #FFA5BB;
+    display: block;
+    margin-top: 30px;
+  }
+
+  #main_content .page_content > h2 {
+    text-align: left;
+    font-weight: normal;
+  }
+  #main_content .page_content > p{
+    text-align: left;
+    font-weight: normal;
+    padding-top: 20px;
+  }
+  .page-tabs a {
+    color: rgb(35, 35, 35);
+    font-size: 16px;
+    margin-top: 50px;
+  }
+
+  .page-tabs a.active {
+    color: rgb(104, 104, 104)!important
+  }
+
+  #main_content .page_content table {
+    margin-top: 15px;
+  }
+
+  #main_content .btn-mobile-logout a.link-to-logout,.page_content tr.responsive-table-row td:first-child > a{
+    color: #FFA4BB;
+  }
+  #main_content .page_content .pagination{
+    margin-top: 50px;
+    display: flex;
+    justify-content: end;
+    margin-right: 10px;
+  }
+  #main_content .page_content .pagination > span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 39px;
+    margin: 0 2px;
+    border: 1px solid #eee;
+  }
+  #main_content .page_content .pagination > span.current{
+    border-color: #FFA6B4;
+  }
+  #main_content .page_content .pagination > span.disabled{
+    color: #eee;
+  }
+  @media (min-width: 768px) {
+    table tr td:last-child, table tr th:last-child {
+      text-align: center;
+    }
+    #main_content .page_content .pagination > span{
+      width: 49px;
+      height: 49px;
+      margin: 0 5px;
+    }
+  }
+
+  table th {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #333333;
+    font-family: "Lato";
+    font-weight: normal;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  table tbody tr td:first-child {
+    color: #3D3D3D !important;
+  }
+
+  table tbody tr td {
+    color: #8e8e8e;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 16px;
+  }
+
+
+  @media (max-width: 980px) {
+    #main_content, .breadcrumb {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+    }
+
+    #main_content {
+      padding-top: 100px !important;
+      padding-bottom: 250px !important;
+    }
+
+    #main_content .page_content {
+      width: calc(100% - 200px) !important;
+    }
+    #main_content .page_content >p {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .page-tabs {
+      width: 200px !important;
+    }
+
+    table *, .page-tabs a {
+      font-size: 14px !important;
+    }
+
+    #main_content h2 {
+      font-size: 16px !important;
+    }
+
+    .btn-logout{
+      margin-left: 45px;
+    }
+  }
+
+/*   @media (max-width: 767px) {
+    #main_content .page_content {
+      width: calc(100% - 180px) !important;
+    }
+
+    .page-tabs {
+      width: 180px !important;
+    }
+
+    #main_content h2:after {
+      margin-top: 5px !important;
+    }
+  } */
+
+  @media (max-width: 768px) {
+    #main_content{
+      padding-top: 60px !important;
+      padding-bottom: 100px !important;
+    }
+
+    #main_content > div {
+      display: block !important;
+      clear: both;
+    }
+
+    #main_content .page_content, .page-tabs {
+      width: 100% !important;
+    }
+
+    #main_content .page-tabs > div {
+      float: left;
+    }
+
+    .page-tabs a {
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    .page-tabs > div:last-child {
+      margin-left: 30px;
+    }
+
+    .btn-logout{
+      display: none;
+    }
+
+    .btn-mobile-logout{
+      display: block;
+      float: right;
+      margin-bottom: -18px;
+    }
+
+    .responsive-table-row+.responsive-table-row:after, tfoot>.responsive-table-row:first-child:after{
+      border-bottom: none;
+    }
+
+    #main_content .page_content > h2{
+      display: none;
+    }
+
+    #main_content .page_content{
+      overflow-y: scroll;
+      min-height: 100px;
+      height: max-content;
+    }
+  }
+
+  @media (max-width: 480px){
+    .swell-reward-sparkle.account .vip-table-section {
+        margin-top: 0px;
+    }
+  }
+
+  .btn-logout{
+    display: none;
+  }
+
+
+  .link-to-logout{
+    font-size: 14px;
+  }
+
+  .swell-reward-sparkle.account .joining-section-login{
+    position: relative !important;
+    top: 0px !important;
+  }
+
+  .swell-reward-sparkle.account .redeem-section{
+    margin-bottom: 60px;
+  }
+
+  .swell-reward-sparkle.account .swell-referral-content-container{
+    position: relative !important;
+    float: left;
+    bottom: 0px !important;
+    margin-bottom: 60px;
+  }
+
+  .swell-reward-sparkle.account .joining-section-login i.section-big-icon:before{
+    position: absolute;
+    font-size: 160px;
+    left: 0px;
+    top: 0px;
+    opacity: 0.17;
+    color: #FFF;
+  }
+
+  .swell-reward-sparkle.account .joining-section-login i.section-background1:before{
+    content: "\f81d";
+  }
+
+  .swell-reward-sparkle.account .joining-section-login i.section-background2:before{
+    content: "\f5c0";
+  }
+  
+
+  @media (max-width: 768px){
+
+    .swell-reward-sparkle.account .redeem-section{
+      margin-top: 60px !important;
+    }
+    
+    .swell-reward-sparkle.account .joining-section-login i.section-background1:before{
+      left: -30px;
+      font-size: 170px;
+    }
+    .swell-reward-sparkle.account .joining-section-login i.section-background2:before{
+      left: -115px;
+      font-size: 260px;
+    }
+  }
+
+  @media (min-width: 769px){
+    .swell-reward-sparkle.account .swell-referral-content-container .swell-referral-thanks{
+      top: -50px;
+    }
+  }
+
+</style>
+
+{% comment %} {{ 'swell-rewards.scss.css' | asset_url | stylesheet_tag }} {% endcomment %}
+{{ 'fontawesome-5.10.2-all.min.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'fontawesome-5.10.2-all.min.js'  | asset_url | script_tag }} {% endcomment %}
+{{ 'swell-page-rewards.scss.css' | asset_url | stylesheet_tag }}
+{{ 'swell-rewards.js'  | asset_url | script_tag }}
+
+
+
+{% include 'breadcrumbs' %}
+
+<div id="main_content">
+  <span class="btn-mobile-logout"><a href="/account/logout" class="link-to-logout">LOG OUT</a></span>
+  <div class="page-tabs">
+    <h2>WELCOME BACK</h2>
+    <div><a class="active">ORDER HISTORY</a></div>
+    <div><a href="/account/addresses">MY ADDRESS</a></div>
+  </div>
+  <div class="page_content">
+    <h2>ORDER HISTORY</h2>
+
+    {% paginate customer.orders by 20 %}
+      {% if customer.orders.size != 0 %}
+      <table class="responsive-table">
+        <thead>
+          <tr>
+            <th>{{ 'customer.orders.order_number' | t }}</th>
+            <th>{{ 'customer.orders.date' | t }}</th>
+            <th>{{ 'customer.orders.payment_status' | t }}</th>
+            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+            <th>{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in customer.orders %}
+          <tr class="responsive-table-row">
+            <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+            <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+            <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+            <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+            <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>{{ 'customer.orders.none' | t }}</p>
+      {% endif %}
+
+      {% if paginate.pages > 1 %}
+      {% include 'pagination' %}
+      {% endif %}
+
+    {% endpaginate %}
+  </div>
+
+
+</div>
+<div class="swell-reward-sparkle swell-refer-sparkle account">
+  <div class="swell-container referral-section">
+
+    <div class="joining-section-login">
+      {% comment %} <img src="{{ 'Welcome.png' | asset_url }}" class="HIW-image desktop"> {% endcomment %}
+      <div class="main-content">
+        <i class="section-big-icon section-background1 fal fa-sack-dollar"></i>
+        {% comment %} <i class="swell-icon-Redeem list-icon"></i> {% endcomment %}
+        <div class="swell-login-section-title">
+          <h3>Hi, {{customer.first_name}}</h3>
+          <div class="swell-login-inform">You Have <span class="swell-point-balance">0</span> <span class="sparkle-bucks">Sparkle Bucks</span></div>
+        </div>
+        <ul class="swell-link-list">
+          <li class="swell-link">
+            <a class="swell-link-redeem" href="/checkout">Redeem Now</a>
+          </li>
+          <li class="swell-link">
+            <a class="swell-link-history swell-history-link" href="javascript:;">Rewards History</a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-content">
+        <div class="swell-sidebar-section">
+          <div class="swell-sidebar-text">
+            <div class="swell-small-text">Current Status</div>
+            <div class="swell-bold-text" id="customer-vip-tier"></div>
+          </div>
+        </div>
+        <i class="section-big-icon section-background2 fal fa-star-half-alt"></i>
+        <div class="swell-sidebar-section">
+          <div class="swell-sidebar-text">
+            <div class="swell-small-text" id="customer-vip-to-spend">Spend $<span id="vip-amount-to-spend">0</span> more to earn</div>
+            <div class="swell-bold-text" id="customer-vip-next-tier"></div>
+          </div>
+          <a class="swell-link-shop" href="https://sparkleinpink.com/">Shop now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="vip-table-section">
+      <div class="main-content">
+        <div class="swell-section-heading">
+          <h2 class="vip">VIPS Earn Even More</h2>
+          <p>More benefits coming soon!</p>
+        </div>
+        <div class="tier-arrows">
+          <div class="arrows-holder">
+            <span class="left-arrow">
+              <i class="swell-icon-arrow-left-circle arrow-icon"></i>
+            </span>
+            <span class="right-arrow">
+              <i class="swell-icon-arrow-right-circle arrow-icon"></i>
+            </span>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          {% comment %} <table class="swell-tier-table">
+            <thead>
+              <tr class="swell-tier-values">
+                <th></th>
+                <th class="star status"></th>
+                <th class="platinum status"></th>
+                <th class="diamond status"></th>
+              </tr>
+              <tr class="swell-tier-values">
+                <th></th>
+                <th class="star">Sign Up</th>
+                <th class="platinum"><span>Yearly Spend</span>$250</th>
+                <th class="diamond"><span>Yearly Spend</span>$500</th>
+              </tr>
+              <tr class="swell-tier-names">
+                <th></th>
+                <th class="star">Gold</th>
+                <th class="platinum">Platinum</th>
+                <th class="diamond">Diamond</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sparkle Bucks per $1 spent</td>
+                <td class="star">3</td>
+                <td class="platinum">4.5</td>
+                <td class="diamond">6</td>
+              </tr>
+              <!-- <tr>
+                <td>Birthday Reward</td>
+                <td class="star"><div class="circle"></div></td>
+                <td class="platinum"><div class="circle"></div></td>
+                <td class="diamond"><div class="circle"></div></td>
+              </tr>
+              <tr>
+                <td>Free Shipping</td>
+                <td class="star"></td>
+                <td class="platinum"><div class="circle"></div></td>
+                <td class="diamond">2-Day Shipping</td>
+              </tr>
+              <tr>
+                <td>Access to Exclusive Products</td>
+                <td class="star"></td>
+                <td class="platinum"><div class="circle"></div></td>
+                <td class="diamond"><div class="circle"></div></td>
+              </tr> -->
+            </tbody>
+          </table> {% endcomment %}
+          <ul class="vip-list">
+            <li class="list-item">
+              <div class="vip-header">
+                <i class="vip-icon icon-gold"></i>
+                <h2 class="vip-title">Gold</h2>
+              </div>
+              <div class="vip-content">
+                <p class="vip-subtext" style="line-height: 2.3;">Sign Up</p>
+                <p class="vip-marks">3</p>
+                <p class="vip-small-text">Sparkle Bucks per</p>
+                <p class="vip-spent">$1 spent</p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="vip-header">
+                <i class="vip-icon icon-diamond"></i>
+                <h2 class="vip-title">Diamond</h2>
+              </div>
+              <div class="vip-content">
+                <p class="vip-subtext">Yearly Spend</p>
+                <span class="vip-money">$500</span>
+                <p class="vip-marks">6</p>
+                <p class="vip-small-text">Sparkle Bucks per</p>
+                <p class="vip-spent">$1 spent</p>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="vip-header">
+                <i class="vip-icon icon-platinum"></i>
+                <h2 class="vip-title">Platinum</h2>
+              </div>
+              <div class="vip-content">
+                <p class="vip-subtext">Yearly Spend</p>
+                <span class="vip-money">$250</span>
+                <p class="vip-marks">4.5</p>
+                <p class="vip-small-text">Sparkle Bucks per</p>
+                <p class="vip-spent">$1 spent</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="redeem-section">
+      <div class="swell-section-heading">
+        <h2>Redeem for Discounts</h2>
+        <p class="desktop-hide">Redeeming your hard-earned Sparkle Bucks is easy!
+        Simply use the slider at checkout to choose the amount of Sparkle Bucks you'd like to spend!</p>
+        <p class="mobile-hide">Redeeming your hard-earned Sparkle Bucks is easy!</p>
+        <p class="mobile-hide">Simply use the slider at checkout to choose the amount of Sparkle Bucks you'd like to spend!</p>
+      </div>
+    </div>
+
+
+    <div class="swell-referral">
+      <div class="swell-referral-content-container swell-referral-static">
+        <div class="swell-referral-content-sidebar">
+
+            <div class="swell-referral-sidebar-details">
+                <span class="swell-referral-sidebar-details-action">Refer a Friend</span>
+                <span class="swell-referral-sidebar-details-reward">$5</span>
+            </div>
+        </div>
+        <div class="swell-referral-content-main" style="margin: 0px auto;">
+            <div class="swell-referral-refer">
+                <h2 class="swell-referral-heading">Give $5, Get $5</h2>
+                <p class="swell-referral-details">When your friend makes their first purchase of $30 or more.</p>
+                <div class="swell-referral-form-wrapper">
+                    <form class="swell-referral-form" name="swell-referral-refer-form" id="swell-referral-refer-form"
+                        method="POST" action="javascript:;" onsubmit="return false;">
+                        <div class="swell-referral-form-header">
+                            <p class="swell-referral-form-header-details">Now, enter your friends' emails below.</p>
+                        </div>
+                        <div class="swell-referral-form-body">
+                            <ul class="swell-referral-form-list">
+                                <li class="swell-referral-form-list-field"> <input
+                                        class="swell-referral-form-list-field-input" type="text"
+                                        name="swell-referral-refer-emails" id="swell-referral-refer-emails"
+                                        required="required" placeholder="Friends’ email (separated by commas)" autocomplete="off"><button
+                                        type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane"
+                                            aria-hidden="true"></i> </button> <span
+                                        class="swell-referral-form-field-details">Separate by Commas</span> </li>
+                                <li class="swell-referral-form-list-field"> <input class="swell-referral-form-list-submit"
+                                        type="submit" name="swell-referral-refer-submit" id="swell-referral-refer-submit"
+                                        value="Send"> </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+                <div class="swell-referral-media-wrapper">
+                    <p class="swell-referral-media-details">Referral links are to be shared on personal pages only, and are
+                        not to be shared on any of Sparkle In Pink's pages/posts</p>
+                    <ul class="swell-referral-media-list">
+                        <li class="swell-referral-medium swell-share-referral-facebook">
+                            <div class="swell-referral-medium-content"> <i class="swell-icon-Fb fa fa-facebook"
+                                    aria-hidden="true"></i>&nbsp;Share </div>
+                        </li>
+                        <li class="swell-referral-medium swell-share-referral-sms">
+                            <div class="swell-referral-medium-content"> <i class="swell-icon-SMS "
+                                    aria-hidden="true"></i>&nbsp;SMS </div>
+                        </li>
+                        <li class="swell-referral-medium swell-share-referral-messenger">
+                            <div class="swell-referral-medium-content"> <i class="swell-icon-Message " aria-hidden="true">
+                                    <span class="path1"></span> <span class="path2"></span> </i> &nbsp; <span>Message
+                                </span> </div>
+                        </li>
+                        <li class="swell-referral-medium swell-share-referral-copy">
+                            <div class="swell-referral-medium-content"> <i class="swell-icon-Copy-Link fa fa-link"
+                                    aria-hidden="true"></i>&nbsp;Copy Link </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <span class="btn-logout"><a href="/account/logout" class="link-to-logout">LOG OUT</a></span>
+
+
+
+
+  {% comment %}
+  {% paginate customer.orders by 20 %}
+  {% if customer.orders.size != 0 %}
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>{{ 'customer.orders.order_number' | t }}</th>
+        <th>{{ 'customer.orders.date' | t }}</th>
+        <th>{{ 'customer.orders.payment_status' | t }}</th>
+        <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+        <th>{{ 'customer.orders.total' | t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in customer.orders %}
+      <tr class="responsive-table-row">
+        <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+        <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+        <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+        <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+        <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>{{ 'customer.orders.none' | t }}</p>
+  {% endif %}
+
+  {% if paginate.pages > 1 %}
+  {% include 'pagination' %}
+  {% endif %}
+
+  {% endpaginate %}
+  {% endcomment %}
+  {% comment %}
+  <h2>{{ 'customer.account.details' | t }}</h2>
+
+  {{ customer.default_address | format_address }}
+  {% endcomment %}
+  <!-- <a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a> -->
+
+</div>
+
+<script>
+  $(function(){
+    $(".vip-table-section .arrows-holder .left-arrow .arrow-icon").on('click', function(){
+      var sliderParent = $(this).parents(".vip-table-section").find(".vip-list");
+      var leftEl = sliderParent.find("li.list-item").last().remove();
+      sliderParent.find("li.list-item").first().before(leftEl);
+    });
+    
+    $(".vip-table-section .arrows-holder .right-arrow .arrow-icon").on('click', function(){
+      var sliderParent = $(this).parents(".vip-table-section").find(".vip-list");
+      var leftEl = sliderParent.find("li.list-item").first().remove();
+      sliderParent.find("li.list-item").last().after(leftEl);
+    });
+
+    if(localStorage.getItem('currentLang') == "es"){
+      $(".swell-reward-sparkle").addClass("swell-lang-es");
+    }
+
+    
+    var staticInputVal = "";
+    var itvalRefer = setInterval(function(){
+
+      if($(".swell-referral-content-container .swell-referral-content-main h2.swell-referral-heading").length > 0){
+
+        clearInterval(itvalRefer);
+
+        if(localStorage.getItem('currentLang') == "es")
+          $(".swell-referral-content-container .swell-referral-content-main h2.swell-referral-heading").text("Dar $5, obtener $5");
+
+      }
+
+    }, 300);
+
+    $(document).on('click', ".swell-referral-back-link", function(){
+      
+      setTimeout(function(){
+        $(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off");
+      }, 200);
+      
+    });
+
+    var itvalSubmitRefer = setInterval(function(){
+
+      if($(".swell-referral-content-container:not(.swell-referral-static) .swell-referral-form-list-field-input").length > 0){
+
+        clearInterval(itvalSubmitRefer);
+
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off").val(staticInputVal).focus();
+        staticInputVal = "";
+        
+        
+        //$(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+
+      }
+
+    }, 300);
+
+    $(".swell-referral-content-container.swell-referral-static .swell-referral-form-list-field-input").on('keyup', function(){
+      staticInputVal = $(this).val();
+    });
+
+    $(document).on("submit", ".swell-referral-content-container .swell-referral-form-wrapper form", function(e){
+      setTimeout(function(){
+        $("#refer-form-submit").remove();
+        $(".swell-referral-form-list-field-input").after('<button type="submit" id="refer-form-submit" name="commit"> <i class="fa fa-paper-plane" aria-hidden="true"></i> </button>');
+        $(".swell-referral-form-list-field-input").attr("autocomplete", "off");
+      }, 3000);
+    });
+
+  });
+</script>

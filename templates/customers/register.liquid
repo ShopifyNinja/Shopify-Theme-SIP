@@ -1,0 +1,292 @@
+
+
+{% form 'create_customer' %}
+<div id="CustomerLoginForm">
+<h2 class="index-f-products__title">{{ 'customer.register.title' | t }}</h2>
+  {{ form.errors | default_errors }}
+  <label for="FirstName" class="my_login_sec">
+    {{ 'customer.register.first_name' | t }}
+  </label>
+  <input type="text"
+    name="customer[first_name]"
+    id="FirstName"
+	placeholder="Enter your name"
+    autofocus
+    {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+
+
+  <label for="Email" class="my_login_sec">
+    {{ 'customer.register.email' | t }}
+  </label>
+  <input type="email"
+    name="customer[email]"
+    id="Email"
+    class="{% if form.errors contains 'email' %}input-error{% endif %}"
+    placeholder="Enter your e-mail"
+    value="{% if form.email %}{{ form.email }}{% endif %}"
+    spellcheck="false"
+    autocomplete="off"
+    autocapitalize="off">
+
+  <label for="CreatePassword" class="my_login_sec">
+    {{ 'customer.register.password' | t }}
+  </label>
+  <input type="password"
+    name="customer[password]"
+    id="CreatePassword"
+    class="{% if form.errors contains 'password' %}input-error{% endif %}"
+    placeholder="Create your password">
+
+  <label for="ConfirmPassword" class="my_login_sec">
+    REPEAT PASSWORD
+  </label>
+
+  <input type="password"
+    name="customer[password_confirmation]"
+    id="ConfirmPassword"
+    class="{% if form.errors contains 'password' %}input-error{% endif %}"
+    placeholder="Repeat your password">
+
+
+	<div class="recover_pas_sec">
+      <a href="javascript:;" class="note-refer-signup" style="width: 100%;">By creating an account you agree to the </a>
+      <a href="/pages/terms-of-use" class="signup-refer-url">Terms of Service</a>
+      <a href="javascript:;" class="note-refer-signup"> and </a>
+      <a href="/pages/privacy-policy" class="signup-refer-url" style="float: none;">Privacy Policy</a>
+	</div>
+  
+  	<div style="margin-top: 22px;" class="Submit_button_sce">
+    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="button">
+      
+  	<hr class="sign_spliter">
+	
+  	<div class="go-signin-section">
+      <label class="label-sign-in">Do you have an account?</label>
+      <a href="/account/login">
+        Sign In
+      </a>
+    </div>
+      
+  </div>
+<!--   <a href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a> -->
+  </div>
+{% endform %}
+
+
+
+<style>
+/*   body.template-login #CustomerLoginForm .index-f-products__title{
+    font-size: 30px;
+	font-family: "Open Sans" !important;
+	line-height: 0;
+	color: #0f0f0f;
+  }
+  body.template-login #CustomerLoginForm .index-f-products__title label{
+    color: #0F0F0F;	
+    font-family: "Open Sans" !important;	
+    font-size: 30px !important;	
+    line-height: 1;
+    text-align: center;
+  } */
+  body.template-register #CustomerLoginForm .index-f-products__title:after{
+    width: 210px;
+    margin: 30px auto 0;
+/*     margin-top: 2px; */
+  }
+  .template-register #CustomerLoginForm{
+    padding-top:50px;
+    width:395px;
+    margin-bottom:54px;
+  }
+  body.template-register #CustomerLoginForm .index-f-products__title{
+    font-size: 30px;
+	font-family: "Open Sans" !important;
+	line-height: 0;
+	color: #0f0f0f;
+  }
+  
+  body.template-register #CustomerLoginForm label.my_login_sec{
+    color: #202124;
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+  
+  body.template-register #CustomerLoginForm input:focus{
+    border: 1px solid #81a6e4;
+	border-radius: 2px;
+  }
+  body.template-register #CustomerLoginForm #FirstName,
+  body.template-register #CustomerLoginForm #LastName,
+  body.template-register #CustomerLoginForm input[type="email"],
+  body.template-register #CustomerLoginForm input[type="password"]{
+    cursor: auto;
+    border: 1px solid #BDBDBD;	
+    background-color: #FFF;
+    padding: 12px 28px;
+    color: #202124;	
+    font-family: Lato;	
+    font-size: 14px;	
+    line-height: 24px;
+    box-shadow: none;
+    padding: 11px 25px;
+  }
+  body.template-register #CustomerLoginForm #FirstName:focus,
+  body.template-register #CustomerLoginForm #LastName:focus,
+  body.template-register #CustomerLoginForm input[type="email"]:focus,
+  body.template-register #CustomerLoginForm input[type="password"]:focus
+  {
+    border: 1px solid #81a6e4;
+	border-radius: 2px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  }
+  body.template-register #CustomerLoginForm #FirstName::placeholder,
+  body.template-register #CustomerLoginForm #LastName::placeholder,
+  body.template-register #CustomerLoginForm input[type="email"]::placeholder,
+  body.template-register #CustomerLoginForm input[type="password"]::placeholder{
+    color: #909090;
+	font-size: 13px;
+	font-family: Lato;
+  }
+  body.template-register #CustomerLoginForm .my_login_sec{
+    margin:20px 0 5px;
+  }
+  
+  body.template-login #customer_login .recover_pas_sec .signup-refer-url{
+    color: #f99bae;	
+    font-family: Lato;	
+    font-size: 14px;
+    line-height: 24px;	
+  }
+  
+  body.template-register #CustomerLoginForm input[type="submit"]{
+    border: 1px solid #000000;	
+    background-color: #212121;
+    font-family: "Open Sans";	
+    font-size: 18px;	
+    font-weight: 600;	
+    line-height: 19px;
+    height:62px !important;
+  }
+  
+  body.template-register #CustomerLoginForm .stay-signin{
+    text-transform: capitalize;
+    color: #ACACAC;	
+    font-family: Lato;
+    font-size: 14px;	
+    line-height: 24px;
+  }
+  
+  body.template-register #CustomerLoginForm label.label-sign-up{
+    color: #202124;	
+    font-family: Lato;	
+    font-size: 14px;	
+    font-weight: 500;	
+    line-height: 19px;
+  }
+  body.template-register #CustomerLoginForm .recover_pas_sec{
+    width:245px;
+    padding: 22px 0 50px;
+    text-align: center;
+    margin:auto;
+  }
+  
+  body.template-register #CustomerLoginForm .recover_pas_sec a{
+    color: #202124;
+	font-size: 14px;
+	font-family: Lato;
+    line-height:24px;
+  }
+  
+  body.template-register #CustomerLoginForm .recover_pas_sec a.signup-refer-url{
+    color: #f99bae;	
+    font-family: Lato;	
+    font-size: 14px;
+    line-height: 24px;	
+    text-decoration: underline;
+  }
+  
+  body.template-register #CustomerLoginForm hr.sign_spliter{
+    margin-top: 50px;
+    margin-bottom: 25px;
+    display: block; 
+    height: 1px;
+    border: 0; 
+    border-top: 1px solid #EDEDED;
+    padding: 0;
+  }
+  
+  body.template-register #CustomerLoginForm .label-sign-in{
+    color: #202124;	
+    font-family: "Open Sans";	
+    font-size: 14px;	
+    font-weight: 600;	
+    line-height: 19px;
+  }
+  
+  body.template-register #CustomerLoginForm .label-sign-in + a{
+    color: #FFA6B4;	
+    font-family: "Open Sans";	
+    font-size: 14px;	
+    font-weight: 500;	
+    line-height: 19px;
+    padding: 0px 18px;
+    text-decoration:underline;
+  }
+  
+  body.template-register #CustomerLoginForm .go-signin-section{
+    text-align: center;
+  }
+  
+  body.template-register #CustomerLoginForm .note-refer-signup{
+    text-transform: none !important;
+  }
+  
+  @media(max-width: 768px){
+    body.template-register #CustomerLoginForm{
+      width: calc(100% - 20px);
+      margin: 20px 10px;
+      margin-top: 0px;
+      padding:0;
+    }
+    body.template-register #CustomerLoginForm .my_login_sec{
+    margin:5px 0 5px;
+  }
+    #CustomerLoginForm .Submit_button_sce{
+      margin-top: 5px !important;
+    }
+    
+    body.template-register #CustomerLoginForm .index-f-products__title{
+      font-size: 18pt;
+      margin-bottom: 25px !important;
+    }
+    body.template-register #CustomerLoginForm .index-f-products__title:after{
+      width: 119pt;
+      margin-top: 11pt;
+    }
+    body.template-register #CustomerLoginForm hr.sign_spliter{
+      margin: 13pt 0px;
+      margin-bottom: 12pt;
+    }
+    body.template-register #CustomerLoginForm .recover_pas_sec{
+      padding: 17px 0px;
+    }
+    
+    body.template-register #CustomerLoginForm input[type="email"],
+    body.template-register #CustomerLoginForm input[type="password"]{
+      padding: 12px 25px;
+    }
+  }
+</style>
+
+<script>
+  $(document).ready(function(){
+    $("#create_customer").on("submit", function(){
+      if($("#CreatePassword").val() != $("#ConfirmPassword").val()){
+        $("#CreatePassword").focus();
+        return false;
+      }
+    });
+  });
+</script>

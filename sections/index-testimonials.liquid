@@ -1,0 +1,149 @@
+<div class="max-wrap">
+  <div class="index-testimonials__bg"></div>
+  <div class="container index-testimonials__container">
+    {% if section.settings.title %}
+    <h2 class="index-testimonials__title"><a href="/pages/reviews">{{ section.settings.title }}</a></h2>
+    {% endif %}
+
+    {% if section.settings.content %}
+      <div class="index-testimonials__content">{{ section.settings.content }}</div>
+    {% endif %}
+
+    <div class="index-testimonials__logos">
+      {% for block in section.blocks %}
+        {% if block.type == "logo" %}
+          {% if block.settings.url != blank %}
+            <a href="{{ block.settings.url }}" class="index-testimonials__logo">
+          {% else %}
+            <span class="index-testimonials__logo">
+          {% endif %}
+
+            <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ block.settings.logo | img_url: '120x' }}" alt="block.settings.logo.alt" />
+
+          {% if block.settings.url != blank %}
+            </a>
+          {% else %}
+            </span>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="index-testimonials__testimonials" data-testimonials>
+      {% for i in (1..9) %}
+        <div class="index-testimonials__testimonial">
+          <div class="index-testimonials__testimonial-description"></div>
+          <div class="index-testimonials__testimonial-stars"></div>
+          <div class="index-testimonials__testimonial-content"></div>
+          <div class="index-testimonials__testimonial-image"></div>
+          <div class="index-testimonials__testimonial-author"></div>
+          <div class="index-testimonials__testimonial-date"></div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="index-testimonials__count"></div>
+</div>
+<div id="yotpo-hidden-review" style="display:none;"></div>
+<script>
+  document.addEventListener("StartOtherLoading", function(event) 
+{
+  var sendData = {};
+  //sendData.methods = '[{"method":"carousels","params":{"images_to_display":3,"autoplay_speed":"3000","data_show_navigation":"1","data_show_bottomline":"1","data_header_customisation_enabled":null,"data_header_customisation_text":null,"data_header_customisation_font_size":null,"data_header_customisation_color":null,"data_header_customisation_alignment":null,"data_background_color":"transparent","data_testimonials_page_enabled":null,"data_testimonials_page_link":null,"data_testimonials_page_text":null,"demo":null,"pid":"yotpo_site_reviews","best":true,"per_page":5}}]';
+  sendData.methods = '[{"method":"carousels","params":{"images_to_display":3,"autoplay_speed":"3000","data_show_navigation":"1","data_show_bottomline":"1","data_header_customisation_enabled":null,"data_header_customisation_text":null,"data_header_customisation_font_size":null,"data_header_customisation_color":null,"data_header_customisation_alignment":null,"data_background_color":"transparent","data_testimonials_page_enabled":null,"data_testimonials_page_link":null,"data_testimonials_page_text":null,"demo":null,"pid":null,"include_site_reviews":true,"per_page":9, "mode": "most_recent"}}]';
+  sendData.app_key = 'wzEo5Y9prJgJeGbube6Y0IuJfXjogzBjiNxfJmyC';
+  sendData.is_mobile = false;
+  sendData.widget_version = '2019-08-28_09-22-30';
+  $.ajax({
+    type: "POST",
+    url: "https://staticw2.yotpo.com/batch",
+    data: sendData,
+    success: reloadReviews,
+    dataType: 'json'
+  });
+  function reloadReviews(response) {
+    $('#yotpo-hidden-review').html(response[0].result);
+    var review_count = $('#yotpo-hidden-review .carousel-reviews-bottom-line').html();
+    $('.index-testimonials__count').html('<a href="/pages/reviews">' + review_count + '</a>');
+    $('#yotpo-hidden-review .single-carousel.review').each(function(idx){
+      var index = idx + 1;
+      var review_title = $(this).find('.carousel-review-title').html();
+      var review_stars = $(this).find('.carousel-stars').html();
+      var review_body = $(this).find('.carousel-review-body').html();
+      var review_img = $(this).find('.product-image-container').html();
+      var review_author = $(this).find('.carousel-review-author').html();
+      var review_date = $(this).find('.carousel-review-date').html();
+      var current_testimonial = $('.index-testimonials__testimonial:nth-child('+index+')');
+      current_testimonial.find('.index-testimonials__testimonial-description').html(review_title);
+      current_testimonial.find('.index-testimonials__testimonial-stars').html(review_stars);
+      current_testimonial.find('.index-testimonials__testimonial-content').html(review_body);
+      current_testimonial.find('.index-testimonials__testimonial-image').html(review_img);
+      current_testimonial.find('.index-testimonials__testimonial-author').html(review_author);
+      current_testimonial.find('.index-testimonials__testimonial-date').html(review_date);
+    });
+
+    var e = $("[data-testimonials]");
+    if($(window).width() > 768){
+      e.length > 0 && e.slick({
+        autoplay: true,
+    	autoplaySpeed: 5000,
+        swipeToSlide: !0,
+        arrows: !1,
+        dots: !0,
+        slidesToShow: 3
+      });
+    }
+    else{
+      e.length > 0 && e.slick({
+        autoplay: true,
+    	autoplaySpeed: 5000,
+        swipeToSlide: !0,
+        arrows: !1,
+        dots: !0,
+        slidesToShow: 1
+      });
+    }
+  }
+  });
+</script>
+{% schema %}
+  {
+    "name": "Testimonials",
+    "class": "index-testimonials",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo",
+        "name": "Logo",
+        "limit": 12,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Url"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+        "name": "Testimonials",
+        "category": "Front Page"
+    }]
+  }
+{% endschema %}

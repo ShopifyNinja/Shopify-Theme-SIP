@@ -1,0 +1,324 @@
+{% if product_item %}
+  <div class="product-item">
+    {%- assign current_variant = product_item.selected_or_first_available_variant -%}
+    {%- assign featured_image = product_item.featured_image | default: product_item.featured_image -%}
+
+	  {% assign min = 1111 %}
+    {% assign max = 8888 %}
+    {% assign diff = max | minus: min %}
+    {% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min %}
+     <form action="/cart/add"
+                method="post"
+                class="shopify-product-item-form clearfix product_form init {% if product_item.variants.size > 1 or product_item.options.size > 1 %}product_form_options{% endif %}"
+                id="product-form-{{ product_item.id }}"
+                data-money-format="{{ shop.money_format }}"
+                data-shop-currency="{{ shop.currency }}"
+                data-select-id="product-select-{{ product_item.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+                data-enable-state="true"
+                data-product-id="{{ product_item.id }}">
+
+      <div class="product-item__img-container">
+        {% include 'responsive-image' with
+          image: featured_image,
+          max_width: 300,
+          max_height: 450,
+          image_attributes: "data-product-featured-image",
+          wrapper_class: "product-item__img-wrap",
+          image_class: "product-item__img"
+          wrapper_attributes: "data-product-image-wrapper",
+        %}
+        <a href="{{ product_item.url }}" class="product-item__link"></a>
+
+        {% assign option_name = "" %}
+        {% if product_item.has_only_default_variant %}
+          <div class="product-item__size-options"   data-custom-select-options>
+           <input
+            type="radio"
+            class="product-item__size-input"
+            id="Option-{{ randomNumber }}-{{ current_variant.title }}-pid-{{ current_variant.id }}"
+            name="id"
+            {% unless current_variant.available %}disabled=disabled{% endunless %}
+            value="{{ current_variant.id }}" checked />
+          </div>
+        {% else %}
+          {% assign p_options = product_item.options_with_values %}
+          {% assign first_o_name = p_options[0].name | downcase %}
+          {% if p_options.size == 1 and first_o_name == 'color' %}
+          {% comment %} if there is only a color variant option {% endcomment %}
+          	{% assign v_id = '' %}
+          	{% assign v_title = '' %}
+          	{% for variant in product_item.variants %}
+          		{% if variant.available %}
+          		 {% assign v_id = variant.id %}
+          		 {% assign v_title = variant.title %}
+          		 {% break %}
+          		{% endif %}
+          	{% endfor %}
+          	<div class="product-item__size-options" data-custom-select-options>
+               <input
+                type="radio"
+                class="product-item__size-input"
+                id="Option-{{ randomNumber }}-{{ v_title }}-pid-{{ v_id }}"
+                name="id"
+                value="{{ v_id }}" checked />
+            </div>
+          {% else %}
+          {% comment %} if product has 2+ option names(color, size, ...) {% endcomment %}
+            {% for option in product_item.options_with_values %}
+              {% assign option_name = option.name | downcase %}
+              {% if option_name contains "size" %}
+                <div class="product-item__size-wrap" data-custom-select>
+                    <div class="product-item__size-styled see-avaliable-btn " data-custom-select-free data-custom-select-styled>
+                      {{ 'products.product.see_available' | t }}
+                    </div>
+                  {% assign values = '' %}
+                  {% assign array_mom = ''%}
+                  {% assign array_adult = ''%}
+                  {% assign array_baby = ''%}
+                  {% assign array_child = ''%}
+                  {% assign array_dad = ''%}
+                  {% assign array_boy = ''%}
+                  {% assign array_girl = ''%}
+                  {% assign array_pet = ''%}
+                  {% assign mom_flag = false %}
+                  {% assign array_me = ''%}
+                  {% assign family_flag = false %}
+                  {% for value_mom_me in option.values %}
+                  		{% if value_mom_me contains 'FAMILY'%}
+                  			{% assign family_flag = true %}
+                  			{% if value_mom_me contains 'DAD' %}
+                          {% assign array_dad = array_dad | append: value_mom_me | append: ','%}
+                        {% elsif value_mom_me contains 'MOM' %}
+                          {% assign array_mom = array_mom | append: value_mom_me | append: ','%}
+                   			{% elsif value_mom_me contains 'BOY' %}
+                          {% assign array_boy = array_boy | append: value_mom_me | append: ','%}
+                  			{% elsif value_mom_me contains 'GIRL' %}
+                          {% assign array_girl = array_girl | append: value_mom_me | append: ','%}
+                  			{% elsif value_mom_me contains 'PET' %}
+                          {% assign array_pet = array_pet | append: value_mom_me | append: ','%}
+                  			{% elsif value_mom_me contains 'BABY' %}
+                          {% assign array_baby = array_baby | append: value_mom_me | append: ','%}
+                  			{% elsif value_mom_me contains 'CHILD' %}
+                          {% assign array_child = array_child | append: value_mom_me | append: ','%}
+                  			{% elsif value_mom_me contains 'ADULT' %}
+                          {% assign array_adult = array_adult | append: value_mom_me | append: ','%}
+                        {% endif %}
+                  		{% else %}
+                          {% if value_mom_me contains 'MOM' or value_mom_me contains 'ADULT' %}
+                            {% assign array_mom = array_mom | append: value_mom_me | append: ','%}
+                          {% elsif value_mom_me contains 'CHILD' %}
+                            {% assign value_mom_me = value_mom_me | remove:'CHILD-' %}
+                            {% assign array_me = array_me | append: value_mom_me | append: ','%}
+              		        {% elsif value_mom_me contains 'KIDS' %}
+                            {% assign value_mom_me = value_mom_me | remove:'KIDS-' %}
+                            {% assign array_baby = array_baby | append: value_mom_me | append: ','%}
+                          {% endif %}
+                  		{% endif %}
+                  	
+                  {% endfor %}
+                   
+                  {% if family_flag %}
+                  	{% assign mom_options =  array_mom  | split: ',' %}
+                    {% assign dad_options =  array_dad  | split: ',' %}
+                    {% assign boy_options =  array_boy  | split: ',' %}
+                    {% assign girl_options =  array_girl  | split: ',' %}
+                    {% assign pet_options =  array_pet  | split: ',' %}
+                  	{% assign baby_options =  array_baby  | split: ',' %}
+                    {% assign adult_options =  array_adult  | split: ',' %}
+                    {% assign child_options =  array_child  | split: ',' %}
+                  {% else %}
+                  	{% assign mom_options =  array_mom  | split: ',' %}
+                  	{% assign me_options =  array_me  | split: ',' %}
+                  	{% assign baby_options =  array_baby  | split: ',' %}
+                  {% endif %}
+                  {% if family_flag %}
+                	  <div class="product-item__size-options" data-custom-select-options>
+                      {% if adult_options.size >= 1 %}
+                        {% assign custom_options = adult_options %}
+                        {% assign option_title = 'Adult' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                      {% if dad_options.size >= 1 %}
+                        {% assign custom_options = dad_options %}
+                        {% assign option_title = 'Dad' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                      {% if mom_options.size >= 1 %}
+                        {% assign custom_options = mom_options %}
+                        {% assign option_title = 'Mom' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                    	{% if child_options.size >= 1 %}
+                        {% assign custom_options = child_options %}
+                        {% assign option_title = 'Child' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                    	{% if baby_options.size >= 1 %}
+                        {% assign custom_options = baby_options %}
+                        {% assign option_title = 'Baby' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                    	{% if boy_options.size >= 1 %}
+                        {% assign custom_options = boy_options %}
+                        {% assign option_title = 'Boy' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                      {% if girl_options.size >= 1 %}
+                        {% assign custom_options = girl_options %}
+                        {% assign option_title = 'Girl' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                    	{% if pet_options.size >= 1 %}
+                        {% assign custom_options = pet_options %}
+                        {% assign option_title = 'Pet' %}
+                        {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                      {% endif %}
+                    </div>
+                  {% else %}
+                    {% if me_options.size >= 1 or mom_options.size >= 1 or baby_options.size >= 1 %}
+                      <div class="product-item__size-options" data-custom-select-options>
+                          {% if baby_options.size >= 1 %}
+                            {% assign custom_options = baby_options %}
+                            {% assign option_title = 'Kids' %}
+                            {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                          {% endif %}
+                          {% if me_options.size >= 1 %}
+                            {% assign custom_options = me_options %}
+                            {% assign option_title = 'Child' %}
+                            {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                          {% endif %}
+                          {% if mom_options.size >= 1 %}
+                            {% assign custom_options = mom_options %}
+                            {% assign option_title = 'Adult' %}
+                            {% include 'popup_options', option_title: option_title, custom_options: custom_options %}
+                          {% endif %}
+                        </div>
+                    {% else %}
+
+
+                      <div class="product-item__size-options"  data-custom-select-options>
+                          <h5 class="option-title"> Sizes </h5>
+                          <ul >
+                            {% for value in option.values %}
+                              <li class="product-item__size-option">
+                              {% assign variant_item = '' %}
+                              {% assign variant_available = false %}
+                              {% for variant in product_item.variants %}
+                                {% if variant.title contains value %}
+                                  {% assign variant_item = variant %}
+                                  {% break %}
+                                {% endif %}
+                              {% endfor %}
+
+                                {% if variant_item.inventory_quantity > 0 %}
+                                  {% assign variant_available = true %}
+                                {% endif %}
+                                <input
+                                    type="radio"
+                                    class="product-item__size-input"
+                                    id="Option{{ option.position }}-{{ randomNumber }}-{{ value }}-pid-{{ product_item.id }}"
+                                    name="id"
+                                    {% unless variant_available %}disabled=disabled{% endunless %}
+                                    value="{{ variant_item.id }}"{% if option.selected_value == value %} checked{% endif %} />
+                                <label
+                                  class="product-item__size-label {% unless variant_available %}unavailable{% endunless %}"
+                                  for="Option{{ option.position }}-{{ randomNumber }}-{{ value }}-pid-{{ product_item.id }}">
+                                  {{ value }}{% unless variant_available %}<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />{% endunless %}
+                                </label>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+
+        <noscript>
+          <select name="id">
+            {% for variant in product_item.variants %}
+              <option
+                {% if variant == current_variant %}selected="selected"{% endif %}
+                {% unless variant.available %}disabled="disabled"{% endunless %}
+                value="{{ variant.id }}">
+                  {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        </noscript>
+
+
+         <button  {% if current_variant.available %}
+                  class="product-item__submit"
+                  {% else %}
+                        disabled class="product-item__submit disabled_btn"
+                  {% endif %}
+            type="submit"
+            name="add"
+
+            data-submit-button>
+            <span>{{ 'products.product.add_to_bag' | t }}</span>
+            <span>➡</span>
+          </button>
+
+
+      </div>
+
+      <input type="hidden" id="Quantity" name="quantity" value="1" min="1">
+
+    </form>
+
+    <div class="product-item__title-bar">
+      <a class="product-item__title" href="{{ product_item.url }}">{{ product_item.title }}</a>
+	 	{% include 'swym-product-view', product: product_item %}<button class="swym-button swym-loaded swym-add-to-wishlist-view-product product_{{product_item.id}}" data-swaction="addToWishlist" data-product-id="{{product_item.id | json}}" style="color:#000 !important;"></button>
+    </div>
+    <div class="product-item__price-wrap" data-price-wrapper>
+      <span
+        data-product-price
+        class="product-item__price {% if product_item.compare_at_price_max > product_item.price %}discounted{% endif %}">
+        
+        {% if current_variant.price > 0 %}
+          ${{ current_variant.price | amount | divided_by: 100.0 }}
+        {% else %}
+          Free
+        {% endif %}
+
+        {% if product_item.compare_at_price_max > product_item.price %}
+          <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+          <s class="product-item__price-compare" data-compare-price>
+            {% if current_variant.compare_at_price > current_variant.price %}
+              {{ current_variant.compare_at_price | money }}
+            {% endif %}
+          </s>
+        {% endif %}
+      </span>
+      <div class="grid-view-item__reviews"><div class="yotpo bottomLine" data-product-id="{{ product_item.id }}"></div></div>
+    </div>
+    <div class="tag-group">
+      <ul class="product-tags-labels">
+        {% for tag in product_item.tags %}
+          {% if tag == 'new arrival'%}
+            {% assign date_published = product_item.published_at | date: '%Y%m%d' %}
+            {% assign date_now = 'now' | date: '%Y%m%d' %}
+            {% assign date_difference = date_now | minus: date_published %}
+            {% if date_difference < 7 %}
+              <li class="tag-new"><span>NEW</span></li>
+            {% endif %}
+          {% endif %}
+          {% if tag == 'sale'%}
+            <li class="tag-normal"><span>SALE</span></li>
+          {% endif %}
+          {% comment %} {% if tag == 'sold out' %}
+            <li class="tag-normal"><span>SOLD OUT</span></li>
+          {% endif %} {% endcomment %}
+        {% endfor %}
+        {% unless product_item.available %}
+        <li><span>SOLD OUT - SIGN UP FOR RESTOCK</span></li>
+        {% endunless %}
+      </ul>
+	</div>
+  </div>
+{% endif %}

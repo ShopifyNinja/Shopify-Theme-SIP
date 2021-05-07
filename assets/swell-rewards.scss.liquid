@@ -1,0 +1,1899 @@
+@-ms-viewport {
+  width: device-width;
+}
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+}
+
+$colorWhite: #fff;
+$colorBlack: #000;
+$colorPink: #f495b2;
+$colorMidGrey: #e5e3de;
+
+$bordercolorgrey: #e1e1e1;
+
+
+
+
+
+$colorLightRed: #ee5666;
+$colordarkRed: #d41217;
+$colorYellow: #fedf34;
+$colorLightGrey: #f5f5f5;
+$colorGrey: #585858;
+$colorDarkGrey: #404040;
+$colorDarkishGrey: #636363;
+$colorLightGreen: #7bd499;
+$colorInput: #796e66;
+$swelltrackcolor: #f4f4f4;
+$swelltrackthumb: #212121;
+
+$bordercolorlightgrey: #dedede;
+$bordercolorinputgrey: #cccccc;
+
+$min: min-width;
+$small: 480px;
+$medium: 768px;
+$large: 1024px;
+
+@font-face {
+    font-family: 'interstateregular';
+    src: url('interstateblack-webfont.woff2') format('woff2'),
+         url('interstateblack-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'swell-rewards';
+  src:  url('swell-rewards.eot?an0qk1');
+  src:  url('swell-rewards.eot?an0qk1#iefix') format('embedded-opentype'),
+    url('swell-rewards.ttf?an0qk1') format('truetype'),
+    url('swell-rewards.woff?an0qk1') format('woff'),
+    url('swell-rewards.svg?an0qk1#swell-rewards') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="swell-icon-"], [class*=" swell-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'swell-rewards' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.swell-icon-circle:before {
+  content: "\e912";
+}
+.swell-icon-arrow-right-circle:before {
+  content: "\e900";
+}
+.swell-icon-arrow-left-circle:before {
+  content: "\e901";
+}
+.swell-icon-Birthday-Bonus:before {
+  content: "\e902";
+  color: #f1cc16;
+}
+.swell-icon-Copy-Link:before {
+  content: "\e903";
+}
+.swell-icon-Create-Account:before {
+  content: "\e904";
+  color: #f495b2;
+}
+.swell-icon-Earn-Points:before {
+  content: "\e905";
+}
+.swell-icon-Facebook:before {
+  content: "\e906";
+  color: #f495b2;
+}
+.swell-icon-Fb:before {
+  content: "\e907";
+}
+.swell-icon-HIW-1:before {
+  content: "\e908";
+}
+.swell-icon-HIW:before {
+  content: "\e909";
+}
+.swell-icon-Instagram:before {
+  content: "\e90a";
+  color: #f1cc16;
+}
+.swell-icon-Join:before {
+  content: "\e90b";
+}
+.swell-icon-Message:before {
+  content: "\e90c";
+}
+.swell-icon-Per-1-Spent:before {
+  content: "\e90d";
+  color: #64c9d6;
+}
+.swell-icon-Read-our-Blog:before {
+  content: "\e90e";
+  color: #68cad7;
+}
+.swell-icon-Redeem:before {
+  content: "\e90f";
+}
+.swell-icon-SMS:before {
+  content: "\e910";
+}
+.swell-icon-Write-a-Review:before {
+  content: "\e911";
+  color: #666766;
+}
+
+
+
+@font-face {
+  font-family: 'ITC Century Std';
+  src: url('CenturyStd-Book.woff2') format('woff2'),
+      url('CenturyStd-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('HelveticaNeue-Bold.woff2') format('woff2'),
+      url('HelveticaNeue-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('HelveticaNeue.woff2') format('woff2'),
+      url('HelveticaNeue.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$theme-font-family-century: 'Lato';
+$theme-font-family-varela: 'Lato';
+$theme-font-family-helvetica: 'Lato';
+
+.swell-link-list {
+  text-align: center;
+  .swell-link {
+    max-width: 160px;
+    margin: 0 auto 1em;
+    width: 100%;
+    display: block;
+    @media ($min:$small) {
+      max-width: 348px;
+    }
+    @media ($min:$medium) {
+      max-width: 120px;
+      display: inline-block;
+      margin: 0 0.5em 1em;
+    }
+    a {
+      display: block;
+      width: 100%;
+      font-family: $theme-font-family-century;
+      font-weight: bold;
+      border: 1px solid $colorBlack;
+      border-radius: 5px;
+      padding: 14px 5px;
+      text-align: center;
+      background-color: $colorBlack;
+      color: $colorWhite;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1;
+      text-transform: uppercase;
+      @media ($min:$small) {
+        font-size: 24px;
+        padding: 20px 5px;
+      }
+      @media ($min:$medium) {
+        font-size: 14px;
+        padding: 14px 5px;
+      }
+    }
+  }
+}
+.swell-reward-sparkle {
+  font-family: $theme-font-family-century;
+  font-weight: normal;
+  &.account {
+    .referral-section {
+      min-height: auto;
+      .referral-section-holder {
+        margin-top: 0;
+      }
+      background-image: none;
+    }
+    .joining-section-login {
+      margin: 0 auto 50px;
+
+    }
+  }
+  p {
+    font-size: 18px;
+    font-family: $theme-font-family-century;
+    font-weight: normal;
+    margin: 0;
+    line-height: 1.3;
+    @media ($min: $small) {
+      font-size: 28px;
+    }
+    @media ($min: $medium) {
+      font-size: 18px;
+    }
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+  img {
+    width: 100%;
+  }
+  .swell-section-heading {
+    text-align: center;
+    margin-bottom: 50px;
+    h2 {
+      color: $colorBlack;
+      font-size: 26px;
+      line-height: 1.2;
+      margin: 0 auto;
+      text-align: center;
+      font-family: $theme-font-family-century;
+      text-transform: initial;
+      letter-spacing: 0;
+      position: relative;
+      &:after {
+        content: "";
+        background-color: $colorPink;
+        width: 140px;
+        margin: 0 auto;
+        height: 3px;
+        position: absolute;
+        bottom: -30%;
+        left: 0;
+        right: 0;
+      }
+      &.vip {
+        &:after {
+          bottom: -75%;
+        }
+      }
+      @media ($min:$small) {
+        font-size: 40px;
+      }
+      @media ($min:$medium) {
+        font-size: 36px;
+      }
+    }
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  @media ($min:$medium) {
+    .desktop {
+      display: block;
+    }
+    .mobile {
+      display: none;
+    }
+  }
+  .swell-disable {
+    opacity: 0.5;
+  }
+  .swell-container {
+    max-width: 1198px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .sparkle-banner {
+    text-align: center;
+    width: 100%;
+    .banner-image-holder {
+      position: relative;
+      .banner-image {
+        &.mobile {
+        }
+      }
+      .banner-caption {
+        position: absolute;
+        top: 71%;
+        left: 23%;
+        @media ($min:$small) {
+          left: 25%;
+        }
+        @media ($min:$medium) {
+          top: 65%;
+          left: 23%;
+        }
+        .caption-detail {
+          font-size: 14px;
+          line-height: 1.3;
+          @media ($min:$small) {
+            font-size: 20px;
+          }
+          @media ($min:$medium) {
+            font-size: 16px;
+          }
+          @media ($min:$large) {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+  .joining-section,
+  .joining-section-login {
+    position: relative;
+    margin: -20px auto 80px;
+    padding: 0 30px;
+    @media ($min: $medium) {
+      display: flex;
+      .HIW-image {
+        width: 95%;
+        margin: 0 auto;
+        position: absolute;
+        top: 24%;
+        left: 0;
+        right: 0;
+        opacity: 0.4;
+      }
+      .sidebar-content {
+        flex: 1.05;
+        background-color: $colorBlack;
+      }
+      .main-content {
+        flex: 4;
+      }
+    }
+    .main-content {
+      background-color: $colorPink;
+      padding: 10px;
+      .swell-section-heading {
+        margin-bottom: 90px;
+        h2 {
+          color: $colorWhite;
+          margin-top: 50px;
+          @media ($min: $medium) {
+            text-align: left;
+            margin-top: 0;
+          }
+          &:after {
+            display: none;
+          }
+        }
+      }
+      .HIW-icon {
+        font-size: 120px;
+        color: $colorMidGrey;
+        position: absolute;
+        top: 10%;
+        left: 20px;
+        @media ($min: $medium) {
+          top: 5%;
+          left: 22%;
+        }
+      }
+      .HIW-list {
+        max-width: 700px;
+        width: 100%;
+        margin: 0 auto 50px;
+        @media ($min: $medium) {
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+        }
+        .list-items {
+          margin-bottom: 70px;
+          text-align: center;
+          position: relative;
+          &:after {
+            content:"";
+            max-width: 50px;
+            width: 100%;
+            min-height: 14px;
+            background-image: url(swell-arrow-right.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: absolute;
+            bottom: -32%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            transform: rotate(90deg);
+          }
+          @media ($min: $medium) {
+            flex: 1;
+            margin: 0 15px;
+            &:after {
+              transform: none;
+              bottom: auto;
+              top: 7%;
+              right: -5%;
+              left: auto;
+            }
+          }
+          &:nth-child(2) {
+            &:after {
+              @media ($min: $medium) {
+                right: -28%;
+              }
+            }
+          }
+          &:last-child {
+            margin-bottom: 0;
+            &:after {
+              display: none;
+            }
+          }
+          .list-title {
+            font-size: 20px;
+            color: $colorWhite;
+            margin: 0 auto 15px;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            font-family: $theme-font-family-varela;
+            @media ($min: $small) {
+              font-size: 28px;
+            }
+            @media ($min: $medium) {
+              font-size: 18px;
+            }
+            @media ($min: $large) {
+              font-size: 22px;
+            }
+          }
+          .list-icon {
+            font-size: 50px;
+            color: $colorWhite;
+            @media ($min: $small) {
+              font-size: 80px;
+            }
+            @media ($min: $medium) {
+              font-size: 50px;
+            }
+          }
+        }
+      }
+      .HIW-1-icon {
+        font-size: 100px;
+        color: $colorMidGrey;
+        position: absolute;
+        bottom: 0;
+        right: 20px;
+        @media ($min: $medium) {
+          font-size: 120px;
+          bottom: 10%;
+          right: 0;
+        }
+      }
+    }
+  }
+  .joining-section-login {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+      &:before {
+      content: "";
+      background-image: url(refer-before.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      min-height: 23px;
+      position: absolute;
+      top: 60px;
+      left: 30px;
+      width: 100%;
+      max-width: 90px;
+      @media($min: $medium) {
+      top: 45px;
+      left: 270px;
+      }
+    }
+      &:after {
+        content: "";
+        background-image: url(refer-after.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 23px;
+        position: absolute;
+        bottom: 30px;
+        right: 0;
+        width: 100%;
+        max-width: 90px;
+       @media($min: $medium) {
+          bottom: 75px;
+          right: 0;
+        }
+      }
+    @media ($min:$medium) {
+      margin-bottom: 50px;
+      display: flex;
+    .HIW-image {
+        width: 72%;
+        margin: 0 auto;
+        position: absolute;
+        top: 35%;
+        left: 0;
+        right: 0;
+        opacity: 0.4;
+      }
+    }
+     .sidebar-content {
+        flex: 1;
+        background-color: $colorBlack;
+      }
+      .main-content {
+        flex: 4;
+        padding: 50px 0;
+      }
+      .swell-icon-Redeem {
+        font-size: 45px;
+        color: $colorWhite;
+      }
+    h3 {
+      color: $colorWhite;
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: bold;
+      margin: 0 auto;
+      text-align: center;
+      font-family: $theme-font-family-century;
+      text-transform: initial;
+      margin-bottom: 30px;
+      span {
+        color: $colorWhite;
+      }
+      @media ($min:$small) {
+        font-size: 26px;
+      }
+    }
+    .swell-link-list {
+      .swell-link {
+        @media ($min: $medium) {
+          max-width: 180px;
+        }
+        .swell-link-redeem,
+        .swell-link-history {
+          background-color: $colorBlack;
+          color: $colorWhite;
+          font-family: $theme-font-family-helvetica;
+          border-radius: 0;
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+  .campaign-section {
+    text-align: center;
+    margin-bottom: 75px;
+    &.login {
+      .swell-campaign-list {
+        .swell-campaign {
+          cursor: pointer;
+        }
+      }
+    }
+    .swell-section-heading {
+      margin-bottom: 80px;
+    }
+    .swell-campaign-list {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      overflow: hidden;
+      padding: 0 15px;
+      .swell-campaign {
+        flex-basis: 50%;
+        margin: 0;
+        &:nth-child(2n+2) {
+          .swell-campaign-content {
+            border-right: 0;
+            &:after {
+              display: none;
+            }
+          }
+        }
+        @media ($min: $medium) {
+          flex-basis: 25%;
+          &:nth-child(2n+2) {
+            .swell-campaign-content {
+              border-right: 1px solid $bordercolorgrey;
+              &:after {
+                display: block;
+              }
+            }
+          }
+          &:nth-child(4n+4) {
+            .swell-campaign-content {
+              border-right: 0;
+              &:after {
+                display: none;
+              }
+            }
+          }
+        }
+        /*&.swell-campaign-login {
+          cursor: pointer;
+        }*/
+        .swell-campaign-content {
+          padding: 20px 5px;
+          min-height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          border-top: 1px solid $bordercolorgrey;
+          border-right: 1px solid $bordercolorgrey;
+          position: relative;
+          &:after {
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-color: $colorWhite;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            z-index: 1;
+          }
+          @media ($min: $small) {
+            min-height: 250px;
+          }
+          .swell-campaign-icon {
+            font-size: 30px;
+            margin-bottom: 30px;
+            @media ($min: $small) {
+              font-size: 50px;
+              margin-bottom: 40px;
+            }
+          }
+          .swell-campaign-type {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: $colorBlack;
+            text-transform: initial;
+            font-family: $theme-font-family-century;
+            @media ($min: $small) {
+              font-size: 24px;
+            }
+            @media ($min: $medium) {
+              font-size: 16px;
+            }
+            @media ($min: $large) {
+              font-size: 22px;
+            }
+          }
+          .swell-campaign-value {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.2;
+            text-transform: initial;
+            font-family: $theme-font-family-helvetica;
+            @media ($min: $small) {
+              font-size: 20px;
+            }
+            @media ($min: $medium) {
+              font-size: 14px;
+            }
+            @media ($min: $large) {
+              font-size: 18px;
+            }
+          }
+          h3 {
+            font-size: 16px;
+            font-family: $theme-font-family-century;
+            color: $colorPink;
+            margin: 0 auto 5px;
+            text-transform: initial;
+            @media ($min: $small) {
+              font-size: 26px;
+            }
+            @media ($min: $medium) {
+              font-size: 18px;
+            }
+            @media ($min: $large) {
+              font-size: 26px;
+            }
+          }
+          p {
+            font-size: 14px;
+            font-family: $theme-font-family-helvetica;
+            font-weight: normal;
+            margin-bottom: 20px;
+            @media ($min: $small) {
+              font-size: 18px;
+            }
+            @media ($min: $medium) {
+              font-size: 13px;
+            }
+            @media ($min: $large) {
+              font-size: 16px;
+            }
+          }
+          a {
+            background-color: $colorBlack;
+            padding: 10px;
+            font-size: 16px;
+            font-family: $theme-font-family-helvetica;
+            font-weight: bold;
+            color: $colorWhite;
+            max-width: 200px;
+            width: 100%;
+            text-transform: uppercase;
+          }
+        }
+        &:nth-child(1) {
+          .swell-campaign-content {
+            border-top: 0;
+            &:after {
+              display: none;
+            }
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorYellow;
+            }
+          }
+        }
+        &:nth-child(2) {
+          .swell-campaign-content {
+            border-top: 0;
+            &:after {
+              display: none;
+            }
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorDarkishGrey;
+            }
+          }
+        }
+        &:nth-child(3) {
+          .swell-campaign-content {
+            @media ($min: $medium) {
+              border-top: 0;
+              &:after {
+                display: none;
+              }
+            }
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorLightGreen;
+            }
+          }
+        }
+        &:nth-child(4) {
+          .swell-campaign-content {
+            @media ($min: $medium) {
+              border-top: 0;
+              &:after {
+                display: none;
+              }
+            }
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorPink;
+            }
+          }
+        }
+        &:nth-child(5) {
+          .swell-campaign-content {
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorDarkishGrey;
+            }
+          }
+        }
+        &:nth-child(6) {
+          .swell-campaign-content {
+            .swell-campaign-icon,
+            .swell-campaign-value {
+              color: $colorLightRed;
+            }
+          }
+        }
+      }
+    }
+  }
+  .vip-table-section {
+    text-align: center;
+    margin-bottom: 65px;
+    .swell-section-heading {
+      margin-bottom: 50px;
+    }
+    .table-wrapper {
+      padding: 0 15px;
+      .swell-tier-table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 0;
+        tr {
+          border: 0;
+          &:nth-child(3) {
+            td {
+              &:nth-child(4) {
+                font-family: $theme-font-family-helvetica;
+              }
+            }
+          }
+          &:last-child {
+            td {
+              border-bottom: 0;
+            }
+          }
+        }
+        th,
+        td {
+          text-align: left;
+          padding: 10px 8px;
+          border: 0;
+          border-bottom: 1px solid $bordercolorgrey;
+          font-size: 15px;
+          font-weight: normal;
+          width: 60%;
+          font-family: $theme-font-family-century;
+          color: $colorBlack;
+          .circle {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 auto;
+            background: #56d4de;
+          }
+          &:first-child {
+            border-right: 1px solid $bordercolorgrey;
+            font-family: $theme-font-family-helvetica;
+          }
+          &:not(:first-child) {
+            text-align: center;
+            width: 30%;
+            @media ($min: $medium) {
+              width: 15%;
+            }
+          }
+          &:nth-child(3),
+          &:nth-child(4) {
+            display: none;
+          }
+          @media ($min: $medium) {
+            width: 40%;
+            font-size: 18px;
+            padding: 14px 12px;
+            border-right: 1px solid $bordercolorgrey;
+            &:last-child {
+              border-right: 0;
+            }
+            &:nth-child(3),
+            &:nth-child(4) {
+              display: table-cell;
+            }
+          }
+          @media ($min: $large) {
+            width: 25%;
+          }
+        }
+        thead {
+          tr {
+            th {
+              &:nth-child(2) {
+                background-color: #f495b2;
+                span {
+                  color: $colorBlack;
+                }
+              }
+              &:nth-child(3) {
+                background-color: #f495b2;
+                span {
+                  color: $colorBlack;
+                }
+              }
+              &:nth-child(4) {
+                background-color: #f495b2;
+                span {
+                  color: $colorBlack;
+                }
+              }
+            }
+            &.swell-tier-values {
+              th {
+                border-bottom: 0;
+                background-color: transparent;
+                font-size: 12px;
+                font-family: $theme-font-family-helvetica;
+                padding: 10px 4px !important;
+                color: $colorBlack;
+                border: 0;
+                vertical-align: bottom;
+                font-weight: bold;
+                @media ($min: $small) {
+                  font-size: 16px;
+                }
+                @media ($min: $medium) {
+                  padding: 14px 4px !important;
+                }
+                span {
+                  display: block;
+                  font-weight: normal;
+                  font-size: 14px;
+                  @media ($min: $small) {
+                    font-size: 18px;
+                  }
+                }
+                .current-status {
+                  font-size: 12px;
+                  line-height: 1;
+                  margin-bottom: 10px;
+                  color: #56d4de;
+                  font-family: $theme-font-family-century;
+                  position: relative;
+                  &:after {
+                    display: none;
+                    @media ($min: $medium) {
+                      display: block;
+                      content: "";
+                      background-image: url(swell-arrow-black.png);
+                      background-repeat: no-repeat;
+                      background-size: cover;
+                      background-position: center;
+                      width: 100%;
+                      max-width: 45px;
+                      min-height: 14px;
+                      position: absolute;
+                      top: 0;
+                      right: -15px;
+                    }
+                    font-size: 15px;
+                  }
+                }
+                .current-status1 {
+                  font-size: 14px;
+                  line-height: 1;
+                  margin-bottom: 0;
+                  color: #56d4de;
+                  font-family: $theme-font-family-century;
+                  position: relative;
+                }
+                .spend-more {
+                  font-size: 15px;
+                  font-family: $theme-font-family-century;
+                  .req-points {
+                    display: inline;
+                  }
+                }
+              }
+            }
+            &.swell-tier-names {
+              th {
+                border-bottom: 0;
+                color: $colorWhite;
+                font-weight: normal;
+                font-size: 14px;
+                border-right: 1px solid $bordercolorgrey;
+                @media ($min: $small) {
+                  font-size: 18px;
+                }
+                &.active{
+                  position: relative;
+                  &::before{
+                    content: "";
+                    position: absolute;
+                    top: -10px;
+                    left: 0;
+                    width: 100%;
+                    height: 10px;
+                    background-color: #f495b2;
+                  }
+                }
+                &:first-child {
+                  color: $colorDarkGrey;
+                  background: 0;
+                }
+              }
+            }
+          }
+        }
+        tbody {
+          border: 1px solid $bordercolorgrey;
+        }
+        &.member {
+          thead,
+          tbody {
+            tr {
+              th:nth-child(3),
+              th:nth-child(4),
+              td:nth-child(3),
+              td:nth-child(4) {
+                display: none;
+                @media ($min: $medium) {
+                  display: table-cell;
+                }
+              }
+            }
+          }
+        }
+        &.vip {
+          thead,
+          tbody {
+            tr {
+              th:nth-child(2),
+              th:nth-child(4),
+              td:nth-child(2),
+              td:nth-child(4) {
+                display: none;
+                @media ($min: $medium) {
+                  display: table-cell;
+                }
+              }
+            }
+          }
+        }
+        &.vip-premier {
+          thead,
+          tbody {
+            tr {
+              th:nth-child(2),
+              th:nth-child(3),
+              td:nth-child(2),
+              td:nth-child(3) {
+                display: none;
+                @media ($min: $medium) {
+                  display: table-cell;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .tier-arrows {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .arrows-holder {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        @media ($min: $medium) {
+          display:none;
+        }
+        .left-arrow,
+        .right-arrow{
+          font-size: 25px;
+          @media ($min: $small) {
+            font-size: 40px;
+          }
+        }
+      }
+    }
+  }
+  .redeem-section {
+    &.login {
+      border-bottom: 1px solid #ebebeb;
+      margin-bottom: 50px;
+    }
+    .swell-section-heading {
+      h2 {
+        margin-bottom: 30px;
+      }
+      p {
+        max-width: 370px;
+        margin: 0 auto;
+      }
+    }
+  }
+.referral-section {
+  @media($min: $medium) {
+    background-image: url(swell-refer.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    min-height: 740px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px 25px;
+    &.thank-you-popup {
+      background-image: none;
+    }
+    }
+    .mobile-refer {
+      display: block;
+      width: 100%;
+      @media($min: $medium) {
+        display: none;
+      }
+    }
+
+  .swell-referral-loader {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    @media ($min:$medium) {
+      top: 50%;
+    }
+    img {
+      max-width: 75px;
+    }
+  }
+  .sidebar-image {
+    width: 100%;
+    margin-bottom: 50px;
+    @media ($min: $medium) {
+      background-image: url(../img/swell-refer-image.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      margin-bottom: 0;
+      &.mobile {
+        display: none;
+      }
+    }
+  }
+  .referral-section-holder {
+    width: 100%;
+    display: block;
+    padding: 0 20px;
+    @media($min: $medium) {
+      max-width: 975px;
+      margin: 0 auto;
+      display: flex;
+      margin-top: 16%;
+      padding: 0;
+    }
+  .swell-referral-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      .sidebar {
+      display: none;
+      @media($min: $medium) {
+        display: block;
+        height: 383px;
+        flex: 1;
+        max-width: 185px;
+      }
+    }
+    @media ($min: $medium) {
+      flex: 1;
+      margin-bottom: 0;
+      min-height: 358px;
+    }
+    .swell-referral {
+      width: 100%;
+      flex: 3;
+    }
+    .swell-referral-content-container {
+      .swell-referral-content-sidebar {
+        display: none;
+      }
+      .swell-referral-content-main {
+        text-align: center;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        min-height: 358px;
+        max-width: 700px;
+        padding: 40px 15px;
+        background-color: #f495b2;
+        &:before {
+          content: "";
+          background-image: url(refer-before.png);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          min-height: 23px;
+          position: absolute;
+          top: 15px;
+          left: -25px;
+          width: 100%;
+          max-width: 90px;
+        }
+        &:after {
+          content: "";
+          background-image: url(refer-after.png);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          min-height: 23px;
+          position: absolute;
+          bottom: 15px;
+          right: -7px;
+          width: 100%;
+          max-width: 90px;
+          @media($min: $medium) {
+            display: none;
+          }
+        }
+        @media($min: $medium) {
+          margin-right: 0;
+        }
+        .swell-referral-thanks {
+          padding: 113px 0;
+          .swell-referral-back-link {
+            top: -60px;
+          }
+          .swell-referral-heading {
+            font-size: 34px;
+        }
+        .swell-referral-details {
+          &:after {
+            display: none;
+          }
+        }
+      }
+        .swell-referral-register,
+        .swell-referral-refer {
+          width: 100%;
+        }
+        .swell-referral-heading {
+          font-size: 30px;
+          font-weight: normal;
+          line-height: 1;
+          margin: 0 auto 10px;
+          letter-spacing: 0;
+          color: $colorWhite;
+          text-transform: capitalize;
+          font-family: $theme-font-family-century;
+          @media ($min: $small) {
+            font-size: 34px;
+          }
+          @media ($min: $medium) {
+            font-size: 42px;
+          }
+          @media ($min: $large) {
+            font-size: 50px;
+          }
+        }
+        .swell-border {
+          width: 100%;
+          margin: 20px auto;
+          height: 1px;
+          background-color: $colorBlack;
+          @media ($min: $small) {
+            margin: 30px auto;
+          }
+          @media ($min: $medium) {
+            margin: 20px auto;
+          }
+        }
+        .swell-referral-details {
+          font-size: 16px;
+          font-weight: normal;
+          font-family: $theme-font-family-helvetica;
+          line-height: 1.2;
+          color: $colorWhite;
+          max-width: 300px;
+          margin: 0 auto 30px;
+          position: relative;
+          padding-bottom: 30px;
+          &:after {
+            content: "";
+            border-bottom: 1px solid #f8bccf;
+            width: 100%;
+            height: 1px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+          }
+          @media ($min: $small) {
+            font-size: 18px;
+            max-width: 400px;
+          }
+          @media ($min: $medium) {
+            font-size: 19px;
+            max-width: 365px;
+          }
+        }
+        .referring-link {
+          display: block;
+          max-width: 220px;
+          margin: 0 auto;
+          color: $colorBlack;
+          padding: 16px 5px;
+          font-size: 16px;
+          line-height: 1;
+          font-family: $theme-font-family-century;
+          text-transform: uppercase;
+          border-radius: 5px;
+          border: 1px solid $colorBlack;
+          @media ($min: $small) {
+            max-width: 300px;
+            font-size: 22px;
+            padding: 18px 5px;
+          }
+          @media ($min: $medium) {
+            max-width: 195px;
+            font-size: 14px;
+            padding: 14px 5px;
+          }
+        }
+        .refer-to-old-customer-error {
+          color: red;
+          font-family: $theme-font-family-helvetica;
+          font-size: 16px;
+        }
+        .swell-referral-form-wrapper {
+          max-width: 520px;
+          margin: 0 auto 30px;
+          .swell-referral-form-header-details {
+            font-size: 16px;
+            font-weight: normal;
+            font-family: $theme-font-family-helvetica;
+            line-height: 1.1;
+            margin: 0 auto 30px;
+            color: $colorWhite;
+            @media ($min: $medium) {
+              font-size: 18px;
+            }
+          }
+          .swell-referral-form-list {
+            @media (min-width: 767px) {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .swell-referral-form-list-field {
+              margin-bottom: 0;
+              @media (min-width: 767px) {
+                flex: 1;
+                &:first-child {
+                  flex: 3;
+                  margin-right: 0;
+                }
+              }
+              .swell-referral-form-field-details {
+                display: none;
+              }
+              .swell-referral-form-list-field-input {
+                background-color: $colorWhite;
+                border: 1px solid $colorWhite;
+                padding: 10px 15px;
+                outline: 0;
+                width: 100%;
+                height: 60px;
+                color: $colorInput;
+                font-size: 15px;
+                font-weight: normal;
+                font-family: $theme-font-family-helvetica;
+                margin-bottom: 10px;
+                @media ($min: $medium) {
+                  margin-bottom: 0;
+                  font-size: 16px;
+                }
+              }
+              .swell-referral-form-list-submit {
+                width: 100%;
+                height: 60px;
+                font-family: 'interstateregular';
+                border: 1px solid #1c1d20;
+                padding: 10px 10px;
+                text-align: center;
+                background-color: #1c1d20;
+                color: $colorWhite;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: normal;
+                text-transform: uppercase;
+                @media ($min: $medium) {
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+        .swell-referral-media-wrapper {
+          .swell-referral-media-details {
+            font-size: 14px;
+            font-weight: normal;
+            color: $colorWhite;
+            font-family: $theme-font-family-helvetica;
+            @media ($min: $small) {
+              font-size: 16px;
+            }
+          }
+          .swell-referral-media-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0 auto;
+            @media ($min: $medium) {
+              max-width: 400px;
+            }
+            .swell-referral-medium {
+              color: $colorWhite;
+              margin-bottom: 0;
+              &:last-child {
+                .swell-referral-medium-content {
+                  margin-right: 0;
+                }
+              }
+              .swell-referral-medium-content {
+                margin-right: 5px;
+                font-size: 12px;
+                font-family: $theme-font-family-helvetica;
+                font-weight: normal;
+                color: $colorWhite;
+                cursor: pointer;
+                @media ($min: $small) {
+                  font-size: 16px;
+                  padding: 10px;
+                }
+              }
+              .swell-referral-media-icon {
+                color: $colorWhite;
+              }
+              &.swell-share-referral-sms {
+                @media (min-width: 767px) {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+    .redeem-holder {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px 18px;
+      color: $colorWhite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: $colorBlack;
+      /*display: none;*/
+      @media($min: $medium) {
+        max-width: 380px;
+      }
+      .refer-details {
+        width: 100%;
+        .swell-referral-heading {
+          text-align: center;
+          width: 100%;
+          max-width: 450px;
+          margin: 0 auto 10px;
+          h2 {
+            font-size: 18px;
+            font-weight: normal;
+            font-family: $theme-font-family-century;
+            margin: 0;
+            color: $colorWhite;
+            text-transform: initial;
+            letter-spacing: 0;
+            @media($min: $small) {
+              font-size: 20px;
+            }
+          }
+        }
+        .table-classes {
+          width: 100%;
+          max-width: 450px;
+          margin: 0 auto;
+          margin-bottom: 15px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid #808080;
+          .swell-table-responsive {
+            border: 0;
+            min-height: 125px;
+            max-height: 125px;
+            overflow-y: scroll;
+            padding-right: 20px;
+            @media($min: $medium) {
+              min-height: 130px;
+              max-height: 130px;
+            }
+            &::-webkit-scrollbar {
+              width: 0.6em;
+            }
+            &::-webkit-scrollbar-track {
+              background: $colorWhite;
+              border-top-left-radius: 4px;
+              border-top-right-radius: 4px;
+              border-bottom-left-radius: 4px;
+              border-bottom-right-radius: 4px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: #f495b2;
+              outline: 1px solid slategrey;
+              border-top-left-radius: 4px;
+              border-top-right-radius: 4px;
+              border-bottom-left-radius: 4px;
+              border-bottom-right-radius: 4px;
+            }
+            .swell-referral-table {
+              width: 100%;
+              border-collapse: collapse;
+              background-color: transparent;
+              thead, tbody {
+                tr {
+                  border: 0;
+                  &:last-child {
+                    td {
+                      border-bottom: 0;
+                    }
+                  }
+                  th, td {
+                    font-size: 12px;
+                    font-weight: normal;
+                    text-align: left;
+                    font-family: $theme-font-family-helvetica;
+                    padding: 8px 5px;
+                    border: 0;
+                    border-bottom: 1px solid #4d4d4d;
+                    background-color: transparent;
+                    color: #fff;
+                    @media($min:$small) {
+                      font-size: 14px;
+                      padding: 10px 5px;
+                    }
+                  }
+                }
+              }
+              tbody {
+                tr {
+                  td{
+                    &:first-child {
+                      &.trancate {
+                        max-width: 220px;
+                        width: 220px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .heading-area {
+        text-align: center;
+        max-width: 320px;
+        width: 100%;
+        margin: 0 auto;
+        @media ($min: $small) {
+          max-width: 420px;
+        }
+        .heading-holder {
+          h4 {
+            font-size: 18px;
+            font-weight: normal;
+            font-family: $theme-font-family-century;
+            margin: 0 auto 10px;
+            color: $colorWhite;
+            text-transform: initial;
+            letter-spacing: 0;
+            line-height: 1.2;
+            @media($min:$small) {
+              font-size: 22px;
+            }
+          }
+          p {
+            font-size: 13px;
+            font-family: $theme-font-family-helvetica;
+            font-weight: normal;
+            text-align: center;
+            margin: 0 auto;
+            line-height: 1.3;
+            color: $colorWhite;
+            @media($min:$medium) {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+}
+.swell-referral-back-link {
+  width: 1em;
+  height: 1em;
+  max-width: 15px;
+  max-height: 15px;
+  display: block;
+  vertical-align: middle;
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+  margin: 0 auto;
+  &:after, &:before {
+    background: $colorWhite;
+    content: "";
+    height: 2px;
+    max-width: calc(15px * 1.414);
+    position: absolute;
+    top: 0;
+    transition: 0.05s ease-in-out background-color;
+    width: calc(1em * 1.414);
+  }
+  &:before {
+    left: 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: left;
+    -ms-transform-origin: left;
+    transform-origin: left;
+  }
+  &:after {
+    right: 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: right;
+    -ms-transform-origin: right;
+    transform-origin: right;
+  }
+}
+.swell-referral-copy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.94);
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    .swell-referral-copy-sidebar {
+        display: block;
+        order: 2;
+        max-width: 520px;
+        margin: 0 auto;
+        text-align: center;
+        background: $colorBlack;
+        @media($min: $medium) {
+          max-width: auto;
+          background: transparent;
+        }
+    }
+    .swell-referral-copy-content {
+        width: 100%;
+        @media($min: $medium) {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .swell-referral-copy-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            background-color: #f495b2;
+            text-align: center;
+            margin: 0 auto;
+            min-height: 300px;
+            padding: 50px 15px;
+            max-width: 520px;
+            width: 100%;
+            &:before {
+              display: none;
+              @media($min: $medium) {
+                display: block;
+                content: "";
+                background-image: url(refer-before.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                min-height: 23px;
+                position: absolute;
+                top: 40px;
+                right: -40px;
+                width: 100%;
+                max-width: 90px;
+              }
+            }
+            @media($min: $medium) {
+              margin-right: 0;
+            }
+            .swell-referral-heading {
+                display: none;
+            }
+            .swell-referral-back-link {
+                margin-bottom: 50px;
+                top: -120%;
+                right: 0;
+                position: absolute;
+                @media($min: $medium) {
+                  position: relative;
+                }
+            }
+            .swell-referral-copy-link {
+                font-size: 28px;
+                font-family: $theme-font-family-century;
+                margin-bottom: 25px;
+                font-weight: normal;
+                color: $colorWhite;
+                @media($min: $small) {
+                    font-size: 36px;
+                }
+            }
+            .swell-referral-copy-button {
+                max-width: 200px;
+                width: 100%;
+                font-family: $theme-font-family-helvetica;
+                border: 1px solid $colorBlack;
+                padding: 15px 0;
+                height: 47px;
+                text-align: center;
+                background-color: $colorBlack;
+                color: $colorWhite;
+                font-size: 14px;
+                line-height: 1;
+                font-weight: normal;
+                border-radius: 0;
+                margin-bottom: 30px;
+                text-transform: uppercase;
+                @media ($min: $small) {
+                    max-width: 250px;
+                    height: 55px;
+                }
+                @media ($min: $medium) {
+                    max-width: 160px;
+                    height: 47px;
+                }
+            }
+            .swell-referral-details {
+                font-size: 13px;
+                font-weight: normal;
+                font-family: $theme-font-family-helvetica;
+                line-height: 1;
+                color: $colorWhite;
+                margin: 0;
+                @media ($min: $small) {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+.swell-post-checkout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9;
+  background-color: rgba(0,0,0,0.94);
+.checkout-heading {
+  position: relative;
+  margin-top: 15px;
+.swell-referral-back-link {
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto 10px;
+  }
+.swell-post-checkout-heading {
+  color: $colorWhite;
+  padding-top: 1.5em;
+  max-width: 300px;
+  font-family: $theme-font-family-century;
+  margin: 0 auto;
+  font-size: 22px;
+  font-weight: normal;
+  }
+}
+.swell-post-checkout-holder {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: scroll;
+  .referral-section {
+    min-height: auto;
+    .referral-section-holder {
+      margin-top: 0;
+    }
+    background-image: none;
+  }
+  .swell-referral {
+    .swell-referral-content-main {
+      max-width: 680px !important;
+      margin: 0 auto !important;
+      &:before {
+        right: -35px !important;
+        top: 35px !important;
+      }
+    }
+  }
+}
+@media ($min: $medium) {
+.checkout-heading {
+  .swell-post-checkout-heading {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+.swell-post-checkout-holder {
+    top: 20%;
+    min-height: auto;
+    max-height: 100%;
+    overflow-y: hidden;
+    }
+  }
+}
+
+.refer-to-old-customer-error {
+  color: red !important
+}
+.error-border {
+  border: 1px solid red !important;
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.video-container iframe
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
